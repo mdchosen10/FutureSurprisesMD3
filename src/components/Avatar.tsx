@@ -17,7 +17,9 @@ const Avatar = ({ user }: any) => {
   const [hydrated, setHydrated] = useState(false);
 
   const onClickLogout = async () => {
-    const res = await dispatch(authActions.logout() as any);
+    const res = await dispatch(
+      authActions.logout({}) as any,
+    );
     if (res?.payload?.status === 200) {
       toast.success("Logout successfully.");
       window.location.pathname = "/";
