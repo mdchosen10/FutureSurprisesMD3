@@ -87,10 +87,11 @@ export default function LayoutWrapper({
   }, [dispatch]);
 
   useEffect(() => {
-    if (!user)
-      return (window.location.href =
-        "https://futuresurprises.co/login");
-  }, []);
+    if (!user) {
+      window.location.href =
+        "https://futuresurprises.co/login";
+    }
+  }, [user]);
 
   if (!hydrated) {
     // Returns null on first render, so the client and server match
