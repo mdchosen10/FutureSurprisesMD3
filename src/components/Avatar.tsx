@@ -22,7 +22,7 @@ const Avatar = ({ user }: any) => {
     );
     if (res?.payload?.status === 200) {
       toast.success("Logout successfully.");
-      window.location.pathname =
+      window.location.href =
         "https://www.futuresurprises.com/";
     }
   };
