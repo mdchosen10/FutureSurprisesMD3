@@ -74,7 +74,8 @@ const Login = () => {
 
   useEffect(() => {
     if (user?.id) {
-      // router.push("/my-account");
+      window.location.href =
+        "https://futuresurprises.com/my-account";
     }
   }, [user]);
 

@@ -17,7 +17,8 @@ export default function PrivateLayoutWrapper({
   useEffect(() => {
     if (!user?.id) {
       // window.location.pathname = "/login";
-      router.push("/login");
+      window.location.href =
+        "https://futuresurprises.co/login";
       return;
     }
   }, [router, user]);

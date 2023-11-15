@@ -93,19 +93,23 @@ const OrderHistoryPage = () => {
               Address
             </h6>
             <p className="mt-2 text-sm font-normal text-primaryBlack">
-              {orderDetails?.shipping_address?.address_1 ||
+              {orderDetails?.items[0]?.metadata
+                ?.recipient_shipping_address?.address_1 ||
                 "--"}
             </p>
             <p className="mt-2 text-sm font-normal text-primaryBlack">
-              {orderDetails?.shipping_address?.city || "--"}
+              {orderDetails?.items[0]?.metadata
+                ?.recipient_shipping_address?.city || "--"}
             </p>
             <p className="mt-2 text-sm font-normal text-primaryBlack">
-              {orderDetails?.shipping_address?.province ||
+              {orderDetails?.items[0]?.metadata
+                ?.recipient_shipping_address?.province ||
                 "--"}
             </p>
             <p className="mt-2 text-sm font-normal text-primaryBlack">
-              {orderDetails?.shipping_address
-                ?.postal_code || "--"}
+              {orderDetails?.items[0]?.metadata
+                ?.recipient_shipping_address?.postal_code ||
+                "--"}
             </p>
           </div>
 
