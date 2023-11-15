@@ -33,7 +33,7 @@ export const login = createAsyncThunk<
   return res.data as AxiosResponse;
 });
 
-export const logout = createAsyncThunk<AxiosResponse, any>(
+export const logout = createAsyncThunk<AxiosResponse>(
   "auth/logout",
   async () => {
     const res = await authApi.logout();

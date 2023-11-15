@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import * as authActions from "@/redux/auth/actions";
 import toast from "react-hot-toast";
-//import { AnyAction } from "redux";
+import { AnyAction } from "redux";
 
 const Avatar = ({ user }: any) => {
   const router = useRouter();
@@ -18,7 +18,7 @@ const Avatar = ({ user }: any) => {
 
   const onClickLogout = async () => {
     const res = await dispatch(
-      authActions.logout({}) as any,
+      authActions.logout() as unknown as AnyAction,
     );
     if (res?.payload?.status === 200) {
       toast.success("Logout successfully.");
