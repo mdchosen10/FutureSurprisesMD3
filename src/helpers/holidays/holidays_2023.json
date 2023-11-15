@@ -1,0 +1,370 @@
+[
+  {
+    "name": "New Year's Day",
+    "date": "2023-01-01",
+    "type": "general"
+  },
+  {
+    "name": "Orthodox Christmas Day",
+    "date": "2023-01-07",
+    "type": "Orthodox"
+  },
+  {
+    "name": "Orthodox New Year",
+    "date": "2023-01-14",
+    "type": "Orthodox"
+  },
+  {
+    "name": "Super Bowl",
+    "date": "2023-02-12",
+    "type": "Sporting event"
+  },
+  {
+    "name": "St. Patrick's Day",
+    "date": "2023-03-17",
+    "type": "christian"
+  },
+  {
+    "name": "April Fool's Day",
+    "date": "2023-04-01",
+    "type": "general"
+  },
+  {
+    "name": "Passover (first day)",
+    "date": "2023-04-06",
+    "type": "Jewish"
+  },
+  {
+    "name": "Easter Sunday",
+    "date": "2023-04-09",
+    "type": "Christian"
+  },
+  {
+    "name": "Orthodox Easter",
+    "date": "2023-04-16",
+    "type": "Orthodox"
+  },
+  {
+    "name": "Eid al-Fitr",
+    "date": "2023-04-21",
+    "type": "Muslim"
+  },
+  {
+    "name": "Cinco de Mayo",
+    "date": "2023-05-05",
+    "type": "general"
+  },
+  {
+    "name": "Mother's Day",
+    "date": "2023-05-14",
+    "type": "moth"
+  },
+  {
+    "name": "Memorial Day",
+    "date": "2023-05-29",
+    "type": "Federal"
+  },
+  {
+    "name": "Father's Day",
+    "date": "2023-06-18",
+    "type": "common"
+  },
+  {
+    "name": "Juneteenth",
+    "date": "2023-06-19",
+    "type": "Federal"
+  },
+  {
+    "name": "Eid al-Adha",
+    "date": "2023-06-28",
+    "type": "Muslim"
+  },
+  {
+    "name": "Independence Day",
+    "date": "2023-07-04",
+    "type": "general"
+  },
+  {
+    "name": "Labor Day",
+    "date": "2023-09-04",
+    "type": "general"
+  },
+  {
+    "name": "Rosh Hashana",
+    "date": "2023-09-16",
+    "type": "Jewish"
+  },
+  {
+    "name": "Yom Kippur",
+    "date": "2023-09-25",
+    "type": "Jewish"
+  },
+  {
+    "name": "Veterans Day",
+    "date": "2023-11-11",
+    "type": "general"
+  },
+  {
+    "name": "Diwali/Deepavali",
+    "date": "2023-11-12",
+    "type": "Hindu"
+  },
+  {
+    "name": "Thanksgiving",
+    "date": "2023-11-23",
+    "type": "general"
+  },
+  {
+    "name": "Kwanzaa (first day)",
+    "date": "2023-12-26",
+    "type": "Hindu"
+  },
+  {
+    "name": "New Year's Eve",
+    "date": "2023-12-31",
+    "type": "Observance"
+  },
+
+  {
+    "name": "Armed Forces Day",
+    "date": "2023-05-20",
+    "type": "general"
+  },
+  {
+    "name": "Bastille Day",
+    "date": "2023-7-14",
+    "type": "general"
+  },
+  {
+    "name": "Boxing Day",
+    "date": "2023-12-26",
+    "type": "general"
+  },
+  {
+    "name": "Columbus Day",
+    "date": "2023-10-09",
+    "type": "general"
+  },
+  {
+    "name": "Earth Day",
+    "date": "2023-04-22",
+    "type": "general"
+  },
+  {
+    "name": "Flag Day",
+    "date": "2023-06-14",
+    "type": "general"
+  },
+  {
+    "name": "Groundhog Day",
+    "date": "2023-02-02",
+    "type": "general"
+  },
+  {
+    "name": "Guy Fawkes Night",
+    "date": "2023-11-05",
+    "type": "general"
+  },
+  {
+    "name": "President's Day",
+    "date": "2023-02-20",
+    "type": "general"
+  },
+  {
+    "name": "Remembrance Day",
+    "date": "2023-11-11",
+    "type": "general"
+  },
+
+  {
+    "name": "All Saint's Day",
+    "date": "2023-11-01",
+    "type": "christian"
+  },
+  {
+    "name": "Ascension Day",
+    "date": "2023-05-18",
+    "type": "christian"
+  },
+  {
+    "name": "Ash Wednesday",
+    "date": "2023-02-22",
+    "type": "christian"
+  },
+  {
+    "name": "Corpus Christi",
+    "date": "2023-06-08",
+    "type": "christian"
+  },
+  {
+    "name": "Epiphany/12th Night",
+    "date": "2023-01-06",
+    "type": "christian"
+  },
+  {
+    "name": "Good Friday",
+    "date": "2023-04-07",
+    "type": "christian"
+  },
+  {
+    "name": "Holy Week",
+    "date": "2023-04-02",
+    "type": "christian"
+  },
+  {
+    "name": "Mardi Gras",
+    "date": "2023-02-21",
+    "type": "christian"
+  },
+  {
+    "name": "Palm Sunday",
+    "date": "2023-04-02",
+    "type": "christian"
+  },
+  {
+    "name": "Pentecost",
+    "date": "2023-05-28",
+    "type": "christian"
+  },
+
+  {
+    "name": "Purim",
+    "date": "2023-03-07",
+    "type": "jewish"
+  },
+  {
+    "name": "Sukkot",
+    "date": "2023-09-23",
+    "type": "jewish"
+  },
+
+  {
+    "name": "Ramadan",
+    "date": "2023-03-22",
+    "type": "islamic"
+  },
+
+  {
+    "name": "Holi",
+    "date": "2023-03-07",
+    "type": "hindu"
+  },
+  {
+    "name": "Lohri",
+    "date": "2023-01-13",
+    "type": "hindu"
+  },
+  {
+    "name": "Makar Sankranti",
+    "date": "2023-01-14",
+    "type": "hindu"
+  },
+  {
+    "name": "Navratri",
+    "date": "2023-09-26",
+    "type": "hindu"
+  },
+  {
+    "name": "Pongal",
+    "date": "2023-01-15",
+    "type": "hindu"
+  },
+
+  {
+    "name": "Vesak",
+    "date": "2023-05-06",
+    "type": "buddhist"
+  },
+  {
+    "name": "Beltane",
+    "date": "2023-05-01",
+    "type": "pagan/wiccan"
+  },
+  {
+    "name": "Imbolc",
+    "date": "2023-02-01",
+    "type": "pagan/wiccan"
+  },
+  {
+    "name": "Lughnasadh",
+    "date": "2023-08-01",
+    "type": "pagan/wiccan"
+  },
+  {
+    "name": "Samhain",
+    "date": "2023-10-31",
+    "type": "pagan/wiccan"
+  },
+
+  {
+    "name": "Guru Nanak Jayanti",
+    "date": "2023-11-09",
+    "type": "other"
+  },
+  {
+    "name": "Nowruz",
+    "date": "2023-03-20",
+    "type": "other"
+  },
+  {
+    "name": "St. Andrew's Day",
+    "date": "2023-11-30",
+    "type": "christian"
+  },
+  {
+    "name": "St. David's Day",
+    "date": "2023-03-01",
+    "type": "christian"
+  },
+  {
+    "name": "St. George's Day",
+    "date": "2023-04-23",
+    "type": "christian"
+  },
+
+  {
+    "name": "Diwali",
+    "date": "2023-11-12",
+    "type": "common"
+  },
+  {
+    "name": "Easter",
+    "date": "2023-04-09",
+    "type": "common"
+  },
+  {
+    "name": "Eid al-Adha",
+    "date": "2023-06-29",
+    "type": "common"
+  },
+  {
+    "name": "Eid al-Fitr",
+    "date": "2023-04-21",
+    "type": "common"
+  },
+  {
+    "name": "Halloween",
+    "date": "2023-10-31",
+    "type": "common"
+  },
+  {
+    "name": "Hanukkah",
+    "date": "2023-12-7",
+    "type": "common"
+  },
+  {
+    "name": "Lunar New Year",
+    "date": "2023-01-22",
+    "type": "common"
+  },
+  {
+    "name": "Valentine's Day",
+    "date": "2023-02-14",
+    "type": "common"
+  },
+  {
+    "name": "Christmas",
+    "date": "2023-12-25",
+    "type": "common"
+  }
+]

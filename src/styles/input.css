@@ -1,0 +1,32 @@
+input[type="checkbox"],
+input.radio-group-input {
+  background-image: url("../../public/images/checkbox.svg") !important;
+  background-color: transparent;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  border: none !important;
+  box-shadow: none !important;
+  content: "";
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+input[type="checkbox"]:checked,
+input.radio-group-input:checked {
+  background-image: url("../../public/images/checkbox-checked.svg") !important;
+  background-color: transparent !important;
+  background-size: contain;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+input[type="checkbox"].gray:checked {
+  background-image: url("../../public/images/checkbox-gray.svg") !important;
+}
+
+input[type="checkbox"]:focus,
+input.radio-group-input:focus {
+  border: none !important;
+  box-shadow: none !important;
+}

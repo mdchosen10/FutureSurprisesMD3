@@ -1,0 +1,375 @@
+[
+  {
+    "name": "New Year's Day",
+    "date": "2024-01-01",
+    "type": "general"
+  },
+  {
+    "name": "Orthodox Christmas Day",
+    "date": "2024-01-07",
+    "type": "Orthodox"
+  },
+  {
+    "name": "Orthodox New Year",
+    "date": "2024-01-14",
+    "type": "Orthodox"
+  },
+  {
+    "name": "Super Bowl",
+    "date": "2024-02-11",
+    "type": "Sporting event"
+  },
+  {
+    "name": "St. Patrick's Day",
+    "date": "2024-03-17",
+    "type": "Observance"
+  },
+  {
+    "name": "Easter Sunday",
+    "date": "2024-03-31",
+    "type": "Christian"
+  },
+  {
+    "name": "April Fool's Day",
+    "date": "2024-04-01",
+    "type": "general"
+  },
+  {
+    "name": "Passover (first day)",
+    "date": "2024-04-23",
+    "type": "Jewish"
+  },
+  {
+    "name": "Eid al-Fitr (Tentative Date)",
+    "date": "2024-04-10",
+    "type": "Muslim"
+  },
+  {
+    "name": "Cinco de Mayo",
+    "date": "2024-05-05",
+    "type": "general"
+  },
+  {
+    "name": "Orthodox Easter",
+    "date": "2024-05-05",
+    "type": "Orthodox"
+  },
+  {
+    "name": "Mother's Day",
+    "date": "2024-05-12",
+    "type": "common"
+  },
+  {
+    "name": "Memorial Day",
+    "date": "2024-05-27",
+    "type": "Federal"
+  },
+  {
+    "name": "Father's Day",
+    "date": "2024-06-16",
+    "type": "common"
+  },
+  {
+    "name": "Eid al-Adha (Tentative Date)",
+    "date": "2024-06-17",
+    "type": "Muslim"
+  },
+  {
+    "name": "Juneteenth",
+    "date": "2024-06-19",
+    "type": "Federal"
+  },
+  {
+    "name": "Independence Day",
+    "date": "2024-07-04",
+    "type": "general"
+  },
+  {
+    "name": "Labor Day",
+    "date": "2024-09-02",
+    "type": "general"
+  },
+  {
+    "name": "Rosh Hashana",
+    "date": "2024-10-03",
+    "type": "Jewish"
+  },
+  {
+    "name": "Yom Kippur",
+    "date": "2024-10-12",
+    "type": "Jewish"
+  },
+  {
+    "name": "Diwali/Deepavali",
+    "date": "2024-10-31",
+    "type": "Hindu"
+  },
+  {
+    "name": "Veterans Day",
+    "date": "2024-11-11",
+    "type": "general"
+  },
+  {
+    "name": "Thanksgiving",
+    "date": "2024-11-28",
+    "type": "general"
+  },
+  {
+    "name": "Christmas Day",
+    "date": "2024-12-25",
+    "type": "Federal"
+  },
+  {
+    "name": "Kwanzaa (first day)",
+    "date": "2024-12-26",
+    "type": "Hindu"
+  },
+  {
+    "name": "New Year's Eve",
+    "date": "2024-12-31",
+    "type": "Observance"
+  },
+
+  {
+    "name": "Armed Forces Day",
+    "date": "2024-05-17",
+    "type": "general"
+  },
+  {
+    "name": "Bastille Day",
+    "date": "2024-07-14",
+    "type": "general"
+  },
+  {
+    "name": "Boxing Day",
+    "date": "2024-12-26",
+    "type": "general"
+  },
+  {
+    "name": "Columbus Day",
+    "date": "2024-10-14",
+    "type": "general"
+  },
+  {
+    "name": "Earth Day",
+    "date": "2024-04-22",
+    "type": "general"
+  },
+  {
+    "name": "Flag Day",
+    "date": "2024-06-14",
+    "type": "general"
+  },
+  {
+    "name": "Groundhog Day",
+    "date": "2024-11-05",
+    "type": "general"
+  },
+  {
+    "name": "Guy Fawkes Night",
+    "date": "2023-11-05",
+    "type": "general"
+  },
+  {
+    "name": "President's Day",
+    "date": "2024-02-19",
+    "type": "general"
+  },
+  {
+    "name": "Remembrance Day",
+    "date": "2024-11-11",
+    "type": "general"
+  },
+
+  {
+    "name": "All Saint's Day",
+    "date": "2024-11-01",
+    "type": "christian"
+  },
+  {
+    "name": "Ascension Day",
+    "date": "2024-05-30",
+    "type": "christian"
+  },
+  {
+    "name": "Ash Wednesday",
+    "date": "2024-02-14",
+    "type": "christian"
+  },
+  {
+    "name": "Corpus Christi",
+    "date": "2024-06-20",
+    "type": "christian"
+  },
+  {
+    "name": "Epiphany/12th Night",
+    "date": "2024-01-06",
+    "type": "christian"
+  },
+  {
+    "name": "Good Friday",
+    "date": "2024-04-05",
+    "type": "christian"
+  },
+  {
+    "name": "Holy Week",
+    "date": "2024-04-29",
+    "type": "christian"
+  },
+  {
+    "name": "Mardi Gras",
+    "date": "2024-02-13",
+    "type": "christian"
+  },
+  {
+    "name": "Palm Sunday",
+    "date": "2024-03-31",
+    "type": "christian"
+  },
+  {
+    "name": "Pentecost",
+    "date": "2024-06-09",
+    "type": "christian"
+  },
+
+  {
+    "name": "Purim",
+    "date": "2024-03-25",
+    "type": "jewish"
+  },
+  {
+    "name": "Sukkot",
+    "date": "2024-10-08",
+    "type": "jewish"
+  },
+
+  {
+    "name": "Ramadan",
+    "date": "2024-03-10",
+    "type": "islamic"
+  },
+
+  {
+    "name": "Holi",
+    "date": "2024-03-08",
+    "type": "hindu"
+  },
+  {
+    "name": "Lohri",
+    "date": "2024-01-14",
+    "type": "hindu"
+  },
+  {
+    "name": "Makar Sankranti",
+    "date": "2024-01-15",
+    "type": "hindu"
+  },
+  {
+    "name": "Navratri",
+    "date": "2024-09-22",
+    "type": "hindu"
+  },
+  {
+    "name": "Pongal",
+    "date": "2024-01-16",
+    "type": "hindu"
+  },
+
+  {
+    "name": "Vesak",
+    "date": "2024-05-16",
+    "type": "buddhist"
+  },
+  {
+    "name": "Beltane",
+    "date": "2024-05-01",
+    "type": "pagan/wiccan"
+  },
+  {
+    "name": "Imbolc",
+    "date": "2024-02-01",
+    "type": "pagan/wiccan"
+  },
+  {
+    "name": "Lughnasadh",
+    "date": "2024-08-01",
+    "type": "pagan/wiccan"
+  },
+  {
+    "name": "Samhain",
+    "date": "2024-10-31",
+    "type": "pagan/wiccan"
+  },
+
+  {
+    "name": "Guru Nanak Jayanti",
+    "date": "2024-11-23",
+    "type": "other"
+  },
+  {
+    "name": "Nowruz",
+    "date": "2024-03-20",
+    "type": "other"
+  },
+  {
+    "name": "St. Andrew's Day",
+    "date": "2024-11-30",
+    "type": "christian"
+  },
+  {
+    "name": "St. David's Day",
+    "date": "2024-03-01",
+    "type": "christian"
+  },
+  {
+    "name": "St. George's Day",
+    "date": "2024-04-23",
+    "type": "christian"
+  },
+
+  {
+    "name": "Diwali",
+    "date": "2024-10-31",
+    "type": "common"
+  },
+  {
+    "name": "Easter",
+    "date": "2024-03-31",
+    "type": "common"
+  },
+  {
+    "name": "Eid al-Adha",
+    "date": "2024-06-16",
+    "type": "common"
+  },
+  {
+    "name": "Eid al-Fitr",
+    "date": "2024-04-09",
+    "type": "common"
+  },
+  {
+    "name": "Halloween",
+    "date": "2024-10-31",
+    "type": "common"
+  },
+  {
+    "name": "Hanukkah",
+    "date": "2024-12-25",
+    "type": "common"
+  },
+  {
+    "name": "Lunar New Year",
+    "date": "2024-01-23",
+    "type": "common"
+  },
+  {
+    "name": "Valentine's Day",
+    "date": "2024-02-14",
+    "type": "common"
+  },
+  {
+    "name": "Christmas",
+    "date": "2024-12-25",
+    "type": "common"
+  }
+]

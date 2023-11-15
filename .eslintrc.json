@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "next",
+    "prettier"
+  ],
+  "rules": {
+    "no-console": "error", // Disallow console.log, console.error, etc.
+    "no-debugger": "error" // Disallow debugger statements
+  }
+}
