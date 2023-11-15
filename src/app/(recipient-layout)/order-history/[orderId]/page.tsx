@@ -13,7 +13,6 @@ const OrderHistoryPage = () => {
   const [orderDetails, setOrderDetails] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const params = useParams();
-
   useEffect(() => {
     if (params && params?.orderId) {
       setLoading(true);
@@ -98,8 +97,11 @@ const OrderHistoryPage = () => {
                 "--"}
             </p>
             <p className="mt-2 text-sm font-normal text-primaryBlack">
-              {orderDetails?.items[0]?.metadata
-                ?.recipient_shipping_address?.city || "--"}
+              {
+                orderDetails?.items[0]?.metadata
+                  ?.recipient_shipping_address
+                  ?.city /* || "--" */
+              }
             </p>
             <p className="mt-2 text-sm font-normal text-primaryBlack">
               {orderDetails?.items[0]?.metadata
