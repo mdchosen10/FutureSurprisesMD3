@@ -109,7 +109,8 @@ const ResetPassword = () => {
     );
     if (res?.payload?.status === 200) {
       toast.success(res?.payload?.message || "");
-      router.push("/login");
+      window.location.href =
+        "https://futuresurprises.co/login";
       return;
     }
     toast.error(res?.payload?.data?.message);

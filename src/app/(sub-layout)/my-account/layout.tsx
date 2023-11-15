@@ -107,7 +107,8 @@ export default function LayoutWrapper({
         <button
           ref={recipientRef}
           onClick={() => {
-            router.push("/my-account/recipients");
+            window.location.href =
+              "https://futuresurprises.co/my-account/recipients";
             scrollHorizontally(recipientRef);
           }}
           className={`sidebar-link  mx-3 
@@ -207,7 +208,8 @@ export default function LayoutWrapper({
         <button
           ref={userRef}
           onClick={() => {
-            router.push("/my-account/user");
+            window.location.href =
+              "https://futuresurprises.co/my-account/user";
             scrollHorizontally(userRef);
           }}
           className={`sidebar-link mx-3 inline whitespace-nowrap pb-1 text-left font-mainText lg:mx-0 lg:pb-0 ${
