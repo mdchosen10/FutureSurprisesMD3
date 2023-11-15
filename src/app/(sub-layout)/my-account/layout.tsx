@@ -87,7 +87,9 @@ export default function LayoutWrapper({
   }, [dispatch]);
 
   useEffect(() => {
-    if (!user) return router.push("/login");
+    if (!user)
+      return (window.location.href =
+        "https://futuresurprises.co/login");
   }, []);
 
   if (!hydrated) {
