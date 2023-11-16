@@ -84,7 +84,7 @@ const Navbar = () => {
             : "fixed top-[-100%]"
         }
       >
-        <li
+        {/* <li
           className="p-4"
           onClick={() => router.push("/")}
         >
@@ -109,7 +109,7 @@ const Navbar = () => {
           onClick={() => router.push("/collections")}
         >
           Collections
-        </li>
+        </li> */}
         {/* <li className="p-4">
           <Dropdown
             inline
@@ -139,10 +139,10 @@ const Navbar = () => {
           alt="logo"
           src={Logo}
           className="w-44 cursor-pointer md:w-[200px]"
-          onClick={() => router.push("/")}
+          onClick={() => window.location.href="https://futuresurprises.com"}
         />
         <nav className="hidden items-center justify-between gap-2 text-sm font-normal text-white md:flex lg:gap-4 lg:text-base xl:gap-11">
-          <span
+         {/*  <span
             className={`cursor-pointer ${
               searchParams?.get("element") === "home" &&
               "border-b-2"
@@ -156,8 +156,8 @@ const Navbar = () => {
             }}
           >
             Home
-          </span>
-          <span
+          </span> */}
+          {/* <span
             ref={howItWorksRef}
             onClick={() => scrollToDiv("how-it-works")}
             className={`cursor-pointer ${
@@ -166,8 +166,8 @@ const Navbar = () => {
             }`}
           >
             How it works
-          </span>
-          <span
+          </span> */}
+          {/* <span
             ref={FAQsRef}
             onClick={() => scrollToDiv("FAQs")}
             className={`cursor-pointer ${
@@ -176,15 +176,15 @@ const Navbar = () => {
             }`}
           >
             FAQs
-          </span>
-          <Link
+          </span> */}
+          {/* <Link
             href="/collections"
             className={
               isActive("/collections") ? "border-b-2" : ""
             }
           >
             Collections
-          </Link>
+          </Link> */}
 
           {/* <Dropdown
             label=""
