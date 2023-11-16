@@ -89,11 +89,10 @@ const ForgotPassword = () => {
   };
 
   useEffect(() => {
-    if (!user) {
-      window.location.href =
-        "https://futuresurprises.co/my-account/user";
+    if (user?.id) {
+      router.push("/my-account/user");
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div className="flex justify-center md:justify-between">

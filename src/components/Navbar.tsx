@@ -8,10 +8,10 @@ import React, {
   useState,
 } from "react";
 import Logo from "@/../public/images/new_log_big.png";
-//import Link from "next/link";
+import Link from "next/link";
 import Button from "./Button";
 import {
-  // usePathname,
+  usePathname,
   useSearchParams,
 } from "next/navigation";
 import BurgerMenuOpen from "@/../public/icons/burger-menu.svg";
@@ -23,7 +23,7 @@ import Avatar from "./Avatar";
 import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
-  //const url = usePathname();
+  const url = usePathname();
   const searchParams = useSearchParams();
 
   const router = useRouter();
@@ -34,9 +34,9 @@ const Navbar = () => {
   const [nav, setNav] = useState<boolean>(false);
   const [hydrated, setHydrated] = useState(false);
 
-  /*  const isActive = (href: string) => {
+  const isActive = (href: string) => {
     return url === href;
-  }; */
+  };
 
   const scrollToDiv = useCallback(
     (element: string) => {
@@ -139,12 +139,10 @@ const Navbar = () => {
           alt="logo"
           src={Logo}
           className="w-44 cursor-pointer md:w-[200px]"
-          onClick={() =>
-            router.push("https://www.futuresurprises.com/")
-          }
+          onClick={() => router.push("/")}
         />
         <nav className="hidden items-center justify-between gap-2 text-sm font-normal text-white md:flex lg:gap-4 lg:text-base xl:gap-11">
-          {/*   <span
+          <span
             className={`cursor-pointer ${
               searchParams?.get("element") === "home" &&
               "border-b-2"
@@ -158,8 +156,8 @@ const Navbar = () => {
             }}
           >
             Home
-          </span> */}
-          {/*    <span
+          </span>
+          <span
             ref={howItWorksRef}
             onClick={() => scrollToDiv("how-it-works")}
             className={`cursor-pointer ${
@@ -168,8 +166,8 @@ const Navbar = () => {
             }`}
           >
             How it works
-          </span> */}
-          {/*   <span
+          </span>
+          <span
             ref={FAQsRef}
             onClick={() => scrollToDiv("FAQs")}
             className={`cursor-pointer ${
@@ -178,15 +176,15 @@ const Navbar = () => {
             }`}
           >
             FAQs
-          </span> */}
-          {/*   <Link
+          </span>
+          <Link
             href="/collections"
             className={
               isActive("/collections") ? "border-b-2" : ""
             }
           >
             Collections
-          </Link> */}
+          </Link>
 
           {/* <Dropdown
             label=""

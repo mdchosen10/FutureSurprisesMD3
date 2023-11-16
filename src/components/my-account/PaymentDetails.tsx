@@ -179,7 +179,7 @@ const PaymentDetails = () => {
                             : ""
                         }`}
                       >
-                        <Image
+                        {/* <Image
                           src={
                             cardImageMapper[
                               card?.card.brand
@@ -187,7 +187,7 @@ const PaymentDetails = () => {
                           }
                           width="50"
                           alt="card"
-                        />
+                        /> */}
                         <p>
                           Card ending in {card?.card.last4}
                         </p>

@@ -16,7 +16,7 @@ export default function LayoutWrapper({
 
   useEffect(() => {
     if (user?.id) {
-      router.back();
+      router.push("/my-account/recipients");
     }
   }, [router]);
 

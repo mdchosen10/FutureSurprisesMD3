@@ -13,6 +13,8 @@ import DeleteModal from "./DeleteModal";
 import BasicTable from "@/components/BasicTable";
 import * as orderActions from "@/redux/orders/actions";
 import { useAppDispatch, useAppSelector } from "@/hooks";
+import Image from "next/image";
+import LinkIcon from "@/../public/icons/link.svg";
 
 const OrderHistory = () => {
   const [deleteModal, setDeleteModal] = useState(false);
@@ -226,6 +228,23 @@ const OrderHistory = () => {
                   <span>:</span>
                   <span className="w-1/3 capitalize">
                     ${order?.items[0]?.original_total / 100}
+                  </span>
+                </div>
+                <div
+                  onClick={() =>
+                    router.push(
+                      `/order-history/${order?.id}`,
+                    )
+                  }
+                  className="flex w-full cursor-pointer justify-center border-t px-[10px] py-[5px]"
+                >
+                  <span>
+                    <Image
+                      src={LinkIcon}
+                      height={24}
+                      width={24}
+                      alt="cta"
+                    />
                   </span>
                 </div>
               </div>

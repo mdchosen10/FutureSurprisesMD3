@@ -13,6 +13,7 @@ const OrderHistoryPage = () => {
   const [orderDetails, setOrderDetails] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const params = useParams();
+
   useEffect(() => {
     if (params && params?.orderId) {
       setLoading(true);
@@ -36,7 +37,7 @@ const OrderHistoryPage = () => {
       {loading ? (
         <Spinner />
       ) : orderDetails?.items?.length > 0 ? (
-        <div className="mx-auto my-10 max-w-[1000px] px-3 lg:my-[96px]">
+        <div className="mx-auto my-10 max-w-[1000px] px-3 pt-10 lg:my-[96px]">
           {/* Title */}
           <div className="flex justify-center md:justify-start md:pt-10">
             <h1 className="heading-gradient font-mainHeading text-4xl font-bold">
@@ -97,11 +98,8 @@ const OrderHistoryPage = () => {
                 "--"}
             </p>
             <p className="mt-2 text-sm font-normal text-primaryBlack">
-              {
-                orderDetails?.items[0]?.metadata
-                  ?.recipient_shipping_address
-                  ?.city /* || "--" */
-              }
+              {orderDetails?.items[0]?.metadata
+                ?.recipient_shipping_address?.city || "--"}
             </p>
             <p className="mt-2 text-sm font-normal text-primaryBlack">
               {orderDetails?.items[0]?.metadata

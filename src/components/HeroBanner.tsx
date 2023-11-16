@@ -38,7 +38,10 @@ const HeroBanner = () => {
             <Button
               onClick={
                 user?.id
-                  ? () => router.push("/my-account/user")
+                  ? // ? () => router.push("/my-account/recipients")
+                    () =>
+                      (window.location.href =
+                        "https://futuresurprises.co/my-account")
                   : () => router.push("/register")
               }
               name="Get Started"

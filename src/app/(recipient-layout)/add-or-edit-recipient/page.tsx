@@ -21,7 +21,6 @@ import TextInput from "@/components/utils/TextInput";
 import CloseIcon from "@/../public/icons/close-violet.svg";
 import Image from "next/image";
 import TextArea from "@/components/utils/TextArea";
-import GoBack from "@/../public/icons/go-back.svg";
 import TrashBin from "@/../public/icons/trash-bin.svg";
 import Pencil from "@/../public/icons/pencil-edit.svg";
 import { Modal } from "flowbite-react";
@@ -151,6 +150,8 @@ const AddOrEditRecipient = () => {
   const [allHolidays, setAllHolidays] = useState<object[]>(
     [],
   );
+  const [saveConfirmModal, setSaveConfirmModal] =
+    useState<boolean>(false);
   const [additionalInfo, setAdditionalInfo] = useState<
     string[]
   >([]);
@@ -181,12 +182,41 @@ const AddOrEditRecipient = () => {
     reset,
     watch,
     setValue,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm<AddRecipientForm>({
     resolver: yupResolver<any>(AddRecipientSchema),
   });
 
-  const dob = watch("dob");
+  const watchDob = watch("dob");
+  const watChSpendingLimit = watch("spendingLimit");
+  const showSpendingOptionForKids = moment().isBefore(
+    moment(watchDob).add(10, "years"),
+  );
+
+  useEffect(() => {
+    if (
+      watchDob &&
+      watChSpendingLimit === "30" &&
+      !showSpendingOptionForKids
+    ) {
+      setValue("spendingLimit", "");
+      setError("spendingLimit", {
+        type: "custom",
+        message: "Spending limit is required!",
+      });
+    } else {
+      clearErrors("spendingLimit");
+    }
+  }, [
+    clearErrors,
+    setError,
+    setValue,
+    showSpendingOptionForKids,
+    watChSpendingLimit,
+    watchDob,
+  ]);
 
   const {
     handleSubmit: handleSubmitAddAddress,
@@ -304,7 +334,7 @@ const AddOrEditRecipient = () => {
      */
 
     if (holiday.name === "Birthdays") {
-      if (!dob)
+      if (!watchDob)
         return toast.error(
           "Please pick a date for the date of birth first!",
         );
@@ -316,8 +346,8 @@ const AddOrEditRecipient = () => {
           selected: true,
           tempId: uuidv4(),
           date: `${moment().add(0, "years").year()}-${
-            moment(dob).month() + 1
-          }-${moment(dob).date()}`,
+            moment(watchDob).month() + 1
+          }-${moment(watchDob).date()}`,
         },
       ]);
       return;
@@ -344,6 +374,7 @@ const AddOrEditRecipient = () => {
     setNewCustomHoliday("");
     setNewCustomHolidayDate(null);
     checkDeliveryDelay();
+    setIsOneTimeHoliday(false);
   };
 
   const onDeleteCustomerHoliday = (item: any) => {
@@ -453,7 +484,8 @@ const AddOrEditRecipient = () => {
 
     allHolidays?.forEach((holiday: any) => {
       diffInDays = moment(holiday.date).diff(today, "days");
-      if (diffInDays <= 13 || holiday.delay) {
+      // && diffInDays >= 0
+      if (diffInDays <= 13) {
         deliveryAffectedHolidays.push(holiday);
       }
     });
@@ -475,25 +507,34 @@ const AddOrEditRecipient = () => {
       delayedHolidays?.map((holiday: any) => {
         const date = moment(holiday.date);
 
-        if (value === "future") {
-          if (date.year() === moment().year()) {
-            date.add(1, "year");
-          }
-        } else {
-          if (holiday.delay) {
-            date.subtract(1, "year");
-          }
-        }
-
         const index = allHolidays.findIndex(
           (hol: any) => hol?.name === holiday?.name,
         );
-        allHolidays.splice(index, 1, {
-          ...holiday,
-          date: moment(date).format(APIDateFormat),
-          delay: true,
-          tempId: uuidv4(),
-        });
+
+        if (!holiday.one_time) {
+          if (value === "future") {
+            if (date.year() === moment().year()) {
+              date.add(1, "year");
+            }
+
+            allHolidays?.splice(index, 1, {
+              ...holiday,
+              date: moment(date).format(APIDateFormat),
+              // delay: true,
+              tempId: uuidv4(),
+            });
+          } else {
+            if (holiday.delay) {
+              date.subtract(1, "year");
+            }
+            allHolidays?.splice(index, 1, {
+              ...holiday,
+              date: moment(date).format(APIDateFormat),
+              // delay: false,
+              tempId: uuidv4(),
+            });
+          }
+        }
 
         return {
           ...holiday,
@@ -535,9 +576,9 @@ const AddOrEditRecipient = () => {
       }
 
       if (
-        !paymentMethods?.length &&
+        paymentMethods?.length === 0 &&
         acknowledged === false &&
-        delayedHolidays?.length
+        delayedHolidays?.length > 0
       ) {
         setNoPaymentsModal(true);
         return;
@@ -545,8 +586,8 @@ const AddOrEditRecipient = () => {
 
       if (
         delayedHolidays?.length > 0 &&
-        paymentMethods?.length &&
-        !isEditMode
+        paymentMethods?.length
+        // !isEditMode
       ) {
         setDelayInfoModal(true);
         return;
@@ -607,7 +648,7 @@ const AddOrEditRecipient = () => {
           router.push("/my-account/payment");
         }
 
-        if (!paymentMethods.length) {
+        if (!paymentMethods?.length) {
           router.push("/my-account/payment");
           return;
         }
@@ -632,7 +673,7 @@ const AddOrEditRecipient = () => {
       checkDeliveryDelay,
       giftFor,
       selectedAddress,
-      paymentMethods.length,
+      paymentMethods?.length,
       acknowledged,
       delayedHolidays?.length,
       isEditMode,
@@ -670,12 +711,22 @@ const AddOrEditRecipient = () => {
       const city = place.address_components.find(
         (item: any) => item.types.includes("locality"),
       )?.long_name;
+
       const zipCode = place.address_components.find(
         (item: any) => item.types.includes("postal_code"),
       )?.long_name;
 
+      const streetNumber =
+        place.address_components.find((item: any) =>
+          item.types.includes("street_number"),
+        )?.long_name || "";
+
       const street = place.address_components.find(
         (item: any) => item.types.includes("route"),
+      )?.long_name;
+
+      const politicalArea = place.address_components.find(
+        (item: any) => item.types.includes("political"),
       )?.long_name;
 
       const state = place.address_components.find(
@@ -687,8 +738,14 @@ const AddOrEditRecipient = () => {
 
       if (city) setAddressValues("city", city);
       if (zipCode) setAddressValues("zip", zipCode);
-      if (street) {
-        setAddressValues("address", street);
+
+      if (street && streetNumber) {
+        setAddressValues(
+          "address",
+          `${streetNumber} ${street}`,
+        );
+      } else {
+        setAddressValues("address", politicalArea);
       }
       setAddressValues("state", state);
     }
@@ -721,14 +778,17 @@ const AddOrEditRecipient = () => {
         new Date(b.date).getTime(),
     );
 
-    if (upcomingHolidays.length > 0) {
+    if (upcomingHolidays?.length > 0) {
       return upcomingHolidays[0].name;
     }
 
     return null;
   }, [allHolidays]);
 
-  const receiver = watch("nickName") || watch("fName");
+  const receiver =
+    watch("nickName") === "Me" || watch("nickName") === "me"
+      ? watch("fName")
+      : watch("nickName");
   const sender = watch("signature") || user?.first_name;
 
   const onClickChatGPT = useCallback(async () => {
@@ -755,11 +815,11 @@ const AddOrEditRecipient = () => {
       setChatGPTMessage(
         chatCompletion.choices[0].message.content || "",
       );
+      setChatGPTLoading(false);
     } else {
       toast.error("Unable to generate custom message!");
+      setChatGPTLoading(false);
     }
-
-    setChatGPTLoading(false);
   }, [
     allHolidays?.length,
     findUpcomingHoliday,
@@ -770,10 +830,15 @@ const AddOrEditRecipient = () => {
 
   useEffect(() => {
     if (isEditMode && chatGPTMessage) return;
-    if (sender && receiver && allHolidays.length) {
+    if (
+      allHolidays?.length === 1 &&
+      sender &&
+      receiver &&
+      allHolidays?.length
+    ) {
       onClickChatGPT();
     }
-  }, [allHolidays, isEditMode, receiver, sender]);
+  }, [allHolidays, isEditMode]);
 
   const onMessageWrite = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
@@ -878,25 +943,6 @@ const AddOrEditRecipient = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editableRecipient?.first_name, isEditMode]);
 
-  const selectedSpendingLimit = watch("spendingLimit");
-  useEffect(() => {
-    selectedSpendingLimit === "0" &&
-      toast(
-        "The recipient will only be sent a reminder of the upcoming occasion and that a gift will no be delivered",
-        {
-          icon: "⚠️",
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
-        },
-      );
-  }, [selectedSpendingLimit, watch]);
-
-  const [saveConfirmModal, setSaveConfirmModal] =
-    useState<boolean>(false);
-
   const onClickYesGoToAddPayment = () => {
     handleSubmit(onSubmitSave)();
   };
@@ -966,7 +1012,7 @@ const AddOrEditRecipient = () => {
 
   useEffect(() => {
     checkDeliveryDelay();
-  }, [checkDeliveryDelay, allHolidays]);
+  }, [checkDeliveryDelay, allHolidays, newCustomHoliday]);
 
   const onDOBchange = (date: Date) => {
     setValue("dob", new Date(date));
@@ -1362,14 +1408,6 @@ const AddOrEditRecipient = () => {
         setIsOpen={setDeleteModal}
         onConfirm={onConfirmDeleteRecipient}
       />
-      <Image
-        src={GoBack}
-        alt="back"
-        className="ml-6 mt-6 cursor-pointer rounded-full border border-gray-300 md:hidden"
-        width={35}
-        height={35}
-        onClick={() => router.back()}
-      />
 
       <div className="mx-auto flex flex-col gap-2 md:flex-row md:max-lg:px-4 lg:gap-[89px]">
         {/* Left wrapper */}
@@ -1433,7 +1471,7 @@ const AddOrEditRecipient = () => {
                       type="text"
                       errors={errors.nickName?.message}
                       inputClassName="w-full md:w-[200px] lg:w-[220px]"
-                      popOverText="Recipient's preferred name or alias"
+                      popOverText="Recipient's preferred name or alias."
                     />
                   )}
                 />
@@ -1540,13 +1578,14 @@ const AddOrEditRecipient = () => {
                         {...field}
                       >
                         <option value="">Select</option>
-                        <option value="0">$0</option>
-                        <option
-                          value="30"
-                          className="rounded-t-lg"
-                        >
-                          $30 (for kids under 10)
-                        </option>
+                        {showSpendingOptionForKids && (
+                          <option
+                            value="30"
+                            className="rounded-t-lg"
+                          >
+                            $30 (for kids under 10)
+                          </option>
+                        )}
                         <option value="40">$40</option>
                         <option value="60">$60</option>
                         <option value="100">$100</option>
@@ -1790,7 +1829,10 @@ const AddOrEditRecipient = () => {
                   </div>
                   <button
                     onClick={onAddCustomHolidays}
-                    disabled={!newCustomHoliday}
+                    disabled={
+                      !newCustomHoliday ||
+                      !newCustomHolidayDate
+                    }
                     type="button"
                     className="w-[89px] rounded-lg bg-primaryViolet px-[8px] py-[5px] text-white"
                   >
@@ -2108,12 +2150,12 @@ const CustomHolidays = (props: CustomHolidaysProps) => {
     <div className="px-4">
       <table
         className=" m-auto w-full 
-        border-collapse rounded-lg border 
-        border-gray-300  font-mainText 
+        border-collapse rounded-lg 
+        font-mainText 
         "
       >
         <thead>
-          <tr>
+          <tr className="bg-primaryViolet text-white">
             <th className="border border-gray-300 px-2 text-left">
               Name
             </th>
@@ -2131,16 +2173,20 @@ const CustomHolidays = (props: CustomHolidaysProps) => {
               <td className="max-w-[200px] break-all border border-gray-300 px-2">
                 {holiday?.name}
               </td>
-              <td className="border border-gray-300 px-2">
+              <td className="min-w-[100px] border border-gray-300 px-2">
                 {`${moment(holiday?.date).format(
                   "MM-DD-yyyy",
                 )}`}
               </td>
               <td className="border border-gray-300 px-2">
-                <div className="flex justify-between">
+                <div className="">
                   <span>
                     {holiday?.one_time ? "N" : "Y"}
                   </span>
+                </div>
+              </td>
+              <td className="px-2">
+                <div className="">
                   <button
                     onClick={() =>
                       onDeleteCustomerHoliday(holiday)

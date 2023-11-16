@@ -87,11 +87,8 @@ export default function LayoutWrapper({
   }, [dispatch]);
 
   useEffect(() => {
-    if (!user) {
-      window.location.href =
-        "https://futuresurprises.co/login";
-    }
-  }, [user]);
+    if (!user) return router.push("/login");
+  }, []);
 
   if (!hydrated) {
     // Returns null on first render, so the client and server match
@@ -107,8 +104,7 @@ export default function LayoutWrapper({
         <button
           ref={recipientRef}
           onClick={() => {
-            window.location.href =
-              "https://futuresurprises.co/my-account/recipients";
+            router.push("/my-account/recipients");
             scrollHorizontally(recipientRef);
           }}
           className={`sidebar-link  mx-3 
@@ -208,8 +204,7 @@ export default function LayoutWrapper({
         <button
           ref={userRef}
           onClick={() => {
-            window.location.href =
-              "https://futuresurprises.co/my-account/user";
+            router.push("/my-account/user");
             scrollHorizontally(userRef);
           }}
           className={`sidebar-link mx-3 inline whitespace-nowrap pb-1 text-left font-mainText lg:mx-0 lg:pb-0 ${

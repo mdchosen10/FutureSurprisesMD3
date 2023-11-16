@@ -235,7 +235,8 @@ const Login = () => {
         <Image
           src={Logo}
           alt="girl"
-          className="md:mt-10 md:w-[250px]"
+          onClick={() => router.push("/")}
+          className="cursor-pointer md:mt-10 md:w-[250px]"
         />
         <Image src={GirlThinking} alt="gir" />
       </div>

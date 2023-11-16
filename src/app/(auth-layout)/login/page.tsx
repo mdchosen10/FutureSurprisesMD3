@@ -8,7 +8,7 @@ import Logo from "@/../public/images/new_log_big.png";
 // import FacebookIcon from "@/../public/icons/facebook.svg";
 import GoBack from "@/../public/icons/go-back.svg";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { useAppDispatch } from "@/hooks";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextInputFloating from "@/components/utils/TextInputFloating";
 import Button from "@/components/Button";
@@ -47,11 +47,12 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const user = useAuth();
-  const { loading } = useAppSelector(
-    state => state.authSlice,
-  );
+  // const { loading } = useAppSelector(
+  //   state => state.authSlice,
+  // );
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loginLoading, setLoginLoading] = useState(false);
   const {
     handleSubmit,
     control,
@@ -63,19 +64,21 @@ const Login = () => {
   const onSubmitLogin: SubmitHandler<
     LoginForm
   > = async data => {
+    setLoginLoading(true);
     const res: any = await dispatch(
       authActions.login({ data }),
     );
     if (res?.payload?.customer) {
+      setLoginLoading(false);
       return router.push("/my-account/recipients");
     }
+    setLoginLoading(false);
     toast.error("Please the check email or password!");
   };
 
   useEffect(() => {
     if (user?.id) {
-      window.location.href =
-        "https://futuresurprises.com/my-account";
+      // router.push("/my-account");
     }
   }, [user]);
 
@@ -87,7 +90,8 @@ const Login = () => {
           <Image
             src={Logo}
             alt="gir"
-            className="h-full w-full object-contain md:mt-10"
+            onClick={() => router.push("/")}
+            className="h-full w-full cursor-pointer object-contain md:mt-10"
           />
         </div>
         <div className="">
@@ -155,7 +159,7 @@ const Login = () => {
             <div className="mx-auto pt-4 md:mx-0">
               <Button
                 type="submit"
-                isLoading={loading}
+                isLoading={loginLoading}
                 name="Sign in"
                 bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
                 textClass="text-white font-mainText"

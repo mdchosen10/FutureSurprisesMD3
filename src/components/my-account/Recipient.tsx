@@ -23,19 +23,6 @@ import Alert from "@/../public/images/alert.png";
 import * as authActions from "@/redux/auth/actions";
 
 const getNextHoliday = (recipient: any) => {
-  // const today = moment();
-  // const filteredDates = recipient?.all_holidays?.filter(
-  //   (item: any) => {
-  //     return moment(item?.date).isAfter(today);
-  //   },
-  // );
-  // const closestDateObject = filteredDates.sort(
-  //   (a: moment.MomentInput, b: moment.MomentInput) => {
-  //     return moment(a).diff(moment(b));
-  //   },
-  // )[0];
-  // return closestDateObject;
-
   const upcomingHolidays: any =
     recipient?.all_holidays?.filter((holiday: any) => {
       const holidayDate = new Date(holiday.date);
@@ -241,9 +228,11 @@ const Recipient = () => {
                   name: `${recipient?.first_name || ""} ${
                     recipient?.last_name || ""
                   }`,
-                  date: moment(next_holiday?.date).format(
-                    "MM-DD-YYYY",
-                  ),
+                  date: next_holiday
+                    ? moment(next_holiday?.date).format(
+                        "MM-DD-YYYY",
+                      )
+                    : "",
                   amount: `$${recipient?.default_spending}`,
                   next_holiday: next_holiday?.name,
                 };
