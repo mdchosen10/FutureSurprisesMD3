@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import React, {
-  useCallback,
+ // useCallback,
   useEffect,
-  useRef,
+ // useRef,
   useState,
 } from "react";
 import Logo from "@/../public/images/new_log_big.png";
-import Link from "next/link";
+//import Link from "next/link";
 import Button from "./Button";
 import {
   usePathname,
@@ -28,23 +28,23 @@ const Navbar = () => {
 
   const router = useRouter();
   const user = useAuth();
-  const howItWorksRef: any = useRef();
-  const FAQsRef: any = useRef();
+  //const howItWorksRef: any = useRef();
+ // const FAQsRef: any = useRef();
 
   const [nav, setNav] = useState<boolean>(false);
   const [hydrated, setHydrated] = useState(false);
 
-  const isActive = (href: string) => {
+  /* const isActive = (href: string) => {
     return url === href;
-  };
+  }; */
 
-  const scrollToDiv = useCallback(
+/*   const scrollToDiv = useCallback(
     (element: string) => {
       router.push(`/?element=${element}`);
       setNav(false);
     },
     [router],
-  );
+  ); */
 
   useEffect(() => {
     const HowItWorksElement =
