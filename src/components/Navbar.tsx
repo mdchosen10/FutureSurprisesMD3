@@ -11,7 +11,7 @@ import Logo from "@/../public/images/new_log_big.png";
 //import Link from "next/link";
 import Button from "./Button";
 import {
-  usePathname,
+  //usePathname,
   useSearchParams,
 } from "next/navigation";
 import BurgerMenuOpen from "@/../public/icons/burger-menu.svg";
@@ -23,7 +23,7 @@ import Avatar from "./Avatar";
 import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
-  const url = usePathname();
+  //const url = usePathname();
   const searchParams = useSearchParams();
 
   const router = useRouter();
