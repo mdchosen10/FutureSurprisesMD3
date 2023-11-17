@@ -1102,7 +1102,7 @@ const AddOrEditRecipient = () => {
         size="md"
         position="center"
       >
-        <div className=" flex max-w-[500px] flex-col px-2 pb-8 pt-6 font-mainText phone:px-6">
+        <div className=" flex max-w-[500px] flex-col px-6 pb-8 pt-6 font-mainText phone:px-6">
           <div className="mb-4 flex items-center justify-center">
             <h3 className="font-bold">Add Address</h3>
             <Image
@@ -1214,7 +1214,7 @@ const AddOrEditRecipient = () => {
               />
             </div>
             <button
-              className="max-w-[240px] rounded-xl border border-primaryViolet px-10 py-2"
+              className="mx-auto w-full rounded-xl border border-primaryViolet px-10 py-2 md:mx-0 md:mr-auto md:max-w-[240px]"
               type="submit"
               disabled={addAddressLoading}
             >
@@ -1412,7 +1412,8 @@ const AddOrEditRecipient = () => {
       <div className="mx-auto flex flex-col gap-2 md:flex-row md:max-lg:px-4 lg:gap-[89px]">
         {/* Left wrapper */}
         <div
-          className="px-4 
+          className="max-w-[390px] 
+          px-4
           md:max-w-[500px] 
           md:px-0"
         >
@@ -1459,7 +1460,7 @@ const AddOrEditRecipient = () => {
                 />
               </div>
 
-              <div className="mb-4 flex flex-col justify-between gap-4 md:flex-row md:gap-4">
+              <div className="h-scree mb-4 flex flex-col justify-between gap-4 md:flex-row md:gap-4">
                 <Controller
                   name="nickName"
                   control={control}

@@ -1,5 +1,3 @@
-// import { getCookie } from "cookies-next";
-
 import axios from "axios";
 import {
   apiErrorHandler,
@@ -8,9 +6,12 @@ import {
 import Qs from "qs";
 import { AxiosRequestHeaders } from "axios";
 
+// const jwt_token = localStorage.getItem("jwt_token")
+
 const customAxios = axios.create({
   baseURL: process.env.BASE_URL as string,
   withCredentials: true,
+  // Authorization: `Bearer ${jwt_token}`,
   paramsSerializer: {
     serialize: params =>
       Qs.stringify(params, { arrayFormat: "brackets" }),

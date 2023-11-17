@@ -7,11 +7,11 @@ import Instagram from "@/../public/icons/instagram.svg";
 import Linkedin from "@/../public/icons/linkedin.svg";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuth } from "@/hooks/useAuth";
+// import { useAuth } from "@/hooks/useAuth";
 
 const Footer = () => {
   const router = useRouter();
-  const user = useAuth();
+  // const user = useAuth();
 
   return (
     <div className="flex flex-col font-mainText">
@@ -25,10 +25,9 @@ const Footer = () => {
             className="cursor-pointer"
             onClick={() => router.push("/")}
           />
-          <div className="flex flex-col items-center gap-5 text-white md:flex-row lg:gap-10">
+          {/* <div className="flex flex-col items-center gap-5 text-white md:flex-row lg:gap-10">
             <p
               className="cursor-pointer"
-              // onClick={() => router.push("/")}
               onClick={() => {
                 if (user && user?.id) {
                   router.push("/my-account/recipients");
@@ -51,13 +50,7 @@ const Footer = () => {
             >
               FAQs
             </p>
-            {/* <p
-              className="cursor-pointer"
-              onClick={() => router.push("/about")}
-            >
-              About Us
-            </p> */}
-          </div>
+          </div> */}
           <div className="flex flex-col lg:gap-6">
             <div className="flex gap-4">
               <Link href="https://www.linkedin.com/company/future-surprises/">

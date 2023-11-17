@@ -235,7 +235,10 @@ const PaymentDetails = () => {
                         </div>
                         <CheckboxInput
                           onChange={() => {}}
-                          checked={card?.isDefault}
+                          checked={
+                            card?.id ===
+                            user?.user?.metadata?.payment_id
+                          }
                           classes=""
                         />
                       </div>

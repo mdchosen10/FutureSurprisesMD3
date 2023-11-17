@@ -16,7 +16,6 @@ export default function PrivateLayoutWrapper({
 
   useEffect(() => {
     if (!user?.id) {
-      // window.location.pathname = "/login";
       router.push("/login");
       return;
     }

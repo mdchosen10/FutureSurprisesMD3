@@ -3,12 +3,13 @@ import { Toaster } from "react-hot-toast";
 import { StoreProvider } from "@/redux/Provider";
 import "../styles/globals.css";
 import AuthProvider from "@/components/AuthProvider";
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import {
   Playfair_Display,
   Poppins,
   Sedgwick_Ave,
 } from "next/font/google";
+import { Metadata } from "next";
 
 const mainHeading = Playfair_Display({
   subsets: ["latin"],

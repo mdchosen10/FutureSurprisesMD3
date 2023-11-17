@@ -27,8 +27,10 @@ import moment from "moment";
 import { APIDateFormat } from "@/helpers";
 import toast from "react-hot-toast";
 import RightArrow from "@/../public/icons/right-arrow.svg";
-// import GoogleIcon from "@/../public/icons/google.svg";
-// import FacebookIcon from "@/../public/icons/facebook.svg";
+import GoogleIcon from "@/../public/icons/google.svg";
+import FacebookIcon from "@/../public/icons/facebook.svg";
+import { useThirdPartyCookieCheck } from "@/hooks/useThirdPartyCookieCheck";
+import Link from "next/link";
 
 export interface registerFormInputs {
   fName: string;
@@ -76,11 +78,11 @@ const registerSchema = yup
       .matches(
         RegExp("(.*\\d.*)"),
         "Password should contain at least one number.",
-      )
-      .matches(
-        RegExp('[!@#$%^&*(),.?":{}|<>]'),
-        "Password should contain at least one special character.",
       ),
+    // .matches(
+    //   RegExp('[!@#$%^&*(),.?":{}|<>]'),
+    //   "Password should contain at least one special character.",
+    // ),
     dob: yup.string().required("DOB is required!"),
   })
   .required();
@@ -228,6 +230,8 @@ const Login = () => {
     };
   }, [checkEmailAlreadyRegisteredDebounced, watchEmail]);
 
+  const isCookiesEnabled = useThirdPartyCookieCheck();
+
   return (
     <div className="flex justify-center md:justify-between">
       {/* Left side*/}
@@ -253,7 +257,28 @@ const Login = () => {
           />
         </div>
 
-        <div className="mx-auto flex max-w-[500px] flex-col items-start pt-[120px] md:mx-0">
+        <div className="mx-auto flex max-w-[500px] flex-col items-start md:mx-0 md:pt-[90px]">
+          {!isCookiesEnabled && (
+            <p
+              className="mb-3 mt-2 max-w-[500px] rounded-lg bg-red-400 py-4 pl-2 text-xs md:mb-4
+          md:mt-0 md:text-sm
+        "
+            >
+              Hi there! Please enable third-party cookies in
+              your browser to enjoy our site. It’s a quick
+              fix for a smoother gifting experience! We are
+              making this simpler soon. Thanks for sticking
+              with us!{" "}
+              <Link
+                href={
+                  "https://cookie-script.com/knowledge-base/enable-cookies-iphone"
+                }
+                className="text-blue-900 underline"
+              >
+                Here is how to do it.
+              </Link>{" "}
+            </p>
+          )}
           <h2 className="heading-gradient mx-auto text-xl font-semibold md:mx-0 md:min-h-[50px] md:text-[36px]">
             Create Account
           </h2>
@@ -390,6 +415,8 @@ const Login = () => {
                       showPopperArrow={false}
                       showMonthDropdown
                       showYearDropdown
+                      dropdownMode="select"
+                      maxDate={new Date()}
                       customInput={
                         <input
                           className="example-custom-input rounded-lg border border-gray-300"
@@ -441,7 +468,7 @@ const Login = () => {
               />
             </div>
 
-            {/* <div className="my-3 mb-5 flex max-w-[442px] flex-col gap-3 pt-6">
+            <div className="my-3 mb-5 flex max-w-[442px] flex-col gap-3 pt-6">
               <p className="mx-auto text-xs md:text-base">
                 Or Sign-in with
               </p>
@@ -473,7 +500,7 @@ const Login = () => {
                   Sign in with Facebook
                 </span>
               </a>
-            </div> */}
+            </div>
 
             <hr className="mb-5" />
             <p className="mt-2 pb-3 text-center text-xs md:pb-0 md:text-base">

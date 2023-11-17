@@ -4,8 +4,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import GirlThinking from "@/../public/images/girl-thinking.png";
 import Logo from "@/../public/images/new_log_big.png";
-// import GoogleIcon from "@/../public/icons/google.svg";
-// import FacebookIcon from "@/../public/icons/facebook.svg";
+import GoogleIcon from "@/../public/icons/google.svg";
+import FacebookIcon from "@/../public/icons/facebook.svg";
 import GoBack from "@/../public/icons/go-back.svg";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks";
@@ -21,6 +21,8 @@ import {
 import * as yup from "yup";
 import toast from "react-hot-toast";
 import { useAuth } from "@/hooks/useAuth";
+import Link from "next/link";
+import { useThirdPartyCookieCheck } from "@/hooks/useThirdPartyCookieCheck";
 
 type LoginForm = {
   email: string;
@@ -82,6 +84,8 @@ const Login = () => {
     }
   }, [user]);
 
+  const isCookiesEnabled = useThirdPartyCookieCheck();
+
   return (
     <div className="flex justify-center md:justify-between">
       {/* Left */}
@@ -99,23 +103,45 @@ const Login = () => {
             src={GirlThinking}
             alt="gir"
             className="h-full w-full object-contain md:mt-10"
-
             // className="lg:w-[400px]"
           />
         </div>
       </div>
       {/* Right */}
       <div className="flex w-[70%] flex-col md:ml-[30px] md:w-[50%] md:max-lg:mt-[20%] lg:ml-[67px] lg:mt-[130px]">
-        <div className="mr-auto  mt-12">
+        <div className="mr-auto  mt-6 md:mt-0">
           <Image
             src={GoBack}
             alt="back"
             className="cursor-pointer rounded-full border border-gray-300 md:hidden"
             width={35}
             height={35}
-            onClick={() => router.back()}
+            onClick={() =>
+              (window.location.href =
+                "https://futuresurprises.com")
+            }
           />
         </div>
+        {!isCookiesEnabled && (
+          <p
+            className="mt-2 max-w-[500px] rounded-lg bg-red-400 py-4 pl-2 text-xs md:mb-4
+          md:mt-0 md:text-sm
+        "
+          >
+            Hi there! Please enable third-party cookies in
+            your browser to enjoy our site. It’s a quick fix
+            for a smoother gifting experience! We are making
+            this simpler soon. Thanks for sticking with us!{" "}
+            <Link
+              href={
+                "https://cookie-script.com/knowledge-base/enable-cookies-iphone"
+              }
+              className="text-blue-900 underline"
+            >
+              Here is how to do it.
+            </Link>{" "}
+          </p>
+        )}
         <div className="mx-auto flex max-w-[334px] flex-col items-start gap-6 pt-14 md:mx-0 md:pt-0">
           <h2 className="heading-gradient mx-auto text-xl font-semibold md:mx-0 md:min-h-[50px] md:text-[36px]">
             Sign in
@@ -168,10 +194,10 @@ const Login = () => {
             </div>
           </form>
 
-          {/* <p className="m-auto font-mainText text-xs md:text-base">
+          <p className="m-auto font-mainText text-xs md:text-base">
             Or
-          </p> */}
-          {/* 
+          </p>
+
           <a
             href={`${process.env.BASE_URL}/store/auth/callback/google`}
             type="button"
@@ -199,23 +225,21 @@ const Login = () => {
             <span className="ms-4">
               Sign in with Facebook
             </span>
-          </a> */}
+          </a>
 
           <div className="flex w-full flex-col items-center gap-4 font-mainText">
-            <p
+            <Link
               className="cursor-pointer text-xs text-primaryViolet md:text-sm"
-              onClick={() => router.push("/register")}
+              href={"/register"}
             >
               Create a New Account for Free
-            </p>
-            <p
+            </Link>
+            <Link
               className="cursor-pointer text-xs text-primaryViolet md:text-sm"
-              onClick={() =>
-                router.push("/forgot-password")
-              }
+              href={"/forgot-password"}
             >
               Forgot password?
-            </p>
+            </Link>
           </div>
         </div>
       </div>

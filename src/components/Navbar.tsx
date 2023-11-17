@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import React, {
- // useCallback,
+  // useCallback,
   useEffect,
- // useRef,
+  // useRef,
   useState,
 } from "react";
 import Logo from "@/../public/images/new_log_big.png";
@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 // import { Dropdown } from "flowbite-react";
 import Avatar from "./Avatar";
 import { useAuth } from "@/hooks/useAuth";
+import Link from "next/link";
 
 const Navbar = () => {
   //const url = usePathname();
@@ -29,7 +30,7 @@ const Navbar = () => {
   const router = useRouter();
   const user = useAuth();
   //const howItWorksRef: any = useRef();
- // const FAQsRef: any = useRef();
+  // const FAQsRef: any = useRef();
 
   const [nav, setNav] = useState<boolean>(false);
   const [hydrated, setHydrated] = useState(false);
@@ -38,7 +39,7 @@ const Navbar = () => {
     return url === href;
   }; */
 
-/*   const scrollToDiv = useCallback(
+  /*   const scrollToDiv = useCallback(
     (element: string) => {
       router.push(`/?element=${element}`);
       setNav(false);
@@ -129,9 +130,27 @@ const Navbar = () => {
             </Dropdown.Item>
           </Dropdown>
         </li> */}
-        <li className="p-4">
-          <Avatar user={user} />
-        </li>
+
+        {!user?.id ? (
+          <div className="flex max-w-[200px] flex-col gap-2 pb-4 md:hidden lg:gap-4">
+            <Link
+              className="w-fit cursor-pointer p-4"
+              href={"/login"}
+            >
+              Sign in
+            </Link>
+            <Link
+              className="w-fit cursor-pointer p-4"
+              href={"/register"}
+            >
+              Get started
+            </Link>
+          </div>
+        ) : (
+          <li className="p-4">
+            <Avatar user={user} />
+          </li>
+        )}
       </ul>
 
       <div className="max-w-[1400px] items-center justify-between phone:flex md:mx-auto md:w-full md:max-lg:px-5">
@@ -139,10 +158,13 @@ const Navbar = () => {
           alt="logo"
           src={Logo}
           className="w-44 cursor-pointer md:w-[200px]"
-          onClick={() => window.location.href="https://futuresurprises.com"}
+          onClick={() =>
+            (window.location.href =
+              "https://futuresurprises.com")
+          }
         />
         <nav className="hidden items-center justify-between gap-2 text-sm font-normal text-white md:flex lg:gap-4 lg:text-base xl:gap-11">
-         {/*  <span
+          {/*  <span
             className={`cursor-pointer ${
               searchParams?.get("element") === "home" &&
               "border-b-2"
