@@ -36,7 +36,13 @@ const authSlice = createSlice({
       actions.login.fulfilled.type,
       (state, action: PayloadAction<any>) => {
         state.loading = false;
-        state.user = action?.payload?.customer;
+        // state.user = action?.payload?.customer;
+        const user_token =
+          action?.payload?.data?.access_token || "";
+        if (action?.payload?.data?.access_token) {
+          localStorage.setItem("user_token", user_token);
+        }
+        return;
       },
     );
     builder.addCase(
@@ -56,6 +62,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = {};
         signOut();
+        localStorage.removeItem("user_token");
       },
     );
     builder.addCase(

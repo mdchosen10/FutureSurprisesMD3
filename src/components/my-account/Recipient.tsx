@@ -115,6 +115,7 @@ const Recipient = () => {
   const user = useAppSelector(
     state => state?.authSlice?.user,
   );
+
   const recipientsLoading = useAppSelector(
     state => state?.recipientSlice?.loading,
   );

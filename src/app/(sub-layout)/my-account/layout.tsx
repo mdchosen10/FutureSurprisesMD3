@@ -10,7 +10,11 @@ import React, {
 } from "react";
 import Image from "next/image";
 import { Tooltip } from "flowbite-react";
-import { usePathname, useRouter } from "next/navigation";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import { useAppDispatch } from "@/hooks";
 import { useAuth } from "@/hooks/useAuth";
@@ -29,6 +33,8 @@ export default function LayoutWrapper({
   children,
 }: LayoutProps) {
   const router = useRouter();
+  const params = useSearchParams();
+
   const active = usePathname()?.split("/").slice(-1)[0];
   const dispatch = useAppDispatch();
   const user = useAuth();
@@ -54,10 +60,14 @@ export default function LayoutWrapper({
 
   const checkAccessIfSocialSignIn = useCallback(() => {
     if (!user) return;
-    isAccessDisabled.current =
-      !user?.metadata?.birthdate || !user?.phone;
-    if (isAccessDisabled.current) {
-      router.push("/my-account/user");
+    const accessToken = params.get("access_token") || "";
+    if (accessToken && accessToken !== "") {
+      localStorage.setItem("user_token", accessToken);
+      isAccessDisabled.current =
+        !user?.metadata?.birthdate || !user?.phone;
+      if (isAccessDisabled.current) {
+        router.push("/my-account/user");
+      }
     }
   }, [user]);
 

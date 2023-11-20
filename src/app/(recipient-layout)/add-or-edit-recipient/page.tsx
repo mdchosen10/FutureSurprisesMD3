@@ -274,11 +274,13 @@ const AddOrEditRecipient = () => {
         moment(date).month() + 1
       }-${moment(date).date()}`,
     };
-    allHolidays?.splice(
+    let modifiedHolidays = [...allHolidays];
+    modifiedHolidays?.splice(
       anniversaryDayIndex,
       1,
       modifiedAnniversary,
     );
+    setAllHolidays(modifiedHolidays);
   };
 
   const onSelectAdditionalInfo = (info: string) => {
@@ -485,7 +487,7 @@ const AddOrEditRecipient = () => {
     allHolidays?.forEach((holiday: any) => {
       diffInDays = moment(holiday.date).diff(today, "days");
       // && diffInDays >= 0
-      if (diffInDays <= 13) {
+      if (diffInDays <= 13 && diffInDays >= 0) {
         deliveryAffectedHolidays.push(holiday);
       }
     });

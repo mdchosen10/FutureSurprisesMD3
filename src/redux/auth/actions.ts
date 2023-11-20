@@ -30,7 +30,7 @@ export const login = createAsyncThunk<
   LoginPayload
 >("auth/login", async (config: LoginPayload) => {
   const res = await authApi.login(config);
-  return res.data as AxiosResponse;
+  return res as AxiosResponse;
 });
 
 export const logout = createAsyncThunk<AxiosResponse>(

@@ -22,7 +22,8 @@ import * as yup from "yup";
 import toast from "react-hot-toast";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
-import { useThirdPartyCookieCheck } from "@/hooks/useThirdPartyCookieCheck";
+import { Modal } from "flowbite-react";
+import CloseIcon from "@/../public/icons/close-violet.svg";
 
 type LoginForm = {
   email: string;
@@ -55,6 +56,8 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
   const {
     handleSubmit,
     control,
@@ -70,24 +73,60 @@ const Login = () => {
     const res: any = await dispatch(
       authActions.login({ data }),
     );
-    if (res?.payload?.customer) {
+
+    if (res?.payload.status === 200) {
       setLoginLoading(false);
       return router.push("/my-account/recipients");
     }
+
     setLoginLoading(false);
     toast.error("Please the check email or password!");
   };
 
   useEffect(() => {
     if (user?.id) {
-      // router.push("/my-account");
+      router.push("/my-account");
     }
   }, [user]);
 
-  const isCookiesEnabled = useThirdPartyCookieCheck();
-
   return (
     <div className="flex justify-center md:justify-between">
+      <Modal
+        show={openModal}
+        onClose={() => setOpenModal(false)}
+        className="h-screen"
+        size="md"
+        position="center"
+      >
+        <div className=" flex max-w-[500px] flex-col px-6 pb-8 pt-6 font-mainText phone:px-6">
+          <div className="mb-4 flex items-center justify-center">
+            <h1 className="font-semibold">
+              Cookies disabled!
+            </h1>
+            <Image
+              src={CloseIcon}
+              alt="close"
+              onClick={() => setOpenModal(false)}
+              className="ml-auto cursor-pointer rounded-full border border-gray-300"
+              width={35}
+              height={35}
+            />
+          </div>
+          <p className="mb-2 font-mainText text-sm md:text-base">
+            Oops! Looks like you do not have third party
+            cookies enabled. Please enable them to sign in
+            with social media. OR sign-in manually instead.
+          </p>
+          <Button
+            type="button"
+            name="Close"
+            onClick={() => setOpenModal(false)}
+            bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
+            textClass="text-white font-mainText"
+            extraClass="w-[140px] shadow-md mx-auto"
+          />
+        </div>
+      </Modal>
       {/* Left */}
       <div className="hidden h-[100%] min-h-screen w-[50%] flex-col items-center justify-between bg-primaryViolet md:flex">
         <div className="md:w-[250px]">
@@ -122,7 +161,7 @@ const Login = () => {
             }
           />
         </div>
-        {!isCookiesEnabled && (
+        {/* {!isCookiesEnabled && (
           <p
             className="mt-2 max-w-[500px] rounded-lg bg-red-400 py-4 pl-2 text-xs md:mb-4
           md:mt-0 md:text-sm
@@ -141,7 +180,7 @@ const Login = () => {
               Here is how to do it.
             </Link>{" "}
           </p>
-        )}
+        )} */}
         <div className="mx-auto flex max-w-[334px] flex-col items-start gap-6 pt-14 md:mx-0 md:pt-0">
           <h2 className="heading-gradient mx-auto text-xl font-semibold md:mx-0 md:min-h-[50px] md:text-[36px]">
             Sign in
@@ -198,8 +237,10 @@ const Login = () => {
             Or
           </p>
 
-          <a
-            href={`${process.env.BASE_URL}/store/auth/callback/google`}
+          <button
+            onClick={() =>
+              (window.location.href = `${process.env.BASE_URL}/store/auth/callback/google`)
+            }
             type="button"
             className="flex min-w-[100%] max-w-[380px] items-center justify-center gap-[25px] rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
           >
@@ -210,9 +251,11 @@ const Login = () => {
               src={GoogleIcon}
             />
             Sign in with Google
-          </a>
-          <a
-            href={`${process.env.BASE_URL}/store/auth/callback/facebook`}
+          </button>
+          <button
+            onClick={() =>
+              (window.location.href = `${process.env.BASE_URL}/store/auth/callback/facebook`)
+            }
             type="button"
             className="flex min-w-[100%] max-w-[380px] items-center justify-center rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
           >
@@ -225,7 +268,7 @@ const Login = () => {
             <span className="ms-4">
               Sign in with Facebook
             </span>
-          </a>
+          </button>
 
           <div className="flex w-full flex-col items-center gap-4 font-mainText">
             <Link

@@ -6,7 +6,7 @@ export const login = (
 ): Promise<AxiosResponse> => {
   // const {} = config
   return axiosInstance({
-    url: "/store/auth ",
+    url: "/store/auth/token",
     method: "POST",
     ...config,
   });

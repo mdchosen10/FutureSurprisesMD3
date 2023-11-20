@@ -30,7 +30,9 @@ import RightArrow from "@/../public/icons/right-arrow.svg";
 import GoogleIcon from "@/../public/icons/google.svg";
 import FacebookIcon from "@/../public/icons/facebook.svg";
 import { useThirdPartyCookieCheck } from "@/hooks/useThirdPartyCookieCheck";
-import Link from "next/link";
+import CloseIcon from "@/../public/icons/close-violet.svg";
+
+import { Modal } from "flowbite-react";
 
 export interface registerFormInputs {
   fName: string;
@@ -102,6 +104,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [alreadyRegistered, setAlreadyRegistered] =
     useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const {
     handleSubmit,
@@ -140,6 +143,15 @@ const Login = () => {
         let stripeAccRes: any = {};
 
         if (medusaAccRes?.payload?.customer?.id) {
+          await dispatch(
+            authActions.login({
+              data: {
+                email: data.email,
+                password: data.password,
+              },
+            }),
+          );
+
           const stripeCustomerAccountReqData = {
             medusa_id: medusaAccRes?.payload?.customer?.id,
           };
@@ -234,6 +246,42 @@ const Login = () => {
 
   return (
     <div className="flex justify-center md:justify-between">
+      <Modal
+        show={openModal}
+        onClose={() => setOpenModal(false)}
+        className="h-screen"
+        size="md"
+        position="center"
+      >
+        <div className=" flex max-w-[500px] flex-col px-6 pb-8 pt-6 font-mainText phone:px-6">
+          <div className="mb-4 flex items-center justify-center">
+            <h1 className="font-semibold">
+              Cookies disabled!
+            </h1>
+            <Image
+              src={CloseIcon}
+              alt="close"
+              onClick={() => setOpenModal(false)}
+              className="ml-auto cursor-pointer rounded-full border border-gray-300"
+              width={35}
+              height={35}
+            />
+          </div>
+          <p className="mb-2 font-mainText text-sm md:text-base">
+            Oops! Looks like you do not have third party
+            cookies enabled. Please enable them to sign in
+            with social media. OR sign-in manually instead.
+          </p>
+          <Button
+            type="button"
+            name="Close"
+            onClick={() => setOpenModal(false)}
+            bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
+            textClass="text-white font-mainText"
+            extraClass="w-[140px] shadow-md mx-auto"
+          />
+        </div>
+      </Modal>
       {/* Left side*/}
       <div className="hidden min-h-screen w-[50%] flex-col items-center justify-between bg-primaryViolet md:flex">
         <Image
@@ -258,7 +306,7 @@ const Login = () => {
         </div>
 
         <div className="mx-auto flex max-w-[500px] flex-col items-start md:mx-0 md:pt-[90px]">
-          {!isCookiesEnabled && (
+          {/* {!isCookiesEnabled && (
             <p
               className="mb-3 mt-2 max-w-[500px] rounded-lg bg-red-400 py-4 pl-2 text-xs md:mb-4
           md:mt-0 md:text-sm
@@ -278,7 +326,7 @@ const Login = () => {
                 Here is how to do it.
               </Link>{" "}
             </p>
-          )}
+          )} */}
           <h2 className="heading-gradient mx-auto text-xl font-semibold md:mx-0 md:min-h-[50px] md:text-[36px]">
             Create Account
           </h2>
@@ -472,8 +520,14 @@ const Login = () => {
               <p className="mx-auto text-xs md:text-base">
                 Or Sign-in with
               </p>
-              <a
-                href={`${process.env.BASE_URL}/store/auth/callback/google`}
+              <button
+                // href={`${process.env.BASE_URL}/store/auth/callback/google`}
+                onClick={
+                  !isCookiesEnabled
+                    ? () => setOpenModal(true)
+                    : () =>
+                        (window.location.href = `${process.env.BASE_URL}/store/auth/callback/google`)
+                }
                 type="button"
                 className="flex min-w-[100%] max-w-[380px] items-center justify-center gap-[25px] rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
               >
@@ -484,9 +538,15 @@ const Login = () => {
                   src={GoogleIcon}
                 />
                 Sign in with Google
-              </a>
-              <a
-                href={`${process.env.BASE_URL}/store/auth/callback/facebook`}
+              </button>
+              <button
+                // href={`${process.env.BASE_URL}/store/auth/callback/facebook`}
+                onClick={
+                  !isCookiesEnabled
+                    ? () => setOpenModal(true)
+                    : () =>
+                        (window.location.href = `${process.env.BASE_URL}/store/auth/callback/facebook`)
+                }
                 type="button"
                 className="flex min-w-[100%] max-w-[380px] items-center justify-center rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
               >
@@ -499,7 +559,7 @@ const Login = () => {
                 <span className="ms-4">
                   Sign in with Facebook
                 </span>
-              </a>
+              </button>
             </div>
 
             <hr className="mb-5" />

@@ -6,12 +6,9 @@ import {
 import Qs from "qs";
 import { AxiosRequestHeaders } from "axios";
 
-// const jwt_token = localStorage.getItem("jwt_token")
-
 const customAxios = axios.create({
   baseURL: process.env.BASE_URL as string,
   withCredentials: true,
-  // Authorization: `Bearer ${jwt_token}`,
   paramsSerializer: {
     serialize: params =>
       Qs.stringify(params, { arrayFormat: "brackets" }),
@@ -20,11 +17,11 @@ const customAxios = axios.create({
 
 customAxios.interceptors.request.use(
   function (config) {
-    // const cookie = getCookie("connect.sid") ?? "";
+    const token = localStorage.getItem("user_token");
 
     config.headers = {
       "Content-Type": "application/json",
-      // Authorization: cookie,
+      Authorization: token ? `Bearer ${token}` : "",
       ...config.headers,
     } as AxiosRequestHeaders;
 
