@@ -29,8 +29,8 @@ import toast from "react-hot-toast";
 import RightArrow from "@/../public/icons/right-arrow.svg";
 import GoogleIcon from "@/../public/icons/google.svg";
 import FacebookIcon from "@/../public/icons/facebook.svg";
-import { useThirdPartyCookieCheck } from "@/hooks/useThirdPartyCookieCheck";
 import CloseIcon from "@/../public/icons/close-violet.svg";
+// import { useThirdPartyCookieCheck } from "@/hooks/useThirdPartyCookieCheck";
 
 import { Modal } from "flowbite-react";
 
@@ -242,7 +242,7 @@ const Login = () => {
     };
   }, [checkEmailAlreadyRegisteredDebounced, watchEmail]);
 
-  const isCookiesEnabled = useThirdPartyCookieCheck();
+  // const isCookiesEnabled = useThirdPartyCookieCheck();
 
   return (
     <div className="flex justify-center md:justify-between">
@@ -522,11 +522,8 @@ const Login = () => {
               </p>
               <button
                 // href={`${process.env.BASE_URL}/store/auth/callback/google`}
-                onClick={
-                  !isCookiesEnabled
-                    ? () => setOpenModal(true)
-                    : () =>
-                        (window.location.href = `${process.env.BASE_URL}/store/auth/callback/google`)
+                onClick={() =>
+                  (window.location.href = `${process.env.BASE_URL}/store/auth/callback/google`)
                 }
                 type="button"
                 className="flex min-w-[100%] max-w-[380px] items-center justify-center gap-[25px] rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
@@ -541,11 +538,8 @@ const Login = () => {
               </button>
               <button
                 // href={`${process.env.BASE_URL}/store/auth/callback/facebook`}
-                onClick={
-                  !isCookiesEnabled
-                    ? () => setOpenModal(true)
-                    : () =>
-                        (window.location.href = `${process.env.BASE_URL}/store/auth/callback/facebook`)
+                onClick={() =>
+                  (window.location.href = `${process.env.BASE_URL}/store/auth/callback/facebook`)
                 }
                 type="button"
                 className="flex min-w-[100%] max-w-[380px] items-center justify-center rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
