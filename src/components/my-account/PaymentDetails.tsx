@@ -6,13 +6,13 @@ import React, {
   useEffect,
   useState,
 } from "react";
-// import Image from "next/image";
+import Image from "next/image";
 import { Spinner } from "flowbite-react";
 import toast from "react-hot-toast";
 
 import DeleteModal from "./DeleteModal";
 import CheckboxInput from "../utils/Checkbox";
-// import Visa from "../../../public/images/visa.png";
+import Visa from "../../../public/images/visa.png";
 import * as authActions from "@/redux/auth/actions";
 import AddPaymentComponent from "../AddPaymentComponent";
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -38,9 +38,9 @@ const PaymentDetails = () => {
     useState<TSelectedPaymentMethod>();
   const [deleteModal, setDeleteModal] = useState(false);
 
-  // const cardImageMapper: any = {
-  //   visa: Visa,
-  // };
+  const cardImageMapper: any = {
+    visa: Visa,
+  };
 
   const onConfirmDeletePaymentMethod = async () => {
     const res: any = await dispatch(
@@ -219,7 +219,7 @@ const PaymentDetails = () => {
                         }`}
                       >
                         <div className="ms-2 flex items-center justify-center gap-3">
-                          {/* <Image
+                          <Image
                             src={
                               cardImageMapper[
                                 card?.card.brand
@@ -227,7 +227,7 @@ const PaymentDetails = () => {
                             }
                             width="50"
                             alt="card"
-                          /> */}
+                          />
                           <p className="text-[14px]">
                             Card ending in{" "}
                             {card?.card.last4}

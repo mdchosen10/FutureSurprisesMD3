@@ -3,7 +3,6 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { signOut } from "next-auth/react";
 
 export interface User {
   user: any | null;
@@ -61,7 +60,6 @@ const authSlice = createSlice({
       state => {
         state.loading = false;
         state.user = {};
-        signOut();
         localStorage.removeItem("user_token");
       },
     );

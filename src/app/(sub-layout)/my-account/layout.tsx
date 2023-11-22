@@ -58,18 +58,33 @@ export default function LayoutWrapper({
     }
   };
 
-  const checkAccessIfSocialSignIn = useCallback(() => {
-    if (!user) return;
-    const accessToken = params.get("access_token") || "";
-    if (accessToken && accessToken !== "") {
-      localStorage.setItem("user_token", accessToken);
-      isAccessDisabled.current =
-        !user?.metadata?.birthdate || !user?.phone;
-      if (isAccessDisabled.current) {
-        router.push("/my-account/user");
+  const checkAccessIfSocialSignIn =
+    useCallback(async () => {
+      const accessToken = params.get("access_token") || "";
+      if (accessToken && accessToken !== "") {
+        localStorage.setItem("user_token", accessToken);
+        const currentUser: any = await dispatch(
+          authActions.getCurrentCustomer(),
+        );
+        isAccessDisabled.current =
+          !currentUser?.payload?.customer?.metadata
+            ?.birthdate ||
+          !currentUser?.payload?.customer?.phone;
+        if (isAccessDisabled.current) {
+          router.push("/my-account/user");
+        } else {
+          router.replace(`/my-account/${active}`);
+        }
+      } else if (user) {
+        isAccessDisabled.current =
+          !user?.metadata?.birthdate || !user?.phone;
+        if (isAccessDisabled.current) {
+          router.push("/my-account/user");
+        }
+      } else {
+        router.push("/login");
       }
-    }
-  }, [user]);
+    }, [active, dispatch, params, router, user]);
 
   useEffect(() => {
     checkAccessIfSocialSignIn();
@@ -91,14 +106,6 @@ export default function LayoutWrapper({
       });
     }
   }, [active]);
-
-  useEffect(() => {
-    dispatch(authActions.getCurrentCustomer());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!user) return router.push("/login");
-  }, []);
 
   if (!hydrated) {
     // Returns null on first render, so the client and server match

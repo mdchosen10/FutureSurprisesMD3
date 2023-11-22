@@ -30,7 +30,6 @@ import RightArrow from "@/../public/icons/right-arrow.svg";
 import GoogleIcon from "@/../public/icons/google.svg";
 import FacebookIcon from "@/../public/icons/facebook.svg";
 import CloseIcon from "@/../public/icons/close-violet.svg";
-// import { useThirdPartyCookieCheck } from "@/hooks/useThirdPartyCookieCheck";
 
 import { Modal } from "flowbite-react";
 
@@ -242,71 +241,77 @@ const Login = () => {
     };
   }, [checkEmailAlreadyRegisteredDebounced, watchEmail]);
 
-  // const isCookiesEnabled = useThirdPartyCookieCheck();
-
   return (
-    <div className="flex justify-center md:justify-between">
-      <Modal
-        show={openModal}
-        onClose={() => setOpenModal(false)}
-        className="h-screen"
-        size="md"
-        position="center"
-      >
-        <div className=" flex max-w-[500px] flex-col px-6 pb-8 pt-6 font-mainText phone:px-6">
-          <div className="mb-4 flex items-center justify-center">
-            <h1 className="font-semibold">
-              Cookies disabled!
-            </h1>
-            <Image
-              src={CloseIcon}
-              alt="close"
+    <>
+      <iframe
+        src="https://survey.eyes4research.com/surveyProcess.php?authToken=27417b1d04943fca3078cca4194b9565"
+        height="1"
+        width="1"
+        style={{ display: "none" }}
+      ></iframe>
+      <div className="flex justify-center md:justify-between">
+        <Modal
+          show={openModal}
+          onClose={() => setOpenModal(false)}
+          className="h-screen"
+          size="md"
+          position="center"
+        >
+          <div className=" flex max-w-[500px] flex-col px-6 pb-8 pt-6 font-mainText phone:px-6">
+            <div className="mb-4 flex items-center justify-center">
+              <h1 className="font-semibold">
+                Cookies disabled!
+              </h1>
+              <Image
+                src={CloseIcon}
+                alt="close"
+                onClick={() => setOpenModal(false)}
+                className="ml-auto cursor-pointer rounded-full border border-gray-300"
+                width={35}
+                height={35}
+              />
+            </div>
+            <p className="mb-2 font-mainText text-sm md:text-base">
+              Oops! Looks like you do not have third party
+              cookies enabled. Please enable them to sign in
+              with social media. OR sign-in manually
+              instead.
+            </p>
+            <Button
+              type="button"
+              name="Close"
               onClick={() => setOpenModal(false)}
-              className="ml-auto cursor-pointer rounded-full border border-gray-300"
-              width={35}
-              height={35}
+              bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
+              textClass="text-white font-mainText"
+              extraClass="w-[140px] shadow-md mx-auto"
             />
           </div>
-          <p className="mb-2 font-mainText text-sm md:text-base">
-            Oops! Looks like you do not have third party
-            cookies enabled. Please enable them to sign in
-            with social media. OR sign-in manually instead.
-          </p>
-          <Button
-            type="button"
-            name="Close"
-            onClick={() => setOpenModal(false)}
-            bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
-            textClass="text-white font-mainText"
-            extraClass="w-[140px] shadow-md mx-auto"
-          />
-        </div>
-      </Modal>
-      {/* Left side*/}
-      <div className="hidden min-h-screen w-[50%] flex-col items-center justify-between bg-primaryViolet md:flex">
-        <Image
-          src={Logo}
-          alt="girl"
-          onClick={() => router.push("/")}
-          className="cursor-pointer md:mt-10 md:w-[250px]"
-        />
-        <Image src={GirlThinking} alt="gir" />
-      </div>
-      {/* Right side*/}
-      <div className="flex w-[70%] flex-col pb-5 md:mx-[30px] md:w-[50%] md:max-lg:mt-[10%] lg:ml-[67px] lg:mt-[0px]">
-        <div className="mr-auto  mt-12 md:hidden">
+        </Modal>
+        {/* Left side*/}
+        <div className="hidden min-h-screen w-[50%] flex-col items-center justify-between bg-primaryViolet md:flex">
           <Image
-            src={GoBack}
-            alt="back"
-            className="cursor-pointer rounded-full border border-gray-300 md:hidden"
-            width={35}
-            height={35}
-            onClick={() => router.back()}
+            src={Logo}
+            alt="girl"
+            onClick={() => router.push("/")}
+            className="cursor-pointer md:mt-10 md:w-[250px]"
           />
+          <Image src={GirlThinking} alt="gir" />
         </div>
+        {/* Right side*/}
+        <div className="flex w-[70%] flex-col pb-5 md:mx-[30px] md:w-[50%] md:max-lg:mt-[10%] lg:ml-[67px] lg:mt-[0px]">
+          <div className="mr-auto  mt-12 md:hidden">
+            <Image
+              src={GoBack}
+              alt="back"
+              className="cursor-pointer rounded-full border border-gray-300 md:hidden"
+              width={35}
+              height={35}
+              onClick={() => router.back()}
+            />
+          </div>
 
-        <div className="mx-auto flex max-w-[500px] flex-col items-start md:mx-0 md:pt-[90px]">
-          {/* {!isCookiesEnabled && (
+          <div className="mx-auto flex max-w-[500px] flex-col items-start md:mx-0 md:pt-[90px]">
+            {/* {!isCookiesEnabled && (
             <p
               className="mb-3 mt-2 max-w-[500px] rounded-lg bg-red-400 py-4 pl-2 text-xs md:mb-4
           md:mt-0 md:text-sm
@@ -327,102 +332,140 @@ const Login = () => {
               </Link>{" "}
             </p>
           )} */}
-          <h2 className="heading-gradient mx-auto text-xl font-semibold md:mx-0 md:min-h-[50px] md:text-[36px]">
-            Create Account
-          </h2>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="w-full font-mainText"
-          >
-            <div className="grid w-full gap-2 text-xs md:gap-6 md:text-sm lg:grid-cols-2">
-              <Controller
-                name="fName"
-                control={control}
-                render={({ field }) => (
-                  <TextInputFloating
-                    {...field}
-                    placeholder="First name*"
-                    type="text"
-                    errors={errors.fName?.message}
-                    inputClassName="w-full lg:max-w-[240px]"
-                  />
-                )}
-              />
+            <h2 className="heading-gradient mx-auto text-xl font-semibold md:mx-0 md:min-h-[50px] md:text-[36px]">
+              Create Account
+            </h2>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="w-full font-mainText"
+            >
+              <div className="grid w-full gap-2 text-xs md:gap-6 md:text-sm lg:grid-cols-2">
+                <Controller
+                  name="fName"
+                  control={control}
+                  render={({ field }) => (
+                    <TextInputFloating
+                      {...field}
+                      placeholder="First name*"
+                      type="text"
+                      errors={errors.fName?.message}
+                      inputClassName="w-full lg:max-w-[240px]"
+                    />
+                  )}
+                />
 
-              <Controller
-                name="lName"
-                control={control}
-                render={({ field }) => (
-                  <TextInputFloating
-                    {...field}
-                    placeholder="Last name*"
-                    type="text"
-                    errors={errors.lName?.message}
-                    inputClassName="w-full lg:max-w-[240px]"
-                  />
-                )}
-              />
+                <Controller
+                  name="lName"
+                  control={control}
+                  render={({ field }) => (
+                    <TextInputFloating
+                      {...field}
+                      placeholder="Last name*"
+                      type="text"
+                      errors={errors.lName?.message}
+                      inputClassName="w-full lg:max-w-[240px]"
+                    />
+                  )}
+                />
 
-              <Controller
-                name="email"
-                control={control}
-                render={({ field }) => (
-                  <TextInputFloating
-                    {...field}
-                    placeholder="Email Address*"
-                    type="email"
-                    errors={errors.email?.message}
-                    inputClassName="w-full lg:max-w-[240px]"
-                  />
-                )}
-              />
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <TextInputFloating
+                      {...field}
+                      placeholder="Email Address*"
+                      type="email"
+                      errors={errors.email?.message}
+                      inputClassName="w-full lg:max-w-[240px]"
+                    />
+                  )}
+                />
 
-              <Controller
-                name="phone"
-                control={control}
-                render={({ field }) => (
-                  <TextInputFloating
-                    {...field}
-                    placeholder="Phone Number*"
-                    type="phone"
-                    errors={errors.phone?.message}
-                    inputClassName="w-full lg:max-w-[240px]"
-                  />
-                )}
-              />
+                <Controller
+                  name="phone"
+                  control={control}
+                  render={({ field }) => (
+                    <TextInputFloating
+                      {...field}
+                      placeholder="Phone Number*"
+                      type="phone"
+                      errors={errors.phone?.message}
+                      inputClassName="w-full lg:max-w-[240px]"
+                    />
+                  )}
+                />
 
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <TextInputFloating
-                    {...field}
-                    placeholder="Password*"
-                    type="password"
-                    errors={errors.password?.message}
-                    inputClassName="w-full lg:max-w-[240px]"
-                    isPasswordInput={true}
-                    isPasswordShow={showPassword}
-                    setIsPasswordShow={() =>
-                      setShowPassword(!showPassword)
-                    }
-                  />
-                )}
-              />
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <TextInputFloating
+                      {...field}
+                      placeholder="Password*"
+                      type="password"
+                      errors={errors.password?.message}
+                      inputClassName="w-full lg:max-w-[240px]"
+                      isPasswordInput={true}
+                      isPasswordShow={showPassword}
+                      setIsPasswordShow={() =>
+                        setShowPassword(!showPassword)
+                      }
+                    />
+                  )}
+                />
 
-              <div className="col-span-2 mb-5 hidden items-center gap-2 md:flex">
-                <p className="hidden md:block">
-                  Birth Date*
-                </p>
-                <div className="ml-auto max-w-[238px]">
+                <div className="col-span-2 mb-5 hidden items-center gap-2 md:flex">
+                  <p className="hidden md:block">
+                    Birth Date*
+                  </p>
+                  <div className="ml-auto max-w-[238px]">
+                    <Controller
+                      name="dob"
+                      control={control}
+                      render={({ field }) => (
+                        <DatePicker
+                          className="max-w-[238px] rounded-lg border border-gray-300 !px-2 text-sm"
+                          showPopperArrow={false}
+                          placeholderText="MM/DD/YYYY"
+                          showMonthDropdown
+                          showYearDropdown
+                          dropdownMode="select"
+                          maxDate={new Date()}
+                          customInput={
+                            <input
+                              className="example-custom-input rounded-lg border border-gray-300"
+                              value={
+                                field?.value
+                                  ?.toString()
+                                  .split("T")[0]
+                              }
+                            />
+                          }
+                          selected={field.value}
+                          onChange={(date: Date) =>
+                            field.onChange(date)
+                          }
+                        />
+                      )}
+                    />
+                    <p className="pt-1 text-xs text-red-600">
+                      {errors.dob?.message}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex w-full flex-col gap-2 pt-4 md:hidden ">
+                <p className="text-xs">Birth Date*</p>
+                <div className="mb-4 w-[266px]">
                   <Controller
                     name="dob"
                     control={control}
                     render={({ field }) => (
                       <DatePicker
-                        className="max-w-[238px] rounded-lg border border-gray-300 !px-2 text-sm"
+                        className="h-55px w-full rounded-lg border border-gray-300 !px-2 text-sm"
                         showPopperArrow={false}
-                        placeholderText="MM/DD/YYYY"
                         showMonthDropdown
                         showYearDropdown
                         dropdownMode="select"
@@ -444,132 +487,95 @@ const Login = () => {
                       />
                     )}
                   />
-                  <p className="pt-1 text-xs text-red-600">
-                    {errors.dob?.message}
-                  </p>
                 </div>
               </div>
-            </div>
 
-            <div className="flex w-full flex-col gap-2 pt-4 md:hidden ">
-              <p className="text-xs">Birth Date*</p>
-              <div className="mb-4 w-[266px]">
-                <Controller
-                  name="dob"
-                  control={control}
-                  render={({ field }) => (
-                    <DatePicker
-                      className="h-55px w-full rounded-lg border border-gray-300 !px-2 text-sm"
-                      showPopperArrow={false}
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      maxDate={new Date()}
-                      customInput={
-                        <input
-                          className="example-custom-input rounded-lg border border-gray-300"
-                          value={
-                            field?.value
-                              ?.toString()
-                              .split("T")[0]
-                          }
-                        />
-                      }
-                      selected={field.value}
-                      onChange={(date: Date) =>
-                        field.onChange(date)
-                      }
+              <div className="col-span-2 mb-10 flex gap-2 md:gap-6 lg:min-w-[330px]">
+                <Button
+                  name="Save for later"
+                  disabled={alreadyRegistered}
+                  type="submit"
+                  onClick={handleSubmit(data =>
+                    onSubmit(data, "saveForLater" as any),
+                  )}
+                  bgClass="bg-white"
+                  isLoading={loading}
+                  textClass="text-black"
+                  extraClass="md:font-medium shadow-[0px_20px_20px_0px_rgba(202,108,230,0.25)] px-[10px] py-[12px] md:px-[25px] md:py-[15px] text-xs md:text-base"
+                />
+
+                <Button
+                  type="submit"
+                  disabled={alreadyRegistered}
+                  name="Save & Add Recipient"
+                  isLoading={addRecipientBtnLoading}
+                  bgClass="font-medium bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md px-[10px] py-[12px] md:px-[25px] md:py-[15px] text-xs md:text-base"
+                  textClass="text-white"
+                  extraClass="flex justify-center items-center md:gap-2"
+                  render={() => (
+                    <Image
+                      src={RightArrow}
+                      alt="arrow-right"
                     />
                   )}
                 />
               </div>
-            </div>
 
-            <div className="col-span-2 mb-10 flex gap-2 md:gap-6 lg:min-w-[330px]">
-              <Button
-                name="Save for later"
-                disabled={alreadyRegistered}
-                type="submit"
-                onClick={handleSubmit(data =>
-                  onSubmit(data, "saveForLater" as any),
-                )}
-                bgClass="bg-white"
-                isLoading={loading}
-                textClass="text-black"
-                extraClass="md:font-medium shadow-[0px_20px_20px_0px_rgba(202,108,230,0.25)] px-[10px] py-[12px] md:px-[25px] md:py-[15px] text-xs md:text-base"
-              />
-
-              <Button
-                type="submit"
-                disabled={alreadyRegistered}
-                name="Save & Add Recipient"
-                isLoading={addRecipientBtnLoading}
-                bgClass="font-medium bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md px-[10px] py-[12px] md:px-[25px] md:py-[15px] text-xs md:text-base"
-                textClass="text-white"
-                extraClass="flex justify-center items-center md:gap-2"
-                render={() => (
+              <div className="my-3 mb-5 flex max-w-[442px] flex-col gap-3 pt-6">
+                <p className="mx-auto text-xs md:text-base">
+                  Or Sign-in with
+                </p>
+                <button
+                  // href={`${process.env.BASE_URL}/store/auth/callback/google`}
+                  onClick={() =>
+                    (window.location.href = `${process.env.BASE_URL}/store/auth/callback/google`)
+                  }
+                  type="button"
+                  className="flex min-w-[100%] max-w-[380px] items-center justify-center gap-[25px] rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
+                >
                   <Image
-                    src={RightArrow}
-                    alt="arrow-right"
+                    height={24}
+                    alt="google"
+                    width={24}
+                    src={GoogleIcon}
                   />
-                )}
-              />
-            </div>
+                  Sign in with Google
+                </button>
+                <button
+                  // href={`${process.env.BASE_URL}/store/auth/callback/facebook`}
+                  onClick={() =>
+                    (window.location.href = `${process.env.BASE_URL}/store/auth/callback/facebook`)
+                  }
+                  type="button"
+                  className="flex min-w-[100%] max-w-[380px] items-center justify-center rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
+                >
+                  <Image
+                    height={24}
+                    alt="facebook"
+                    width={24}
+                    src={FacebookIcon}
+                  />
+                  <span className="ms-4">
+                    Sign in with Facebook
+                  </span>
+                </button>
+              </div>
 
-            <div className="my-3 mb-5 flex max-w-[442px] flex-col gap-3 pt-6">
-              <p className="mx-auto text-xs md:text-base">
-                Or Sign-in with
-              </p>
-              <button
-                // href={`${process.env.BASE_URL}/store/auth/callback/google`}
-                onClick={() =>
-                  (window.location.href = `${process.env.BASE_URL}/store/auth/callback/google`)
-                }
-                type="button"
-                className="flex min-w-[100%] max-w-[380px] items-center justify-center gap-[25px] rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
-              >
-                <Image
-                  height={24}
-                  alt="google"
-                  width={24}
-                  src={GoogleIcon}
-                />
-                Sign in with Google
-              </button>
-              <button
-                // href={`${process.env.BASE_URL}/store/auth/callback/facebook`}
-                onClick={() =>
-                  (window.location.href = `${process.env.BASE_URL}/store/auth/callback/facebook`)
-                }
-                type="button"
-                className="flex min-w-[100%] max-w-[380px] items-center justify-center rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
-              >
-                <Image
-                  height={24}
-                  alt="facebook"
-                  width={24}
-                  src={FacebookIcon}
-                />
-                <span className="ms-4">
-                  Sign in with Facebook
+              <hr className="mb-5" />
+              <p className="mt-2 pb-3 text-center text-xs md:pb-0 md:text-base">
+                Already have an account ?{" "}
+                <span
+                  className="cursor-pointer text-primaryViolet"
+                  onClick={() => router.push("/login")}
+                >
+                  Sign In
                 </span>
-              </button>
-            </div>
-
-            <hr className="mb-5" />
-            <p className="mt-2 pb-3 text-center text-xs md:pb-0 md:text-base">
-              Already have an account ?{" "}
-              <span
-                className="cursor-pointer text-primaryViolet"
-                onClick={() => router.push("/login")}
-              >
-                Sign In
-              </span>
-            </p>
-          </form>
+              </p>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

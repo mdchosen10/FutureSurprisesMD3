@@ -2,7 +2,6 @@ import React from "react";
 import { Toaster } from "react-hot-toast";
 import { StoreProvider } from "@/redux/Provider";
 import "../styles/globals.css";
-import AuthProvider from "@/components/AuthProvider";
 // import type { Metadata } from "next";
 import {
   Playfair_Display,
@@ -37,9 +36,6 @@ const Sedgwick = Sedgwick_Ave({
 export const metadata: Metadata = {
   title: "Future surprises",
   description: "Simplify your gift giving",
-  icons: {
-    icon: "https://images.squarespace-cdn.com/content/v1/65417fc1188fee42b071f876/ff26a069-ee8a-4c72-96a9-c59c79c71b3b/favicon.ico?format=100w",
-  },
 };
 
 export default function RootLayout({
@@ -63,9 +59,7 @@ export default function RootLayout({
             },
           }}
         />
-        <AuthProvider>
-          <StoreProvider>{children}</StoreProvider>
-        </AuthProvider>
+        <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
   );
