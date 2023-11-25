@@ -58,9 +58,10 @@ export default function LayoutWrapper({
     }
   };
 
+  const accessToken = params.get("access_token") || "";
+
   const checkAccessIfSocialSignIn =
     useCallback(async () => {
-      const accessToken = params.get("access_token") || "";
       if (accessToken && accessToken !== "") {
         localStorage.setItem("user_token", accessToken);
         const currentUser: any = await dispatch(
@@ -87,8 +88,8 @@ export default function LayoutWrapper({
     }, [active, dispatch, params, router, user]);
 
   useEffect(() => {
-    checkAccessIfSocialSignIn();
-  }, [checkAccessIfSocialSignIn]);
+    accessToken && checkAccessIfSocialSignIn();
+  }, [accessToken, checkAccessIfSocialSignIn]);
 
   useEffect(() => {
     setHydrated(true);

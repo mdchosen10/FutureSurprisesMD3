@@ -116,9 +116,13 @@ const Recipient = () => {
     state => state?.authSlice?.user,
   );
 
-  const recipientsLoading = useAppSelector(
-    state => state?.recipientSlice?.loading,
-  );
+  // const recipientsLoading = useAppSelector(
+  //   state => state?.recipientSlice?.loading,
+  // );
+
+  const [recipientsLoading, setRecipientsLoading] =
+    useState(false);
+
   const deleteLoader = useAppSelector(
     state => state?.recipientSlice?.deleteLoading,
   );
@@ -160,7 +164,14 @@ const Recipient = () => {
   ];
 
   const fetchUser = useCallback(async () => {
-    await dispatch(authActions.getCustomer()).unwrap();
+    const res = await dispatch(
+      authActions.getCustomer(),
+    ).unwrap();
+    if (res.status === 200) {
+      getRecipients();
+    }else{
+      toast.error("Database error!")
+    }
   }, [dispatch]);
 
   const deleteRecipient = useCallback(async () => {
@@ -178,8 +189,9 @@ const Recipient = () => {
     toast.error("Something went wrong!");
   }, [recipientId, dispatch]);
 
-  const getRecipients = useCallback(async () => {
+  const getRecipients = async () => {
     if (user && user?.id) {
+      setRecipientsLoading(true);
       const res = await dispatch(
         recipientActions.getAddedRecipients({
           data: user?.id,
@@ -187,14 +199,18 @@ const Recipient = () => {
       );
       if (res?.payload?.recipients) {
         setRecipients(res?.payload?.recipients);
+      } else {
+        toast.error(
+          "Failed to load recipients, please refresh!",
+        );
       }
+      setRecipientsLoading(false);
     }
-  }, [recipientActions, dispatch, user?.id]);
+  };
 
   useEffect(() => {
-    getRecipients();
     fetchUser();
-  }, [fetchUser, getRecipients]);
+  }, [fetchUser]);
 
   return (
     <>
