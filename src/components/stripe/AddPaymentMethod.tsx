@@ -21,10 +21,12 @@ export const AddPaymentMethod = ({
   const elements = useElements();
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] =
     useState<any>(null);
 
   const handleSubmit = async (event: any) => {
+    setLoading(true);
     event.preventDefault();
 
     if (!stripe || !elements) {
@@ -42,6 +44,7 @@ export const AddPaymentMethod = ({
     if (response.error) {
       setErrorMessage(response.error.message);
       toast.error(response.error.message);
+      setLoading(false);
     } else {
       const reqData = {
         metadata: {
@@ -63,6 +66,7 @@ export const AddPaymentMethod = ({
         router.push("/my-account/recipients");
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -75,11 +79,11 @@ export const AddPaymentMethod = ({
         <Button
           name="Confirm"
           type="submit"
-          disabled={!stripe || !elements}
+          disabled={loading || !stripe || !elements}
           bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md"
           textClass="text-white font-mainText"
           extraClass="px-6"
-          isLoading={false}
+          isLoading={loading}
         />
         {render && render()}
       </div>

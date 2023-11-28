@@ -169,8 +169,8 @@ const Recipient = () => {
     ).unwrap();
     if (res.status === 200) {
       getRecipients();
-    }else{
-      toast.error("Database error!")
+    } else {
+      toast.error("Database error!");
     }
   }, [dispatch]);
 
@@ -266,6 +266,7 @@ const Recipient = () => {
         )}
       </div>
 
+      {/* MOBILE VIEW */}
       <div className="lg:hidden">
         {recipientsLoading ? (
           <div className="flex h-[100px] w-full items-center justify-center">
@@ -330,9 +331,11 @@ const Recipient = () => {
                   </span>
                   <span>:</span>
                   <span className="w-1/3 capitalize">
-                    {moment(next_holiday?.date).format(
-                      "MM-DD-YYYY",
-                    )}
+                    {next_holiday?.name
+                      ? moment(next_holiday?.date).format(
+                          "MM-DD-YYYY",
+                        )
+                      : ""}
                   </span>
                 </div>
                 <div className="flex w-full justify-evenly px-[10px] py-[5px]">

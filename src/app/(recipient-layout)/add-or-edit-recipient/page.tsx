@@ -268,12 +268,26 @@ const AddOrEditRecipient = () => {
     const anniversary: any = allHolidays.find(
       (item: any) => item.name === "Anniversary",
     );
+
+    const today = moment();
+    const dobWithCurrentYear = moment(date).year(
+      moment().year(),
+    );
+
+    const isDateBeforeNow =
+      dobWithCurrentYear.isBefore(today);
+
     const modifiedAnniversary = {
       ...anniversary,
-      date: `${moment().add(0, "years").year()}-${
-        moment(date).month() + 1
-      }-${moment(date).date()}`,
+      date: isDateBeforeNow
+        ? `${moment().add(1, "years").year()}-${
+            moment(date).month() + 1
+          }-${moment(date).date()}`
+        : `${moment().add(0, "years").year()}-${
+            moment(date).month() + 1
+          }-${moment(date).date()}`,
     };
+
     let modifiedHolidays = [...allHolidays];
     modifiedHolidays?.splice(
       anniversaryDayIndex,
@@ -341,15 +355,27 @@ const AddOrEditRecipient = () => {
           "Please pick a date for the date of birth first!",
         );
 
+      const today = moment();
+      const dobWithCurrentYear = moment(watchDob).year(
+        moment().year(),
+      );
+
+      const isDateBeforeNow =
+        dobWithCurrentYear.isBefore(today);
+
       setAllHolidays([
         ...allHolidays,
         {
           ...holiday,
           selected: true,
           tempId: uuidv4(),
-          date: `${moment().add(0, "years").year()}-${
-            moment(watchDob).month() + 1
-          }-${moment(watchDob).date()}`,
+          date: isDateBeforeNow
+            ? `${moment().add(1, "years").year()}-${
+                moment(watchDob).month() + 1
+              }-${moment(watchDob).date()}`
+            : `${moment().add(0, "years").year()}-${
+                moment(watchDob).month() + 1
+              }-${moment(watchDob).date()}`,
         },
       ]);
       return;
