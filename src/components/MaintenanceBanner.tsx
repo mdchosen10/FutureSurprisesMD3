@@ -6,7 +6,7 @@ const MaintenanceBanner = () => {
       Our social sign-in feature is temporarily unavailable.
       We apologize for any inconvenience and are working to
       resolve the issue as quickly as possible. Please try
-      again later login with email and password.
+      again later or login with email and password.
     </div>
   );
 };
