@@ -302,7 +302,7 @@ const Login = () => {
       </div>
       {/* Right side*/}
       <div className="flex w-[70%] flex-col pb-5 md:mx-[30px] md:w-[50%] md:max-lg:mt-[10%] lg:ml-[67px] lg:mt-[0px]">
-      <div className="mb-3 max-w-[500px] mt-3">
+      <div className=" max-w-[500px] mt-3">
           <MaintenanceBanner />
         </div>
         <div className="mr-auto  mt-2 md:hidden">
@@ -316,7 +316,7 @@ const Login = () => {
           />
         </div>
 
-        <div className="mx-auto flex max-w-[500px] flex-col items-start md:mx-0 md:pt-[90px]">
+        <div className="mx-auto flex max-w-[500px] flex-col items-start md:mx-0 md:pt-[20px]">
 
           {/* {!isCookiesEnabled && (
             <p
