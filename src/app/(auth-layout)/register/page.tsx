@@ -32,6 +32,7 @@ import FacebookIcon from "@/../public/icons/facebook.svg";
 import CloseIcon from "@/../public/icons/close-violet.svg";
 
 import { Modal } from "flowbite-react";
+import MaintenanceBanner from "@/components/MaintenanceBanner";
 
 export interface registerFormInputs {
   fName: string;
@@ -301,7 +302,10 @@ const Login = () => {
       </div>
       {/* Right side*/}
       <div className="flex w-[70%] flex-col pb-5 md:mx-[30px] md:w-[50%] md:max-lg:mt-[10%] lg:ml-[67px] lg:mt-[0px]">
-        <div className="mr-auto  mt-12 md:hidden">
+      <div className="mb-3 max-w-[500px] mt-3">
+          <MaintenanceBanner />
+        </div>
+        <div className="mr-auto  mt-2 md:hidden">
           <Image
             src={GoBack}
             alt="back"
@@ -313,6 +317,7 @@ const Login = () => {
         </div>
 
         <div className="mx-auto flex max-w-[500px] flex-col items-start md:mx-0 md:pt-[90px]">
+
           {/* {!isCookiesEnabled && (
             <p
               className="mb-3 mt-2 max-w-[500px] rounded-lg bg-red-400 py-4 pl-2 text-xs md:mb-4

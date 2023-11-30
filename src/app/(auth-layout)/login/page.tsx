@@ -24,6 +24,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { Modal } from "flowbite-react";
 import CloseIcon from "@/../public/icons/close-violet.svg";
+import MaintenanceBanner from "@/components/MaintenanceBanner";
 
 type LoginForm = {
   email: string;
@@ -147,7 +148,10 @@ const Login = () => {
         </div>
       </div>
       {/* Right */}
-      <div className="flex w-[70%] flex-col md:ml-[30px] md:w-[50%] md:max-lg:mt-[20%] lg:ml-[67px] lg:mt-[130px]">
+      <div className="mt-[30px] flex w-[70%] flex-col md:ml-[30px] md:w-[50%] md:max-lg:mt-[20%] lg:ml-[67px] lg:mt-[50px]">
+        <div className="mb-3 max-w-[500px]">
+          <MaintenanceBanner />
+        </div>
         <div className="mr-auto  mt-6 md:mt-0">
           <Image
             src={GoBack}
