@@ -87,12 +87,17 @@ export default function LayoutWrapper({
       }
     }, [dispatch, params]);
 
+  const getCurrentCustomer = async () => {
+    await dispatch(authActions.getCurrentCustomer());
+  };
+
   useEffect(() => {
     accessToken && checkAccessIfSocialSignIn();
   }, [accessToken, checkAccessIfSocialSignIn]);
 
   useEffect(() => {
     setHydrated(true);
+    getCurrentCustomer();
   }, []);
 
   useEffect(() => {
