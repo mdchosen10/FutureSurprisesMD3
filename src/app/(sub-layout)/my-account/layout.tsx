@@ -85,7 +85,7 @@ export default function LayoutWrapper({
       } else {
         router.push("/login");
       }
-    }, [active, dispatch, params, router, user]);
+    }, [dispatch, params]);
 
   useEffect(() => {
     accessToken && checkAccessIfSocialSignIn();

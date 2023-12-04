@@ -189,7 +189,7 @@ const Recipient = () => {
     toast.error("Something went wrong!");
   }, [recipientId, dispatch]);
 
-  const getRecipients = async () => {
+  const getRecipients = useCallback(async () => {
     if (user && user?.id) {
       setRecipientsLoading(true);
       const res = await dispatch(
@@ -206,11 +206,15 @@ const Recipient = () => {
       }
       setRecipientsLoading(false);
     }
-  };
+  }, [dispatch, user]);
 
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
+  useEffect(() => {
+    getRecipients();
+  }, [getRecipients]);
 
   return (
     <>

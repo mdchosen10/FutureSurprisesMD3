@@ -50,7 +50,7 @@ interface AddRecipientForm {
   lName: string;
   nickName: string;
   signature: string;
-  dob: Date | null;
+  dob: Date | null | any;
   spendingLimit: string;
   relationship: string;
   chatGPTmessage: string;
@@ -920,7 +920,7 @@ const AddOrEditRecipient = () => {
   }, [getCustomer]);
 
   useEffect(() => {
-    if (!isEditMode) return;
+    if (!isEditMode || !editableRecipient) return;
     setValue("fName", editableRecipient?.first_name);
     setValue("lName", editableRecipient?.last_name);
     setValue("nickName", editableRecipient?.nickname);
@@ -930,7 +930,9 @@ const AddOrEditRecipient = () => {
     );
     setValue(
       "dob",
-      new Date(editableRecipient?.birthdate || new Date()),
+      new Date(
+        moment(editableRecipient?.birthdate).toDate(),
+      ),
     );
     setValue(
       "spendingLimit",
@@ -1540,16 +1542,16 @@ const AddOrEditRecipient = () => {
                       showMonthDropdown
                       showYearDropdown
                       dropdownMode="select"
+                      className="h-6 w-[170px] max-w-[240px] rounded-lg border border-gray-300 p-4 text-sm"
                       customInput={
                         <input className="example-custom-input rounded-lg border border-gray-300" />
                       }
-                      className="h-6 w-[170px] max-w-[240px] rounded-lg border border-gray-300 p-4 text-sm"
                     />
                   )}
                 />
               </div>
               <p className="text-xs text-red-700">
-                {errors.dob?.message}
+                {errors.dob?.message as any}
               </p>
             </div>
 
