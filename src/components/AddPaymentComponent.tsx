@@ -8,14 +8,12 @@ import {
   StripeAddressElementOptions,
   loadStripe,
 } from "@stripe/stripe-js";
-import Image from "next/image";
 import { Spinner } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import Button from "./Button";
 import { useAppSelector } from "@/hooks";
-import GoBack from "@/../public/icons/go-back.svg";
 import { AddPaymentMethod } from "@/components/stripe/AddPaymentMethod";
 
 const stripePromise: any = loadStripe(
@@ -28,7 +26,6 @@ function AddPaymentComponent({
   showButton: boolean;
   onCancel: () => void;
 }) {
-  const router = useRouter();
   const { user } = useAppSelector(state => state.authSlice);
   const path = usePathname()?.split("/").slice(-1)[0];
   const [clientSecret, setClientSecret] =
@@ -91,17 +88,6 @@ function AddPaymentComponent({
 
   return (
     <div className="p-5 lg:p-10">
-      <div className="w-full md:hidden">
-        <Image
-          src={GoBack}
-          alt="back"
-          className="cursor-pointer rounded-full border border-gray-300 md:hidden"
-          width={35}
-          height={35}
-          onClick={() => router.back()}
-        />
-      </div>
-
       {loading && path !== "add-payment-details" ? (
         <div className="flex w-full p-5">
           <Spinner size="lg" color="pink" />

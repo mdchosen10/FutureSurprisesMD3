@@ -272,6 +272,12 @@ const Recipient = () => {
 
       {/* MOBILE VIEW */}
       <div className="lg:hidden">
+        {!recipients.length && (
+          <p className="my-5 w-full text-center font-mainText">
+            Look&apos;s like no one is here! Let&apos;s fix
+            that! Click on add recipients to get started!
+          </p>
+        )}
         {recipientsLoading ? (
           <div className="flex h-[100px] w-full items-center justify-center">
             <Spinner size="lg" color="pink" />
