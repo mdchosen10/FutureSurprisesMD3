@@ -603,6 +603,12 @@ const AddOrEditRecipient = () => {
         return;
       }
 
+      if (!allHolidays?.length) {
+        return toast.error(
+          "Please select at least one holiday!",
+        );
+      }
+
       if (
         paymentMethods?.length === 0 &&
         acknowledged === false &&
@@ -627,9 +633,11 @@ const AddOrEditRecipient = () => {
         last_name: data.lName,
         first_name: data.fName,
         nickname: data.nickName || "",
-        all_holidays: !paymentMethods?.length
-          ? []
-          : allHolidays,
+        all_holidays:
+          !paymentMethods?.length &&
+          delayedHolidays?.length > 0
+            ? []
+            : allHolidays,
         signature_name: data.signature || "",
         relationship: data.relationship,
         interests_array: additionalInfo,
@@ -816,7 +824,7 @@ const AddOrEditRecipient = () => {
   const receiver =
     watch("nickName") === "Me" || watch("nickName") === "me"
       ? watch("fName")
-      : watch("nickName");
+      : watch("nickName") || watch("fName");
   const sender = watch("signature") || user?.first_name;
 
   const onClickChatGPT = useCallback(async () => {
@@ -857,16 +865,11 @@ const AddOrEditRecipient = () => {
   ]);
 
   useEffect(() => {
-    if (isEditMode && chatGPTMessage) return;
-    if (
-      allHolidays?.length === 1 &&
-      sender &&
-      receiver &&
-      allHolidays?.length
-    ) {
+    // if (isEditMode && chatGPTMessage) return;
+    if (allHolidays?.length === 1 && sender && receiver) {
       onClickChatGPT();
     }
-  }, [allHolidays, isEditMode]);
+  }, [allHolidays, isEditMode, receiver, sender]);
 
   const onMessageWrite = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
