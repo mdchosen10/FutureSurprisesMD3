@@ -83,6 +83,7 @@ interface AddNewAddressForm {
   address: string;
   city: string;
   state: string;
+  country?: string;
   zip: string;
 }
 
@@ -97,6 +98,7 @@ const AddNewAddressSchema = yup
       .required("Please specify street address!"),
     city: yup.string().required("City is required!"),
     state: yup.string().required("State is required!"),
+    country: yup.string(),
     zip: yup.string().required("Postal code is required"),
   })
   .required();
@@ -426,7 +428,7 @@ const AddOrEditRecipient = () => {
             address_1: data.address,
             city: data.city,
             province: data.state,
-            country_code: "US",
+            country_code: data.country || "US",
             postal_code: data.zip.toString(),
             metadata: {
               nickname: data.nickName,
@@ -771,6 +773,12 @@ const AddOrEditRecipient = () => {
             "administrative_area_level_1",
           ),
       )?.long_name;
+
+      const country = place.address_components.find(
+        (item: any) => item.types.includes("country"),
+      )?.long_name;
+
+      if (country) setAddressValues("country", country);
 
       if (city) setAddressValues("city", city);
       if (zipCode) setAddressValues("zip", zipCode);
