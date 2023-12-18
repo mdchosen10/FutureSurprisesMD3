@@ -25,7 +25,7 @@ const Hurray = () => {
           Hurray
         </h1>
         <p className="text-center font-mainText">
-          You are all done! Now just sit back and relax and
+          You are all done. Now just sit back and relax and
           know that we have got you covered!
         </p>
         <Button
