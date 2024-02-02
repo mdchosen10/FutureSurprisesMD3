@@ -24,14 +24,22 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 type ResetPasswordForm = {
+  email: string;
   password: string;
-  confirmPassword: string;
+  // confirmPassword: string;
   token?: string;
 };
 
 const resetPasswordSchema = yup
   .object()
   .shape({
+    email: yup
+      .string()
+      .required("Email is required!")
+      .matches(/^((\S+)@(\S+)\.(\S+))$/, {
+        message: "Please enter a valid email address.",
+        excludeEmptyString: false,
+      }),
     password: yup
       .string()
       .required("Password is required!")
@@ -52,26 +60,27 @@ const resetPasswordSchema = yup
         RegExp('[!@#$%^&*(),.?":{}|<>]'),
         "Password should contain at least one special character.",
       ),
-    confirmPassword: yup
-      .string()
-      .required("Password is required!")
-      .min(8, "Password must be at least 8 character long")
-      .matches(
-        RegExp("(.*[a-z].*)"),
-        "Password should contain at least one lowercase character.",
-      )
-      .matches(
-        RegExp("(.*[A-Z].*)"),
-        "Password should contain at least one uppercase character.",
-      )
-      .matches(
-        RegExp("(.*\\d.*)"),
-        "Password should contain at least one number.",
-      )
-      .matches(
-        RegExp('[!@#$%^&*(),.?":{}|<>]'),
-        "Password should contain at least one special character.",
-      ),
+
+    // confirmPassword: yup
+    //   .string()
+    //   .required("Password is required!")
+    //   .min(8, "Password must be at least 8 character long")
+    //   .matches(
+    //     RegExp("(.*[a-z].*)"),
+    //     "Password should contain at least one lowercase character.",
+    //   )
+    //   .matches(
+    //     RegExp("(.*[A-Z].*)"),
+    //     "Password should contain at least one uppercase character.",
+    //   )
+    //   .matches(
+    //     RegExp("(.*\\d.*)"),
+    //     "Password should contain at least one number.",
+    //   )
+    //   .matches(
+    //     RegExp('[!@#$%^&*(),.?":{}|<>]'),
+    //     "Password should contain at least one special character.",
+    //   ),
   })
   .required();
 
@@ -101,8 +110,9 @@ const ResetPassword = () => {
   > = async data => {
     const reqData = {
       password: data.password,
-      confirmPassword: data.confirmPassword,
+      email: data.email,
       token: token || "",
+      // confirmPassword: data.confirmPassword,
     };
     const res: any = await dispatch(
       authActions.resetPassword({ data: reqData }),
@@ -161,6 +171,20 @@ const ResetPassword = () => {
             className="flex w-full max-w-[270px] flex-col gap-4"
           >
             <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <TextInputFloating
+                  {...field}
+                  placeholder="Email*"
+                  type="email"
+                  errors={errors.email?.message}
+                  inputClassName="w-full lg:max-w-[240px]"
+                  isPasswordInput={false}
+                />
+              )}
+            />
+            <Controller
               name="password"
               control={control}
               render={({ field }) => (
@@ -178,7 +202,8 @@ const ResetPassword = () => {
                 />
               )}
             />
-            <Controller
+
+            {/* <Controller
               name="confirmPassword"
               control={control}
               render={({ field }) => (
@@ -195,7 +220,7 @@ const ResetPassword = () => {
                   }
                 />
               )}
-            />
+            /> */}
             <Button
               type="submit"
               isLoading={loading}
