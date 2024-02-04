@@ -240,7 +240,7 @@ const Login = () => {
 
           <button
             onClick={() =>
-              (window.location.href = `${process.env.BASE_URL}/store/auth/callback/google`)
+              (window.location.href = `${process.env.BASE_URL}/store/auth/google/cb`)
             }
             type="button"
             className="flex min-w-[100%] max-w-[380px] items-center justify-center gap-[25px] rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
