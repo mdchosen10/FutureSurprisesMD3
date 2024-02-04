@@ -255,7 +255,7 @@ const Login = () => {
           </button>
           <button
             onClick={() =>
-              (window.location.href = `${process.env.BASE_URL}/store/auth/callback/facebook`)
+              (window.location.href = `${process.env.BASE_URL}/store/auth/facebook`)
             }
             type="button"
             className="flex min-w-[100%] max-w-[380px] items-center justify-center rounded-[50px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
