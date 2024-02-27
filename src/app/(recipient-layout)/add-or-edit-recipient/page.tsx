@@ -128,8 +128,9 @@ const AddOrEditRecipient = () => {
     useState<string>("");
   const [newCustomHolidayDate, setNewCustomHolidayDate] =
     useState<Date | any>(null);
-  const [anniversaryDate, setAnniversaryDate] =
-    useState<Date | null>(null);
+  const [anniversaryDate, setAnniversaryDate] = useState<
+    Date | any
+  >(null);
   const [chatGPTMessage, setChatGPTMessage] =
     useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -428,7 +429,7 @@ const AddOrEditRecipient = () => {
             address_1: data.address,
             city: data.city,
             province: data.state,
-            country_code: data.country || "US",
+            country_code: "US",
             postal_code: data.zip.toString(),
             metadata: {
               nickname: data.nickName,
@@ -967,11 +968,23 @@ const AddOrEditRecipient = () => {
       editableRecipient?.all_holidays?.find(
         (holiday: any) => holiday.name === "Anniversary",
       );
+    // setAnniversaryDate(
+    //   anniversaryHoliday
+    //     ? new Date(anniversaryHoliday.date)
+    //     : null,
+    // );
+
     setAnniversaryDate(
       anniversaryHoliday
-        ? new Date(anniversaryHoliday.date)
+        ? new Date(
+            moment.utc(
+              anniversaryHoliday?.date,
+              "YYYY-MM-DD",
+            ) as any,
+          )
         : null,
     );
+
     setAdditionalInfo(editableRecipient?.interests_array);
     setChatGPTMessage(editableRecipient?.personal_message);
     onSelectAddress(
