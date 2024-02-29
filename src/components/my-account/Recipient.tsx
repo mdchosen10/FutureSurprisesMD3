@@ -23,25 +23,20 @@ import Alert from "@/../public/images/alert.png";
 import * as authActions from "@/redux/auth/actions";
 
 const getNextHoliday = (recipient: any) => {
-  const upcomingHolidays: any =
-    recipient?.all_holidays?.filter((holiday: any) => {
-      const holidayDate = new Date(holiday.date);
-      return moment(holidayDate).isSameOrAfter(
-        moment().startOf("day"),
-      );
-    });
+  let holidays = recipient?.all_holidays.slice();
+  const sorted =
+    holidays?.sort(
+      (a: any, b: any) =>
+        (moment(a.date) as any) - (moment(b.date) as any),
+    ) || [];
 
-  upcomingHolidays.sort(
-    (a: any, b: any) =>
-      new Date(a.date).getTime() -
-      new Date(b.date).getTime(),
+  const currentDate = moment();
+
+  const upcomingHoliday = sorted.find(
+    (holiday: any) => moment(holiday.date) >= currentDate,
   );
 
-  if (upcomingHolidays.length > 0) {
-    return upcomingHolidays[0];
-  }
-
-  return null;
+  return upcomingHoliday;
 };
 
 const EditDelete = ({
