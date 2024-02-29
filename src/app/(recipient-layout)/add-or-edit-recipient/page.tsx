@@ -428,7 +428,7 @@ const AddOrEditRecipient = () => {
             address_1: data.address,
             city: data.city,
             province: data.state,
-            country_code: data.country || "US",
+            country_code: "US",
             postal_code: data.zip.toString(),
             metadata: {
               nickname: data.nickName,
