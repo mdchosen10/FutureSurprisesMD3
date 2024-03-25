@@ -271,23 +271,31 @@ const AddOrEditRecipient = () => {
       (item: any) => item.name === "Anniversary",
     );
 
-    const today = moment();
-    const dobWithCurrentYear = moment(date).year(
-      moment().year(),
+    const currentDate = moment();
+    const dayOfBirthInCurrentYear = moment(date).year(
+      new Date().getFullYear(),
     );
+    const isDayOfBirthInCurrentYearIsPastToday = moment(
+      dayOfBirthInCurrentYear,
+    ).isAfter(currentDate);
 
-    const isDateBeforeNow =
-      dobWithCurrentYear.isBefore(today);
+    const bufferYear = isDayOfBirthInCurrentYearIsPastToday
+      ? 0
+      : 1;
+
+    const year = moment().add(bufferYear, "years").year();
+    const monthNumber = moment(date).month() + 1;
+    const month =
+      monthNumber < 10
+        ? `0${monthNumber}`
+        : `${monthNumber}`;
+    const dayNumber = moment(date).date();
+    const day =
+      dayNumber < 10 ? `0${dayNumber}` : `${dayNumber}`;
 
     const modifiedAnniversary = {
       ...anniversary,
-      date: isDateBeforeNow
-        ? `${moment().add(1, "years").year()}-${
-            moment(date).month() + 1
-          }-${moment(date).date()}`
-        : `${moment().add(0, "years").year()}-${
-            moment(date).month() + 1
-          }-${moment(date).date()}`,
+      date: `${year}-${month}-${day}`,
     };
 
     let modifiedHolidays = [...allHolidays];
@@ -1065,12 +1073,33 @@ const AddOrEditRecipient = () => {
       const index = allHolidaysCopy?.findIndex(
         (item: any) => item.name === "Birthdays",
       );
+
+      const currentDate = moment();
+      const dayOfBirthInCurrentYear = moment(date).year(
+        new Date().getFullYear(),
+      );
+      const isDayOfBirthInCurrentYearIsPastToday = moment(
+        dayOfBirthInCurrentYear,
+      ).isAfter(currentDate);
+
+      const bufferYear =
+        isDayOfBirthInCurrentYearIsPastToday ? 0 : 1;
+
+      const year = moment().add(bufferYear, "years").year();
+      const monthNumber = moment(date).month() + 1;
+      const month =
+        monthNumber < 10
+          ? `0${monthNumber}`
+          : `${monthNumber}`;
+      const dayNumber = moment(date).date();
+      const day =
+        dayNumber < 10 ? `0${dayNumber}` : `${dayNumber}`;
+
       allHolidaysCopy?.splice(index, 1, {
         ...bdayHoliday,
-        date: `${moment().add(1, "years").year()}-${
-          moment(date).month() + 1
-        }-${moment(date).date()}`,
+        date: `${year}-${month}-${day}`,
       });
+
       setAllHolidays(allHolidaysCopy);
     }
   };
