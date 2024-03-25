@@ -272,16 +272,16 @@ const AddOrEditRecipient = () => {
     );
 
     const currentDate = moment();
-    const dayOfBirthInCurrentYear = moment(date).year(
+    const dayOfAnniversaryInCurrentYear = moment(date).year(
       new Date().getFullYear(),
     );
-    const isDayOfBirthInCurrentYearIsPastToday = moment(
-      dayOfBirthInCurrentYear,
-    ).isAfter(currentDate);
+    const isDayOfAnniversaryInCurrentYearIsPastToday =
+      moment(dayOfAnniversaryInCurrentYear).isAfter(
+        currentDate,
+      );
 
-    const bufferYear = isDayOfBirthInCurrentYearIsPastToday
-      ? 0
-      : 1;
+    const bufferYear =
+      isDayOfAnniversaryInCurrentYearIsPastToday ? 0 : 1;
 
     const year = moment().add(bufferYear, "years").year();
     const monthNumber = moment(date).month() + 1;
@@ -365,13 +365,26 @@ const AddOrEditRecipient = () => {
           "Please pick a date for the date of birth first!",
         );
 
-      const today = moment();
-      const dobWithCurrentYear = moment(watchDob).year(
-        moment().year(),
+      const currentDate = moment();
+      const dayOfBirthInCurrentYear = moment(watchDob).year(
+        new Date().getFullYear(),
       );
+      const isDayOfBirthInCurrentYearIsPastToday = moment(
+        dayOfBirthInCurrentYear,
+      ).isAfter(currentDate);
 
-      const isDateBeforeNow =
-        dobWithCurrentYear.isBefore(today);
+      const bufferYear =
+        isDayOfBirthInCurrentYearIsPastToday ? 0 : 1;
+
+      const year = moment().add(bufferYear, "years").year();
+      const monthNumber = moment(watchDob).month() + 1;
+      const month =
+        monthNumber < 10
+          ? `0${monthNumber}`
+          : `${monthNumber}`;
+      const dayNumber = moment(watchDob).date();
+      const day =
+        dayNumber < 10 ? `0${dayNumber}` : `${dayNumber}`;
 
       setAllHolidays([
         ...allHolidays,
@@ -379,13 +392,7 @@ const AddOrEditRecipient = () => {
           ...holiday,
           selected: true,
           tempId: uuidv4(),
-          date: isDateBeforeNow
-            ? `${moment().add(1, "years").year()}-${
-                moment(watchDob).month() + 1
-              }-${moment(watchDob).date()}`
-            : `${moment().add(0, "years").year()}-${
-                moment(watchDob).month() + 1
-              }-${moment(watchDob).date()}`,
+          date: `${year}-${month}-${day}`,
         },
       ]);
       return;
