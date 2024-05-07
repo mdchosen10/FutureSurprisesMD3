@@ -273,7 +273,13 @@ export const yearlyHolidays = () => {
     }
     // else, if not in the object, add it to the allHolidayOptionsObject
     if (!allHolidayOptionsObject[holiday.name]) {
-      allHolidayOptionsObject[holiday.name] = {
+      const formatHolidayKey = holiday.name?.replace(
+        /[ ,'-./]/g,
+        "",
+      );
+
+      allHolidayOptionsObject[formatHolidayKey] = {
+        name: holiday.name,
         date: holiday.date,
         type: holiday.type,
       };
@@ -282,11 +288,16 @@ export const yearlyHolidays = () => {
 
   // - and now I build an array of all the holiday options with each holiday option
   // stored as an object with the keys of name, date, and type
+
   let allHolidayOptionsArray = Object.entries(
     allHolidayOptionsObject,
   ).map((holidayNameAndDate: any) => {
-    let holidayObject: any = {};
-    holidayObject["name"] = holidayNameAndDate[0];
+    let holidayObject: {
+      name: string;
+      date: string;
+      type: string;
+    } = { name: "", date: "", type: "" };
+    holidayObject["name"] = holidayNameAndDate[1].name;
     holidayObject["date"] = holidayNameAndDate[1].date;
     holidayObject["type"] = holidayNameAndDate[1].type;
     return holidayObject;
