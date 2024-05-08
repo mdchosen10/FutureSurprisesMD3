@@ -263,7 +263,6 @@ export const yearlyHolidays = () => {
     i++
   ) {
     const holiday: any = allCurrentAndFutureHolidays[i];
-
     // if the holiday date is within 2 weeks of today, skip
     if (
       new Date(holiday.date) <
@@ -271,13 +270,14 @@ export const yearlyHolidays = () => {
     ) {
       continue;
     }
-    // else, if not in the object, add it to the allHolidayOptionsObject
-    if (!allHolidayOptionsObject[holiday.name]) {
-      const formatHolidayKey = holiday.name?.replace(
-        /[ ,'-./]/g,
-        "",
-      );
 
+    const formatHolidayKey = holiday.name?.replace(
+      /[ ,'-./]/g,
+      "",
+    );
+
+    // else, if not in the object, add it to the allHolidayOptionsObject
+    if (!allHolidayOptionsObject[formatHolidayKey]) {
       allHolidayOptionsObject[formatHolidayKey] = {
         name: holiday.name,
         date: holiday.date,
