@@ -340,12 +340,12 @@
   {
     "name": "Eid al-Adha",
     "date": "2025-06-28",
-    "type": "islamic"
+    "type": "common"
   },
   {
     "name": "Eid al-Fitr",
     "date": "2025-04-20",
-    "type": "islamic"
+    "type": "common"
   },
   {
     "name": "Halloween",
