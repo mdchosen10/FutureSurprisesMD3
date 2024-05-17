@@ -52,7 +52,7 @@
   {
     "name": "Eid al-Fitr",
     "date": "2023-04-21",
-    "type": "Muslim"
+    "type": "islamic"
   },
   {
     "name": "Cinco de Mayo",
@@ -82,7 +82,7 @@
   {
     "name": "Eid al-Adha",
     "date": "2023-06-28",
-    "type": "Muslim"
+    "type": "islamic"
   },
   {
     "name": "Independence Day",
@@ -340,12 +340,12 @@
   {
     "name": "Eid al-Adha",
     "date": "2023-06-29",
-    "type": "common"
+    "type": "islamic"
   },
   {
     "name": "Eid al-Fitr",
     "date": "2023-04-21",
-    "type": "common"
+    "type": "islamic"
   },
   {
     "name": "Halloween",

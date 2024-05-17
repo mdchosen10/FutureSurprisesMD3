@@ -414,6 +414,7 @@ const AddOrEditRecipient = () => {
         type: "custom",
         selected: true,
         one_time: isOneTimeHoliday,
+        tempId: uuidv4(),
       },
     ]);
     setNewCustomHoliday("");
@@ -425,7 +426,7 @@ const AddOrEditRecipient = () => {
   const onDeleteCustomerHoliday = (item: any) => {
     setAllHolidays(
       allHolidays.filter(
-        (holiday: any) => holiday.name !== item.name,
+        (holiday: any) => holiday.tempId !== item.tempId,
       ),
     );
   };
