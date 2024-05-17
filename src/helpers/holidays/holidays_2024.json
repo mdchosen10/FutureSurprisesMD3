@@ -42,7 +42,7 @@
   {
     "name": "Eid al-Fitr (Tentative Date)",
     "date": "2024-04-10",
-    "type": "Muslim"
+    "type": "islamic"
   },
   {
     "name": "Cinco de Mayo",
@@ -72,7 +72,7 @@
   {
     "name": "Eid al-Adha (Tentative Date)",
     "date": "2024-06-17",
-    "type": "Muslim"
+    "type": "islamic"
   },
   {
     "name": "Juneteenth",
@@ -340,12 +340,12 @@
   {
     "name": "Eid al-Adha",
     "date": "2024-06-16",
-    "type": "common"
+    "type": "islamic"
   },
   {
     "name": "Eid al-Fitr",
     "date": "2024-04-09",
-    "type": "common"
+    "type": "islamic"
   },
   {
     "name": "Halloween",
