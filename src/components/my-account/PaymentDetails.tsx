@@ -49,6 +49,7 @@ const PaymentDetails = () => {
           payment_method_id: selectedPaymentMethod
             ? selectedPaymentMethod?.id
             : "",
+          customerId: user?.user?.id || null,
         },
       }),
     );
@@ -81,14 +82,16 @@ const PaymentDetails = () => {
 
   const handleDefaultCardUpdate = useCallback(
     async (card: any) => {
-      if (card?.id === user?.user?.metadata?.payment_id)
+      if (
+        card?.id === user?.user?.metadata?.payment_method_id
+      )
         return;
 
       const res: any = await dispatch(
         authActions.updateMedusaCustomerAccount({
           data: {
             metadata: {
-              payment_id: card?.id,
+              payment_method_id: card?.id,
             },
           },
         }),
@@ -99,7 +102,7 @@ const PaymentDetails = () => {
         toast.error("Failed to update default card");
       }
     },
-    [dispatch, user?.user?.metadata?.payment_id],
+    [dispatch, user?.user?.metadata?.payment_method_id],
   );
 
   useEffect(() => {
@@ -113,7 +116,7 @@ const PaymentDetails = () => {
         authActions.updateMedusaCustomerAccount({
           data: {
             metadata: {
-              payment_id: card?.id,
+              payment_method_id: card?.id,
             },
           },
         }),
@@ -167,14 +170,16 @@ const PaymentDetails = () => {
                         }}
                         checked={
                           card?.id ===
-                          user?.user?.metadata?.payment_id
+                          user?.user?.metadata
+                            ?.payment_method_id
                         }
                         classes=""
                       />
                       <div
                         className={`flex items-center gap-3 p-3 ${
                           card?.id ===
-                          user?.user?.metadata?.payment_id
+                          user?.user?.metadata
+                            ?.payment_method_id
                             ? "border border-[#A93CC9]"
                             : ""
                         }`}
@@ -237,7 +242,8 @@ const PaymentDetails = () => {
                           onChange={() => {}}
                           checked={
                             card?.id ===
-                            user?.user?.metadata?.payment_id
+                            user?.user?.metadata
+                              ?.payment_method_id
                           }
                           classes=""
                         />

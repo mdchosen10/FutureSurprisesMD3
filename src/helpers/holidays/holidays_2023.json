@@ -45,6 +45,11 @@
     "type": "Orthodox"
   },
   {
+    "name": "Mother's Day",
+    "date": "2023-05-12",
+    "type": "common"
+  },
+  {
     "name": "Eid al-Fitr",
     "date": "2023-04-21",
     "type": "islamic"
