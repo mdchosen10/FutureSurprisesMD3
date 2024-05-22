@@ -2,7 +2,7 @@ import holidays_2023 from "@/helpers/holidays/holidays_2023.json";
 import holidays_2024 from "@/helpers/holidays/holidays_2024.json";
 import holidays_2025 from "@/helpers/holidays/holidays_2025.json";
 
-export const APIDateFormat = "YYYY-MM-DD";
+export const APIDateFormat = "yyyy-MM-dd";
 
 export const faqs = [
   {

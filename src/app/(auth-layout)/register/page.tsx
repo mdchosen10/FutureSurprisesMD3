@@ -23,7 +23,7 @@ import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks";
 import * as authActions from "@/redux/auth/actions";
-import moment from "moment";
+import { format } from "date-fns";
 import { APIDateFormat } from "@/helpers";
 import toast from "react-hot-toast";
 import RightArrow from "@/../public/icons/right-arrow.svg";
@@ -168,9 +168,7 @@ const Login = () => {
           const updateMedusaCustomerAccReqData = {
             metadata: {
               stripe_id: stripeAccRes?.payload.customer?.id,
-              birthdate: moment(data.dob).format(
-                APIDateFormat,
-              ),
+              birthdate: format(data.dob, APIDateFormat),
               notifications:
                 selectedNotifications.length > 1
                   ? "both"

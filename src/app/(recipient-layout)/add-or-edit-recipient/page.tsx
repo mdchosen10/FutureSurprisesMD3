@@ -33,7 +33,6 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import DeleteModal from "@/components/my-account/DeleteModal";
-import moment from "moment";
 import AccordionInput from "@/components/Accordion";
 import Help from "@/../public/icons/help.svg";
 import * as paymentActions from "@/redux/payment/actions";
@@ -45,6 +44,20 @@ import {
   relationshipOptions,
   yearlyHolidays,
 } from "@/helpers";
+import {
+  addYears,
+  differenceInCalendarDays,
+  format,
+  isAfter,
+  isBefore,
+  isValid,
+  setHours,
+  setMinutes,
+  setSeconds,
+  setYear,
+  startOfDay,
+} from "date-fns";
+
 interface AddRecipientForm {
   fName: string;
   lName: string;
@@ -161,6 +174,7 @@ const AddOrEditRecipient = () => {
   const [delayedHolidays, setDelayedHolidays] = useState(
     [],
   );
+
   const [holidayGroup, setHolidayGroup] = useState<any>([]);
   const [isOneTimeHoliday, setIsOneTimeHoliday] =
     useState<boolean>(false);
@@ -193,8 +207,10 @@ const AddOrEditRecipient = () => {
 
   const watchDob = watch("dob");
   const watChSpendingLimit = watch("spendingLimit");
-  const showSpendingOptionForKids = moment().isBefore(
-    moment(watchDob).add(10, "years"),
+
+  const showSpendingOptionForKids = isBefore(
+    new Date(),
+    addYears(watchDob, 10),
   );
 
   useEffect(() => {
@@ -271,25 +287,28 @@ const AddOrEditRecipient = () => {
       (item: any) => item.name === "Anniversary",
     );
 
-    const currentDate = moment();
-    const dayOfAnniversaryInCurrentYear = moment(date).year(
+    const dayOfAnniversaryInCurrentYear = setYear(
+      date,
       new Date().getFullYear(),
     );
+
     const isDayOfAnniversaryInCurrentYearIsPastToday =
-      moment(dayOfAnniversaryInCurrentYear).isAfter(
-        currentDate,
-      );
+      isAfter(new Date(), dayOfAnniversaryInCurrentYear);
 
     const bufferYear =
       isDayOfAnniversaryInCurrentYearIsPastToday ? 0 : 1;
 
-    const year = moment().add(bufferYear, "years").year();
-    const monthNumber = moment(date).month() + 1;
+    const year = +format(
+      addYears(new Date(), bufferYear),
+      "yyyy",
+    );
+
+    const monthNumber = +format(date, "MM");
     const month =
       monthNumber < 10
         ? `0${monthNumber}`
         : `${monthNumber}`;
-    const dayNumber = moment(date).date();
+    const dayNumber = +format(date, "dd");
     const day =
       dayNumber < 10 ? `0${dayNumber}` : `${dayNumber}`;
 
@@ -365,24 +384,29 @@ const AddOrEditRecipient = () => {
           "Please pick a date for the date of birth first!",
         );
 
-      const currentDate = moment();
-      const dayOfBirthInCurrentYear = moment(watchDob).year(
+      const dayOfBirthInCurrentYear = setYear(
+        watchDob,
         new Date().getFullYear(),
       );
-      const isDayOfBirthInCurrentYearIsPastToday = moment(
+
+      const isDayOfBirthInCurrentYearIsPastToday = isAfter(
         dayOfBirthInCurrentYear,
-      ).isAfter(currentDate);
+        new Date(),
+      );
 
       const bufferYear =
         isDayOfBirthInCurrentYearIsPastToday ? 0 : 1;
 
-      const year = moment().add(bufferYear, "years").year();
-      const monthNumber = moment(watchDob).month() + 1;
+      const year = +format(
+        addYears(new Date(), bufferYear),
+        "yyyy",
+      );
+      const monthNumber = +format(watchDob, "MM");
       const month =
         monthNumber < 10
           ? `0${monthNumber}`
           : `${monthNumber}`;
-      const dayNumber = moment(watchDob).date();
+      const dayNumber = +format(watchDob, "dd");
       const day =
         dayNumber < 10 ? `0${dayNumber}` : `${dayNumber}`;
 
@@ -408,9 +432,7 @@ const AddOrEditRecipient = () => {
       ...allHolidays,
       {
         name: newCustomHoliday,
-        date: moment(newCustomHolidayDate).format(
-          APIDateFormat,
-        ),
+        date: format(newCustomHolidayDate, APIDateFormat),
         type: "custom",
         selected: true,
         one_time: isOneTimeHoliday,
@@ -525,13 +547,15 @@ const AddOrEditRecipient = () => {
 
   const checkDeliveryDelay = useCallback(() => {
     const deliveryAffectedHolidays: any = [];
-    const today = moment();
     let diffInDays = 0;
 
     allHolidays?.forEach((holiday: any) => {
-      diffInDays = moment(holiday.date).diff(today, "days");
+      diffInDays = differenceInCalendarDays(
+        holiday.date,
+        new Date(),
+      );
       // && diffInDays >= 0
-      if (diffInDays <= 13 && diffInDays >= 0) {
+      if (diffInDays <= 14 && diffInDays >= 1) {
         deliveryAffectedHolidays.push(holiday);
       }
     });
@@ -551,7 +575,7 @@ const AddOrEditRecipient = () => {
 
     const updatedDelayedHolidays: any =
       delayedHolidays?.map((holiday: any) => {
-        const date = moment(holiday.date);
+        let date = holiday.date;
 
         const index = allHolidays.findIndex(
           (hol: any) => hol?.name === holiday?.name,
@@ -559,23 +583,26 @@ const AddOrEditRecipient = () => {
 
         if (!holiday.one_time) {
           if (value === "future") {
-            if (date.year() === moment().year()) {
-              date.add(1, "year");
+            if (
+              +format(holiday.date, "yyyy") ===
+              +format(new Date(), "yyyy")
+            ) {
+              date = addYears(date, 1);
             }
 
             allHolidays?.splice(index, 1, {
               ...holiday,
-              date: moment(date).format(APIDateFormat),
+              date: format(date, APIDateFormat),
               // delay: true,
               tempId: uuidv4(),
             });
           } else {
             if (holiday.delay) {
-              date.subtract(1, "year");
+              date = addYears(date, -1);
             }
             allHolidays?.splice(index, 1, {
               ...holiday,
-              date: moment(date).format(APIDateFormat),
+              date: format(date, APIDateFormat),
               // delay: false,
               tempId: uuidv4(),
             });
@@ -584,7 +611,7 @@ const AddOrEditRecipient = () => {
 
         return {
           ...holiday,
-          date: moment(date).format(APIDateFormat),
+          date: format(date, APIDateFormat),
           delay: true,
           tempId: uuidv4(),
         };
@@ -663,10 +690,11 @@ const AddOrEditRecipient = () => {
         strong_likes: data.strongLikes || "",
         strong_dislikes: data.strongDislikes || "",
         shipping_address_id: selectedAddress,
-        birthdate: moment(data.dob).format(APIDateFormat),
-        anniversary_date: moment(anniversaryDate).isValid()
-          ? moment(anniversaryDate).format(APIDateFormat)
-          : "",
+        birthdate: format(data.dob, APIDateFormat),
+        anniversary_date:
+          anniversaryDate && isValid(anniversaryDate)
+            ? format(anniversaryDate, APIDateFormat)
+            : "",
       };
 
       const options = {
@@ -826,9 +854,7 @@ const AddOrEditRecipient = () => {
     const upcomingHolidays: any = allHolidays.filter(
       (holiday: any) => {
         const holidayDate = new Date(holiday.date);
-        return moment(holidayDate).isSameOrAfter(
-          moment().startOf("day"),
-        );
+        return isAfter(holidayDate, startOfDay(new Date()));
       },
     );
 
@@ -955,11 +981,21 @@ const AddOrEditRecipient = () => {
       "signature",
       editableRecipient?.signature_name,
     );
+
+    function setToZeroTime(dateStr: Date) {
+      const midnightDate = setSeconds(
+        setMinutes(setHours(dateStr, 0), 0),
+        0,
+      );
+      return midnightDate;
+    }
+
     setValue(
       "dob",
-      new Date(
-        moment(editableRecipient?.birthdate).toDate(),
-      ),
+      editableRecipient?.birthdate &&
+        setToZeroTime(
+          new Date(editableRecipient?.birthdate),
+        ),
     );
     setValue(
       "spendingLimit",
@@ -1082,24 +1118,29 @@ const AddOrEditRecipient = () => {
         (item: any) => item.name === "Birthdays",
       );
 
-      const currentDate = moment();
-      const dayOfBirthInCurrentYear = moment(date).year(
+      const dayOfBirthInCurrentYear = setYear(
+        date,
         new Date().getFullYear(),
       );
-      const isDayOfBirthInCurrentYearIsPastToday = moment(
+
+      const isDayOfBirthInCurrentYearIsPastToday = isAfter(
         dayOfBirthInCurrentYear,
-      ).isAfter(currentDate);
+        new Date(),
+      );
 
       const bufferYear =
         isDayOfBirthInCurrentYearIsPastToday ? 0 : 1;
 
-      const year = moment().add(bufferYear, "years").year();
-      const monthNumber = moment(date).month() + 1;
+      const year = +format(
+        addYears(new Date(), bufferYear),
+        "yyyy",
+      );
+      const monthNumber = +format(date, "MM");
       const month =
         monthNumber < 10
           ? `0${monthNumber}`
           : `${monthNumber}`;
-      const dayNumber = moment(date).date();
+      const dayNumber = +format(date, "dd");
       const day =
         dayNumber < 10 ? `0${dayNumber}` : `${dayNumber}`;
 
@@ -1353,7 +1394,7 @@ const AddOrEditRecipient = () => {
             {delayedHolidays?.map((holiday: any) => (
               <p key={uuidv4()}>
                 {holiday.name} (
-                {moment(holiday.date).format("MM-DD-YYYY")})
+                {format(holiday.date, "MM-dd-yyyy")})
               </p>
             ))}
           </div>
@@ -1444,7 +1485,7 @@ const AddOrEditRecipient = () => {
             {delayedHolidays?.map((holiday: any) => (
               <p key={holiday.date}>
                 {holiday.name} (
-                {moment(holiday.date).format("MM-DD-YYYY")})
+                {format(holiday.date, "MM-dd-yyyy")})
               </p>
             ))}
           </div>
@@ -2248,14 +2289,12 @@ const CustomHolidays = (props: CustomHolidaysProps) => {
         </thead>
         <tbody>
           {holidays?.map((holiday: any) => (
-            <tr key={holiday.name}>
+            <tr key={holiday.tempId}>
               <td className="max-w-[200px] break-all border border-gray-300 px-2">
                 {holiday?.name}
               </td>
               <td className="min-w-[100px] border border-gray-300 px-2">
-                {`${moment(holiday?.date).format(
-                  "MM-DD-yyyy",
-                )}`}
+                {`${format(holiday?.date, "MM-dd-yyyy")}`}
               </td>
               <td className="border border-gray-300 px-2">
                 <div className="">

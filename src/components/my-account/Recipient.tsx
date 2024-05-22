@@ -21,6 +21,7 @@ import * as recipientActions from "@/redux/recipient/actions";
 import Image from "next/image";
 import Alert from "@/../public/images/alert.png";
 import * as authActions from "@/redux/auth/actions";
+import { format } from "date-fns";
 
 const getNextHoliday = (recipient: any) => {
   let holidays = recipient?.all_holidays.slice();
@@ -245,8 +246,9 @@ const Recipient = () => {
                     recipient?.last_name || ""
                   }`,
                   date: next_holiday
-                    ? moment(next_holiday?.date).format(
-                        "MM-DD-YYYY",
+                    ? format(
+                        next_holiday?.date,
+                        "MM-dd-yyyy",
                       )
                     : "",
                   amount: `$${recipient?.default_spending}`,
@@ -337,8 +339,9 @@ const Recipient = () => {
                   <span>:</span>
                   <span className="w-1/3 capitalize">
                     {next_holiday?.name
-                      ? moment(next_holiday?.date).format(
-                          "MM-DD-YYYY",
+                      ? format(
+                          next_holiday?.date,
+                          "MM-dd-yyyy",
                         )
                       : ""}
                   </span>

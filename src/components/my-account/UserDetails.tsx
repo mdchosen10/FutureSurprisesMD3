@@ -14,13 +14,13 @@ import Button from "../Button";
 import { useAppDispatch } from "@/hooks";
 import * as authActions from "@/redux/auth/actions";
 import { useAuth } from "@/hooks/useAuth";
-import moment from "moment";
 import { APIDateFormat } from "@/helpers";
 import TextInputFloating from "../utils/TextInputFloating";
 import toast from "react-hot-toast";
 import * as yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/navigation";
+import { format } from "date-fns";
 
 export const updateAccountDetailsSchema = yup
   .object()
@@ -79,7 +79,7 @@ const UserDetails = () => {
       phone: data.phone,
       metadata: {
         stripe_id: user?.metadata?.stripe_id || "",
-        birthdate: moment(data.dob).format(APIDateFormat),
+        birthdate: format(data.dob, APIDateFormat),
         notifications:
           selectedNotifications.length > 1
             ? "both"
