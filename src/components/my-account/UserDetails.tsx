@@ -143,7 +143,12 @@ const UserDetails = () => {
       setValue("email", user.email);
       setValue("phone", user.phone);
       user?.metadata?.birthdate &&
-        setValue("dob", new Date(user.metadata.birthdate));
+        setValue(
+          "dob",
+          new Date(
+            moment(user?.metadata?.birthdate).toDate(),
+          ),
+        );
       setSelectedNotifications([
         user?.metadata?.notifications,
       ]);

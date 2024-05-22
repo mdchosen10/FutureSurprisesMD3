@@ -2248,7 +2248,7 @@ const CustomHolidays = (props: CustomHolidaysProps) => {
         </thead>
         <tbody>
           {holidays?.map((holiday: any) => (
-            <tr key={holiday.name}>
+            <tr key={holiday.tempId}>
               <td className="max-w-[200px] break-all border border-gray-300 px-2">
                 {holiday?.name}
               </td>
