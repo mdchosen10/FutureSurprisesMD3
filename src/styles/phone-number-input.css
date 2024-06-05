@@ -1,0 +1,31 @@
+/* :root {
+  --PhoneInput-color--focus: red;
+  --PhoneInputCountryFlag-borderColor--focus: red;
+} */
+
+.PhoneInputInput {
+  border: 0px;
+  padding: 0px;
+  width: 100%;
+  font-size: 14px;
+  color: rgb(17 24 39);
+  padding-left: 5px;
+  outline: none;
+}
+
+.PhoneInputInput::placeholder {
+  font-size: 14px;
+  color: rgb(17 24 39);
+}
+
+.PhoneInput {
+  height: 42px;
+  border-bottom: 2px solid rgb(209 213 219);
+}
+
+input,
+textarea,
+select {
+  outline: none;
+  box-shadow: none !important;
+}
