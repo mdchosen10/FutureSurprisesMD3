@@ -25,6 +25,17 @@ interface createStripeCustomerAccountPayload {
   };
 }
 
+export const deleteUser = createAsyncThunk<
+  AxiosResponse,
+  { data: { email: string } }
+>(
+  "auth/userDelete",
+  async (userData: { data: { email: string } }) => {
+    const res = await authApi.deleteUser(userData);
+    return res as AxiosResponse;
+  },
+);
+
 export const login = createAsyncThunk<
   AxiosResponse,
   LoginPayload

@@ -1,6 +1,17 @@
 import axiosInstance from "@/utils/api";
 import { AxiosResponse } from "axios";
 
+export const deleteUser = (
+  config = {},
+): Promise<AxiosResponse> => {
+  // const {} = config
+  return axiosInstance({
+    url: "/store/customer",
+    method: "DELETE",
+    ...config,
+  });
+};
+
 export const login = (
   config = {},
 ): Promise<AxiosResponse> => {

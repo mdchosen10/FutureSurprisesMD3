@@ -70,6 +70,28 @@ const authSlice = createSlice({
         state.error = action.payload;
       },
     );
+    /******************DELETE USER******************/
+    builder.addCase(
+      actions.deleteUser.pending.type,
+      state => {
+        state.loading = true;
+      },
+    );
+    builder.addCase(
+      actions.deleteUser.fulfilled.type,
+      state => {
+        state.loading = false;
+        state.user = {};
+        localStorage.clear();
+      },
+    );
+    builder.addCase(
+      actions.deleteUser.rejected.type,
+      (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = action.payload;
+      },
+    );
     /******************GET CUSTOMER******************/
     builder.addCase(
       actions.getCurrentCustomer.pending.type,
