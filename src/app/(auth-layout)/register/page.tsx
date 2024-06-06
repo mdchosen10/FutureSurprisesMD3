@@ -32,6 +32,8 @@ import FacebookIcon from "@/../public/icons/facebook.svg";
 import CloseIcon from "@/../public/icons/close-violet.svg";
 
 import { Modal } from "flowbite-react";
+import PhoneNumberInput from "@/components/utils/PhoneNumberInput";
+import { isPossiblePhoneNumber } from "react-phone-number-input";
 
 export interface registerFormInputs {
   fName: string;
@@ -57,13 +59,17 @@ const registerSchema = yup
     phone: yup
       .string()
       .required("Phone is required!")
-      .matches(
-        /^(\(\d{3}\)|\d{3})[-.\s]?(\d{3})[-.\s]?(\d{4})$/,
-        {
-          message: "Please enter valid phone number.",
-          excludeEmptyString: false,
+      .test({
+        name: "validate-phone-number",
+        test: (value: string, { createError }) => {
+          if (isPossiblePhoneNumber(value)) {
+            return true;
+          }
+          return createError({
+            message: "Enter a valid phone number",
+          });
         },
-      ),
+      }),
     password: yup
       .string()
       .required("Password is required!")
@@ -389,12 +395,12 @@ const Login = () => {
                 name="phone"
                 control={control}
                 render={({ field }) => (
-                  <TextInputFloating
-                    {...field}
+                  <PhoneNumberInput
+                    value={field.value}
                     placeholder="Phone Number*"
-                    type="phone"
+                    defaultCountry="US"
+                    onChange={field.onChange}
                     errors={errors.phone?.message}
-                    inputClassName="w-full lg:max-w-[240px]"
                   />
                 )}
               />

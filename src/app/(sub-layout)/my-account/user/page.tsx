@@ -19,6 +19,7 @@ import Image from "next/image";
 
 import CloseIcon from "@/../public/icons/close-violet.svg";
 import TextInputFloating from "@/components/utils/TextInputFloating";
+import DeleteAccount from "@/components/my-account/DeleteAccount";
 
 const changePasswordSchema = yup
   .object()
@@ -54,6 +55,8 @@ const changePasswordSchema = yup
   .required();
 
 const User = () => {
+  const [isDeleteAccOpen, setIsDeleteAccOpen] =
+    useState(false);
   const [changePasswordModal, setChangePasswordModal] =
     useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -183,14 +186,26 @@ const User = () => {
           </form>
         </div>
       </Modal>
-      <span
-        className="max-w-fit cursor-pointer font-mainText text-sm text-primaryViolet md:ml-[25px] md:text-base"
-        onClick={() =>
-          setChangePasswordModal(!changePasswordModal)
-        }
-      >
-        Change password?
-      </span>
+      <DeleteAccount
+        isOpen={isDeleteAccOpen}
+        setIsOpen={setIsDeleteAccOpen}
+      />
+      <div className="flex flex-col space-y-3">
+        <span
+          className="max-w-fit cursor-pointer font-mainText text-sm text-primaryViolet md:ml-[25px] md:text-base"
+          onClick={() =>
+            setChangePasswordModal(!changePasswordModal)
+          }
+        >
+          Change password?
+        </span>
+        <span
+          className="max-w-fit cursor-pointer font-mainText text-sm text-red-600 md:ml-[25px] md:text-base"
+          onClick={() => setIsDeleteAccOpen(true)}
+        >
+          Delete Account
+        </span>
+      </div>
     </div>
   );
 };
