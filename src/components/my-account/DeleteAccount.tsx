@@ -44,13 +44,16 @@ const DeleteAccount = ({
     toast.error(
       responseMsg?.message || "Something went wrong!",
     );
-  }, [dispatch, setIsOpen]);
+  }, [dispatch, setIsOpen, user?.email]);
 
   return (
     <Modal
       dismissible={false}
       show={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={() => {
+        setConfirmText("");
+        setIsOpen(false);
+      }}
       className="h-screen"
       size="md"
       position="center"
@@ -62,6 +65,7 @@ const DeleteAccount = ({
             src={CloseIcon}
             alt="close"
             onClick={() => {
+              setConfirmText("");
               setIsOpen(false);
             }}
             className="ml-auto cursor-pointer rounded-full border border-gray-300"

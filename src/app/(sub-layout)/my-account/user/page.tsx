@@ -203,7 +203,7 @@ const User = () => {
           className="max-w-fit cursor-pointer font-mainText text-sm text-red-600 md:ml-[25px] md:text-base"
           onClick={() => setIsDeleteAccOpen(true)}
         >
-          Delete Account
+          Delete account
         </span>
       </div>
     </div>
