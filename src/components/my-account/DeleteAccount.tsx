@@ -99,7 +99,7 @@ const DeleteAccount = ({
                 className="w-full rounded border p-2 focus:border-primaryViolet md:col-span-2"
               />
               <button
-                disabled
+                disabled={confirmText !== "DELETE"}
                 className={`h-[42px] rounded font-semibold text-white md:h-full
                 ${
                   confirmText === "DELETE"
