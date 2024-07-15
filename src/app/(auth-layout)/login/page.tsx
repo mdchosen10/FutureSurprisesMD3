@@ -7,7 +7,10 @@ import Logo from "@/../public/images/new_log_big.png";
 import GoogleIcon from "@/../public/icons/google.svg";
 import FacebookIcon from "@/../public/icons/facebook.svg";
 import GoBack from "@/../public/icons/go-back.svg";
-import { useRouter } from "next/navigation";
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useAppDispatch } from "@/hooks";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextInputFloating from "@/components/utils/TextInputFloating";
@@ -58,6 +61,9 @@ const Login = () => {
   const [loginLoading, setLoginLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
+  const searchParams = useSearchParams();
+  const searchRedirectURL = searchParams.get("redirect");
+
   const {
     handleSubmit,
     control,
@@ -76,7 +82,12 @@ const Login = () => {
 
     if (res?.payload.status === 200) {
       setLoginLoading(false);
-      return router.push("/my-account/recipients");
+      if (searchRedirectURL) {
+        return router.push(
+          `/my-account/recipients?redirect=${searchRedirectURL}`,
+        );
+      }
+      return router.push(`/my-account/recipients`);
     }
 
     setLoginLoading(false);

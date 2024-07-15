@@ -16,7 +16,9 @@ export default function PrivateLayoutWrapper({
 
   useEffect(() => {
     if (!user?.id) {
-      router.push("/login");
+      router.replace(
+        `/login?redirect=${window.location.href}`,
+      );
       return;
     }
   }, [router, user]);

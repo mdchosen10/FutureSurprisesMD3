@@ -1,7 +1,11 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import React, { ReactNode } from "react";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import React, { ReactNode, useEffect } from "react";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -32,8 +36,16 @@ export default function SubLayoutWrapper({
   children,
 }: LayoutProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchRedirectURL = searchParams.get("redirect");
 
   let tab = usePathname();
+
+  useEffect(() => {
+    if (searchRedirectURL) {
+      router.replace(searchRedirectURL);
+    }
+  }, [searchRedirectURL, router]);
 
   return (
     <div className="m-auto flex min-h-screen flex-col">
