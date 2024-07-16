@@ -8,6 +8,7 @@ type GiftCardProps = {
     image: string;
     name: string;
   };
+  defaultGiftId: number;
   selectedGiftId?: number;
   onGiftSelection: (id: number) => void;
 };
@@ -15,39 +16,37 @@ type GiftCardProps = {
 const GiftCard = ({
   data,
   selectedGiftId,
+  defaultGiftId,
   onGiftSelection,
 }: GiftCardProps) => {
   return (
     <div
       onClick={() => onGiftSelection(data.id)}
-      className={`relative cursor-pointer space-y-3 ${
+      className={`relative cursor-pointer rounded-md border-2 transition-all duration-300 ease-in-out ${
         selectedGiftId === data.id
-          ? "rounded-md border-2 border-primaryViolet p-2 shadow-md"
+          ? "z-10 scale-105 border-primaryViolet bg-white shadow-md"
           : ""
       }`}
     >
-      {selectedGiftId === data.id && (
-        <div className="absolute right-2 top-2 w-fit rounded bg-primaryViolet px-2 text-sm text-white">
-          Selected
-        </div>
-      )}
-      <Image
-        src={data.image}
-        alt="gift-image"
-        className="h-[200px] w-full rounded-md bg-gray-100"
-        height={0}
-        width={0}
-      />
-      <h4>{data?.name}</h4>
-      <p>
-        dummy text of the printing and typesetting industry.
-        Lorem Ipsum has been the industry standard dummy
-        text ever since the 1500s, when an unknown printer
-        took a galley of type and scrambled it to make a
-        type specimen book. It has survived not only five
-        centuries, but also the leap into electronic
-        typesetting, remaining essentially unchanged.
-      </p>
+      {selectedGiftId === data.id &&
+        data.id === defaultGiftId && (
+          <div className="w-full bg-primaryViolet p-2 text-center text-xs text-white">
+            <p>Selected</p>
+          </div>
+        )}
+      <div className="space-y-3 p-2">
+        <Image
+          src={data.image}
+          alt="gift-image"
+          className="h-[200px] w-full rounded-md bg-gray-100 object-cover"
+          height={0}
+          width={0}
+        />
+        <h4>{data?.name}</h4>
+        <p className="text-xs text-gray-600">
+          {data?.description}
+        </p>
+      </div>
     </div>
   );
 };

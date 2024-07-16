@@ -20,6 +20,7 @@ const GiftOptions = ({ params }: GiftProps) => {
   const [pageData, setPageData] = useState<any>(null);
   const [selectedGift, setSelectedGift] =
     useState<Gift | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchGiftOptions = async () => {
     try {
@@ -29,16 +30,19 @@ const GiftOptions = ({ params }: GiftProps) => {
       if (response.status === 200) {
         if (response.data?.message === "ok") {
           const data = response?.data?.data;
-          setIsLoading(false);
           setSelectedGift(
             data?.metadata?.selectedGift || null,
           );
           return setPageData(data);
         }
       }
+      setError(response?.data?.message);
       toast.error(response?.data?.message);
     } catch (error) {
+      setError("Something went wrong.");
       toast.error("Something went wrong.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -48,6 +52,28 @@ const GiftOptions = ({ params }: GiftProps) => {
     );
     if (findGift) {
       setSelectedGift(findGift);
+    }
+  };
+
+  const calculateRemainingDays = (issuedDate: string) => {
+    if (issuedDate) {
+      const issued: any = new Date(issuedDate);
+      const current: any = new Date();
+      const differenceInMillis = current - issued;
+
+      const differenceInDays = Math.floor(
+        differenceInMillis / (1000 * 60 * 60 * 24),
+      );
+
+      const remaining = 10 - differenceInDays;
+
+      if (remaining > 0) {
+        return `in ${remaining} days`;
+      }
+
+      return "today";
+    } else {
+      return 0;
     }
   };
 
@@ -65,9 +91,19 @@ const GiftOptions = ({ params }: GiftProps) => {
     );
   }
 
+  if (!pageData && error) {
+    return (
+      <div className="mx-auto flex max-w-[1000px] flex-col space-y-4 px-5 pt-[130px] font-mainText md:pb-6 lg:px-0">
+        <h3 className="font-mainHeading text-2xl text-primaryViolet">
+          {error}
+        </h3>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <div className="mx-auto flex max-w-[1000px] flex-col space-y-4 px-5 pt-[130px] font-mainText md:pb-6 lg:px-0">
+      <div className="mx-auto mb-10 flex max-w-[1000px] flex-col space-y-4 px-5 pt-[130px] font-mainText md:pb-6 lg:px-0">
         <h3 className="font-mainHeading text-2xl text-primaryViolet">
           Select a Gift for Your Recipient
         </h3>
@@ -87,13 +123,26 @@ const GiftOptions = ({ params }: GiftProps) => {
             {pageData?.recipient?.default_spending}
           </h6>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="text-sm text-red-600">
+          *Please note that this link will expire{" "}
+          {calculateRemainingDays(
+            pageData?.metadata?.issuedAt,
+          )}
+        </div>
+
+        <h1 className="text-center font-mainHeading text-lg text-primaryViolet md:text-2xl">
+          Available Gifts
+        </h1>
+        <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-4">
           {pageData?.giftOptions &&
             pageData.giftOptions?.map((item: any) => (
               <GiftCard
                 key={item.id}
                 data={item}
                 selectedGiftId={selectedGift?.id}
+                defaultGiftId={
+                  pageData?.metadata?.selectedGift?.id
+                }
                 onGiftSelection={handleGiftSelection}
               />
             ))}
@@ -101,7 +150,7 @@ const GiftOptions = ({ params }: GiftProps) => {
       </div>
       {selectedGift?.id !==
         pageData?.metadata?.selectedGift?.id && (
-        <div className="sticky bottom-0 flex min-h-[100px] w-full flex-col items-center justify-center gap-2 border-t border-primaryViolet bg-gray-50 px-3 py-6 text-center font-mainText text-sm">
+        <div className="sticky bottom-0 z-20 flex min-h-[100px] w-full flex-col items-center justify-center gap-2 border-t border-primaryViolet bg-gray-50 px-3 py-6 text-center font-mainText text-sm">
           <p>
             Important Note: Once confirmed, changes to this
             gift will not be possible.
