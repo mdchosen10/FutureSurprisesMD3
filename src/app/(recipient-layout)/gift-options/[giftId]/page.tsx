@@ -4,6 +4,7 @@ import GiftCard from "@/components/GiftCard";
 import axiosInstance from "@/utils/api";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import moment from "moment";
 
 type Gift = {
   description: string;
@@ -55,27 +56,11 @@ const GiftOptions = ({ params }: GiftProps) => {
     }
   };
 
-  const calculateRemainingDays = (issuedDate: string) => {
-    if (issuedDate) {
-      const issued: any = new Date(issuedDate);
-      const current: any = new Date();
-      const differenceInMillis = current - issued;
-
-      const differenceInDays = Math.floor(
-        differenceInMillis / (1000 * 60 * 60 * 24),
-      );
-
-      const remaining = 10 - differenceInDays;
-
-      if (remaining > 0) {
-        return `in ${remaining} days`;
-      }
-
-      return "today";
-    } else {
-      return 0;
-    }
-  };
+  function formatDate(date: Date) {
+    const momentDate = moment(date).add(10, "days");
+    const formattedDate = momentDate.format("DD-MM-YYYY");
+    return formattedDate;
+  }
 
   useEffect(() => {
     fetchGiftOptions();
@@ -124,10 +109,8 @@ const GiftOptions = ({ params }: GiftProps) => {
           </h6>
         </div>
         <div className="text-sm text-red-600">
-          *Please note that this link will expire{" "}
-          {calculateRemainingDays(
-            pageData?.metadata?.issuedAt,
-          )}
+          *Please note that this link will expire on{" : "}
+          {formatDate(pageData?.metadata?.issuedAt)}
         </div>
 
         <h1 className="text-center font-mainHeading text-lg text-primaryViolet md:text-2xl">
