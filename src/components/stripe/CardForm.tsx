@@ -1,0 +1,238 @@
+"use client";
+
+import React, { useState } from "react";
+import {
+  useStripe,
+  useElements,
+  CardElement,
+} from "@stripe/react-stripe-js";
+import {
+  Controller,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import Spinner from "../shared/Spinner";
+import Button from "../shared/Button";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
+export interface CustomerSchema {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+}
+
+const customerSchema = yup
+  .object()
+  .shape({
+    first_name: yup
+      .string()
+      .required("First name is required"),
+    last_name: yup
+      .string()
+      .required("First name is required"),
+    email: yup.string().required(),
+    phone: yup.string().required(),
+  })
+  .required();
+
+const cardElementOptions = {
+  style: {
+    base: {
+      padding: "100px",
+      color: "#fff",
+      fontSize: "16px",
+      "::placeholder": {
+        color: "#fff",
+      },
+      border: "1px solid #fff",
+    },
+
+    invalid: {
+      color: "#ff0000",
+    },
+  },
+  hidePostalCode: true, // Optional: Hides the postal code field
+};
+const CardForm = () => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const router = useRouter();
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
+  const { handleSubmit, control } = useForm({
+    resolver: yupResolver(customerSchema),
+  });
+
+  const onSubmit: SubmitHandler<
+    CustomerSchema
+  > = async data => {
+    if (!stripe || !elements) return;
+
+    const cardElement = elements.getElement(CardElement);
+
+    if (!cardElement) {
+      toast.error("Card Element not found");
+      return;
+    }
+    setLoading(true);
+
+    const { error, paymentMethod } =
+      await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement,
+      });
+
+    if (error) {
+      toast.error(
+        error.message ?? "Failed to create payment method",
+      );
+      return;
+    }
+
+    try {
+      const storedData = JSON.parse(
+        localStorage.getItem("formData") ?? "{}",
+      );
+      const response = await fetch(
+        `${process.env.BASE_URL}/create-customer-and-payment`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: data?.email,
+            first_name: data?.first_name,
+            last_name: data?.last_name,
+            phone: data?.phone,
+            paymentMethodId: paymentMethod.id,
+            ...storedData,
+          }),
+        },
+      );
+
+      const final = await response.json();
+      if (final && final?.success && final?.token) {
+        setLoading(false);
+        setSuccess(true);
+        localStorage.removeItem("formData");
+        localStorage?.setItem("user_token", final?.token);
+        toast.success(
+          "Recipient details stored successfully",
+        );
+        return router.push("/my-account/recipients");
+      } else {
+        setLoading(false);
+        localStorage.removeItem("formData");
+        toast.error("Failed to store recipient details");
+        router.push("/surprise");
+      }
+    } catch (err) {
+      setLoading(false);
+      toast.error("Failed to store recipient details");
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen w-full flex-col bg-[#2f1752] px-5 lg:px-20">
+      {success ? (
+        <div className="flex w-full flex-col items-center justify-center gap-3 pt-20">
+          <h2 className="text-3xl font-bold text-white">
+            Thank you{" "}
+          </h2>
+          <p className="text-lg text-white">
+            Recipient details stored successfully
+          </p>
+          <Button
+            variant="transparent"
+            className="border !bg-white px-5 text-[#2f1752]"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            Go To Home Page
+          </Button>
+        </div>
+      ) : (
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mx-auto mt-20 flex max-w-3xl flex-col gap-3 p-10"
+        >
+          <Controller
+            name="first_name"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                placeholder="First Name*"
+                type="text"
+                className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+              />
+            )}
+          />
+          <Controller
+            name="last_name"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                placeholder="Last Name*"
+                type="text"
+                className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+              />
+            )}
+          />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                placeholder="Email*"
+                type="email"
+                className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+              />
+            )}
+          />
+
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                placeholder="Phone*"
+                type="text"
+                className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+              />
+            )}
+          />
+          <label className="text-white">
+            Enter Card Details
+          </label>
+          <div className="flex flex-col gap-6 rounded-md border border-white bg-[#422c62] px-5 py-3">
+            <CardElement options={cardElementOptions} />
+          </div>
+          <small className="mt-3 text-xs text-[#ffeeee]">
+            By providing your card information, you allow
+            Future Surprises to charge your card for future
+            payments in accordance with their terms.
+          </small>
+          <button
+            className="ml-auto mt-5 flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2 text-black hover:shadow-md disabled:cursor-not-allowed"
+            type="submit"
+            disabled={!stripe || loading}
+          >
+            Submit
+            {loading ? <Spinner /> : ""}
+          </button>
+        </form>
+      )}
+    </div>
+  );
+};
+
+export default CardForm;

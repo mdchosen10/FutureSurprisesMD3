@@ -14,11 +14,15 @@ const config: Config = {
       colors: {
         primaryViolet: "#643e74",
         primaryBlack: "#2C2434",
+        primary: "#4B0082",
+        secondary: "#2c2c34",
       },
       fontFamily: {
         mainHeading: ["var(--font-mainHeading)"],
         mainText: ["var(--font-mainText)"],
         Sedgwick: ["var(--font-Sedgwick)"],
+        lora: "var(--font-lora)",
+        poppins: "var(--font-mainText)",
       },
       screens: {
         "3xl": "1440px",

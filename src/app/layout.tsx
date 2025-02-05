@@ -2,8 +2,10 @@ import React from "react";
 import { Toaster } from "react-hot-toast";
 import { StoreProvider } from "@/redux/Provider";
 import "../styles/globals.css";
+
 // import type { Metadata } from "next";
 import {
+  Lora,
   Playfair_Display,
   Poppins,
   Sedgwick_Ave,
@@ -33,6 +35,13 @@ const Sedgwick = Sedgwick_Ave({
   subsets: ["latin"],
 });
 
+const lora = Lora({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-lora",
+});
+
 export const metadata: Metadata = {
   title: "Future surprises",
   description: "Simplify your gift giving",
@@ -46,7 +55,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${mainHeading.variable} ${mainText.variable} ${Sedgwick.variable}`}
+      className={`${mainHeading.variable} ${mainText.variable} ${Sedgwick.variable} ${lora.variable}`}
     >
       <body>
         <Toaster
@@ -59,7 +68,11 @@ export default function RootLayout({
             },
           }}
         />
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <div className="mx-auto overflow-hidden">
+            {children}
+          </div>
+        </StoreProvider>
       </body>
     </html>
   );
