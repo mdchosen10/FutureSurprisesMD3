@@ -221,7 +221,7 @@ const Recipient = () => {
           onClick={() =>
             router.push("/add-or-edit-recipient")
           }
-          className="rounded-[10px] border border-[#A93CC9] px-[10px] py-[5px] font-mainText text-[14px]"
+          className="rounded-[10px] bg-primary px-10 py-3 font-mainText text-lg font-bold text-white"
         >
           Add Recipient
         </button>
