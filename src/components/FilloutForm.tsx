@@ -84,11 +84,11 @@ const FilloutForm = () => {
       <div className="w-full flex-1">
         {data && data?.success ? (
           user?.id ? (
-            <div className="">
+            <div className="flex h-full flex-col items-center justify-center">
               <Button
                 onClick={handleSubmit}
-                variant="transparent"
-                className="bg-white px-5 text-black"
+                variant="primary"
+                className="mx-auto !px-10 py-5 text-lg font-bold text-white"
                 disabled={loading}
               >
                 Continue
