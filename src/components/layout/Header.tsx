@@ -5,12 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Avatar from "../Avatar";
-import Button from "../Button";
-import { useRouter } from "next/navigation";
 
 const Header = () => {
   const user = useAuth();
-  const router = useRouter();
 
   return (
     <nav className="fixed left-0 top-0 z-30 flex h-[90px] w-full items-center justify-between bg-primary font-poppins text-white dark:text-white">
@@ -34,7 +31,7 @@ const Header = () => {
           </Link>
           <Link
             className="font-bold hover:underline"
-            href="/faq"
+            href="/FAQs"
           >
             FAQ
           </Link>
@@ -44,41 +41,16 @@ const Header = () => {
           >
             Contact
           </Link>
-          {!user?.id && (
-            <div className="hidden justify-between gap-1 md:flex lg:gap-4">
-              <Button
-                name="Sign in"
-                bgClass=""
-                textClass="text-white"
-                extraClass="px-2 lg:px-4"
-                onClick={() => router.push("/login")}
-              />
-              <Button
-                name="Get started"
-                bgClass="bg-white"
-                textClass="text-primaryViolet"
-                extraClass="px-2 lg:px-4"
-                onClick={() => router.push("/register")}
-              />
-            </div>
-          )}
+
           {!user?.id ? (
-            <div className="flex max-w-[200px] flex-col gap-2 pb-4 md:hidden lg:gap-4">
-              <Link
-                className="font-bold hover:underline"
-                href={"/login"}
-              >
-                Sign in
-              </Link>
-              <Link
-                className="font-bold hover:underline"
-                href={"/register"}
-              >
-                Get started
-              </Link>
-            </div>
+            <Link
+              className="font-bold hover:underline"
+              href={"/login"}
+            >
+              Account
+            </Link>
           ) : (
-            <li className="p-4">
+            <li className="list-none p-4">
               <Avatar user={user} />
             </li>
           )}

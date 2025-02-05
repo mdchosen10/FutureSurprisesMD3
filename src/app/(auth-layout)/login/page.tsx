@@ -87,7 +87,7 @@ const Login = () => {
     if (user?.id) {
       router.push("/my-account");
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div className="flex justify-center md:justify-between">
@@ -282,7 +282,8 @@ const Login = () => {
               className="cursor-pointer text-xs text-primaryViolet md:text-sm"
               href={"/forgot-password"}
             >
-              Forgot password?
+              Don&apos;t have a password? or Forgot
+              password?
             </Link>
           </div>
         </div>

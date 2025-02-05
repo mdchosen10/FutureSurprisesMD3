@@ -158,32 +158,6 @@ const Recipient = () => {
     },
   ];
 
-  const fetchUser = useCallback(async () => {
-    const res = await dispatch(
-      authActions.getCustomer(),
-    ).unwrap();
-    if (res.status === 200) {
-      getRecipients();
-    } else {
-      toast.error("Database error!");
-    }
-  }, [dispatch]);
-
-  const deleteRecipient = useCallback(async () => {
-    const res: any = await dispatch(
-      recipientActions.deleteRecipient({
-        data: recipientId,
-      }),
-    );
-    if (res?.payload.success) {
-      toast.success("Recipient deleted successfully");
-      setDeleteModal(false);
-      getRecipients();
-      return;
-    }
-    toast.error("Something went wrong!");
-  }, [recipientId, dispatch]);
-
   const getRecipients = useCallback(async () => {
     if (user && user?.id) {
       setRecipientsLoading(true);
@@ -202,6 +176,31 @@ const Recipient = () => {
       setRecipientsLoading(false);
     }
   }, [dispatch, user]);
+  const fetchUser = useCallback(async () => {
+    const res = await dispatch(
+      authActions.getCustomer(),
+    ).unwrap();
+    if (res.status === 200) {
+      getRecipients();
+    } else {
+      toast.error("Database error!");
+    }
+  }, [dispatch, getRecipients]);
+
+  const deleteRecipient = useCallback(async () => {
+    const res: any = await dispatch(
+      recipientActions.deleteRecipient({
+        data: recipientId,
+      }),
+    );
+    if (res?.payload.success) {
+      toast.success("Recipient deleted successfully");
+      setDeleteModal(false);
+      getRecipients();
+      return;
+    }
+    toast.error("Something went wrong!");
+  }, [recipientId, dispatch, getRecipients]);
 
   useEffect(() => {
     fetchUser();
@@ -218,9 +217,7 @@ const Recipient = () => {
           Recipient
         </h1>
         <button
-          onClick={() =>
-            router.push("/add-or-edit-recipient")
-          }
+          onClick={() => router.push("/surprise")}
           className="rounded-[10px] bg-primary px-10 py-3 font-mainText text-lg font-bold text-white"
         >
           Add Recipient

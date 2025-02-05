@@ -17,6 +17,8 @@ import Spinner from "../shared/Spinner";
 import Button from "../shared/Button";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import TextInput from "../utils/TextInput";
+import { isPossiblePhoneNumber } from "react-phone-number-input";
 
 export interface CustomerSchema {
   first_name: string;
@@ -33,9 +35,28 @@ const customerSchema = yup
       .required("First name is required"),
     last_name: yup
       .string()
-      .required("First name is required"),
-    email: yup.string().required(),
-    phone: yup.string().required(),
+      .required("Last name is required"),
+    email: yup
+      .string()
+      .required("Email is required!")
+      .matches(/^((\S+)@(\S+)\.(\S+))$/, {
+        message: "Please enter a valid email address.",
+        excludeEmptyString: false,
+      }),
+    phone: yup
+      .string()
+      .required("Phone is required!")
+      .test({
+        name: "validate-phone-number",
+        test: (value: string, { createError }) => {
+          if (isPossiblePhoneNumber(value)) {
+            return true;
+          }
+          return createError({
+            message: "Enter a valid phone number",
+          });
+        },
+      }),
   })
   .required();
 
@@ -64,7 +85,11 @@ const CardForm = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
-  const { handleSubmit, control } = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(customerSchema),
   });
 
@@ -88,6 +113,7 @@ const CardForm = () => {
       });
 
     if (error) {
+      setLoading(false);
       toast.error(
         error.message ?? "Failed to create payment method",
       );
@@ -165,11 +191,12 @@ const CardForm = () => {
             name="first_name"
             control={control}
             render={({ field }) => (
-              <input
+              <TextInput
                 {...field}
                 placeholder="First Name*"
                 type="text"
                 className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+                errors={errors?.first_name?.message}
               />
             )}
           />
@@ -177,11 +204,12 @@ const CardForm = () => {
             name="last_name"
             control={control}
             render={({ field }) => (
-              <input
+              <TextInput
                 {...field}
                 placeholder="Last Name*"
                 type="text"
                 className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+                errors={errors?.last_name?.message}
               />
             )}
           />
@@ -189,11 +217,12 @@ const CardForm = () => {
             name="email"
             control={control}
             render={({ field }) => (
-              <input
+              <TextInput
                 {...field}
                 placeholder="Email*"
                 type="email"
                 className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+                errors={errors?.email?.message}
               />
             )}
           />
@@ -202,11 +231,12 @@ const CardForm = () => {
             name="phone"
             control={control}
             render={({ field }) => (
-              <input
+              <TextInput
                 {...field}
                 placeholder="Phone*"
                 type="text"
                 className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+                errors={errors?.phone?.message}
               />
             )}
           />
