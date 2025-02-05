@@ -1,5 +1,5 @@
 "use client";
-
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
   useCallback,
   useEffect,
@@ -185,7 +185,7 @@ const Recipient = () => {
     } else {
       toast.error("Database error!");
     }
-  }, [dispatch, getRecipients]);
+  }, [dispatch]);
 
   const deleteRecipient = useCallback(async () => {
     const res: any = await dispatch(
@@ -200,7 +200,7 @@ const Recipient = () => {
       return;
     }
     toast.error("Something went wrong!");
-  }, [recipientId, dispatch, getRecipients]);
+  }, [recipientId, dispatch]);
 
   useEffect(() => {
     fetchUser();

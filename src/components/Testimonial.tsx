@@ -3,22 +3,30 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
 
 const TestimonialsCarousel = () => {
   const testimonials = [
     {
-      text: "FutureSurprises.com made it so easy to send a surprise to my best friend! She received a gorgeous handcrafted jewelry box, and it was exactly her style. It felt like they knew her personally!",
-      author: "Emily R., New York, USA",
+      text: "Future Surprises is a really convenient way to send gifts to your loved ones. I appreciate how they took care of most of the effort and found great gifts so I didn't have to. My relatives loved what I got them.",
+      author: "Tarikh Campbell",
     },
     {
-      text: "I wanted to cheer up my mom after a tough week. They delivered a beautiful, thoughtful gift, and it made her day!",
-      author: "Sofia R., Austin, TX, USA",
+      text: "My mom loved her Mother's Day gift. Future Surprises truly is thoughtful. Not a boring basket or generic box like other services. I highly recommend their service. Simple, fast, and quality gifts.",
+      author: "Hanzel Corella",
     },
     {
-      text: "FutureSurprises.com helped me send my brother a gift for his graduation. He got a personalized watch with an engraved message—absolutely loved it!",
-      author: "James T., Los Angeles, CA, USA",
+      text: "Future surprises provides a magical experience both to the gift receiver and gift giver.",
+      author: "Armen Kherlopian",
+    },
+    {
+      text: "Excellent service. Very happy with the gift",
+      author: "Khalil Qato",
+    },
+    {
+      text: "Future Surprises has helped me put gift giving for my family and close friends on autopilot. Great gift recommendations!",
+      author: "Dennis Chim",
     },
   ];
 
@@ -30,7 +38,7 @@ const TestimonialsCarousel = () => {
         are Saying
       </h2>
       <Swiper
-        modules={[Pagination]}
+        modules={[Pagination, Autoplay]}
         pagination={{ clickable: true }}
         spaceBetween={10}
         containerModifierClass="overflow-visible"
@@ -44,6 +52,8 @@ const TestimonialsCarousel = () => {
             slidesPerView: 1,
           },
         }}
+        loop
+        autoplay
       >
         {testimonials.map((testimonial, index) => (
           <SwiperSlide

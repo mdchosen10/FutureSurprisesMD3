@@ -87,7 +87,8 @@ const Login = () => {
     if (user?.id) {
       router.push("/my-account");
     }
-  }, [user, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <div className="flex justify-center md:justify-between">
