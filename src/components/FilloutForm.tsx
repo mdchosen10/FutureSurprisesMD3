@@ -14,11 +14,16 @@ import Button from "./shared/Button";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Spinner from "./shared/Spinner";
+import { Modal } from "flowbite-react";
+import { ModalHeader } from "flowbite-react/lib/esm/components/Modal/ModalHeader";
+import { ModalBody } from "flowbite-react/lib/esm/components/Modal/ModalBody";
 
 const FilloutForm = () => {
   const uniqueId = useSessionId();
   const { data } = useWebSocket(uniqueId);
   const [loading, setLoading] = useState(false);
+  const [openModal] = useState(true);
+
   const token = getToken();
   const user = useAuth();
   const router = useRouter();
@@ -84,17 +89,37 @@ const FilloutForm = () => {
       <div className="w-full flex-1">
         {data && data?.success ? (
           user?.id ? (
-            <div className="flex h-full flex-col items-center justify-center">
-              <Button
-                onClick={handleSubmit}
-                variant="primary"
-                className="mx-auto !px-10 py-5 text-lg font-bold text-white"
-                disabled={loading}
+            <Modal
+              dismissible={false}
+              show={openModal}
+              onClose={() => {}}
+            >
+              <ModalHeader
+                theme={{ close: { icon: "!hidden" } }}
               >
-                Continue
-                {loading ? <Spinner /> : ""}
-              </Button>
-            </div>
+                <h3 className="font-poppins text-2xl font-bold text-primary">
+                  Save Recipient
+                </h3>
+              </ModalHeader>
+              <ModalBody>
+                <div className="flex h-full flex-col items-center justify-center gap-6">
+                  <p className="text-center font-poppins">
+                    The recipient details will be saved and
+                    our team will select the perfect gift
+                    and ensure timely delivery.
+                  </p>
+                  <Button
+                    onClick={handleSubmit}
+                    variant="primary"
+                    className="mx-auto !px-10 py-2 text-lg font-bold text-white"
+                    disabled={loading}
+                  >
+                    Submit
+                    {loading ? <Spinner /> : ""}
+                  </Button>
+                </div>
+              </ModalBody>
+            </Modal>
           ) : (
             <div className="">
               <Elements
