@@ -11,30 +11,35 @@ type PhoneNumberInputProps = {
   onChange: () => void;
   defaultCountry?: Country;
   errors?: string;
+  isRounded?: boolean;
 };
 
-const NumberInput = forwardRef((props, ref: any) => {
-  return (
-    <div className="ml-1 flex flex-col gap-1">
-      <div className="relative z-0">
-        <input
-          name="floating_text_input"
-          {...props}
-          className={`peer 
+const NumberInput = forwardRef(
+  (props: { isRounded?: boolean }, ref: any) => {
+    return (
+      <div className="ml-1 flex flex-col gap-1">
+        <div className="relative z-0">
+          <input
+            name="floating_text_input"
+            {...props}
+            className={`peer 
           block w-full appearance-none border-0
           bg-transparent 
            py-2.5 
           text-sm text-gray-900 
           focus:border-blue-600 focus:outline-none 
-          focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500
+          focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500 ${
+            props?.isRounded ? "!text-white" : ""
+          }
           `}
-          ref={ref}
-          autoComplete="off"
-          placeholder=""
-        />
-        <label
-          htmlFor="floating_text_input"
-          className={`
+            ref={ref}
+            autoComplete="off"
+            placeholder=""
+          />
+          {!props?.isRounded ? (
+            <label
+              htmlFor="floating_text_input"
+              className={`
         absolute top-3 -z-10 origin-[0]  
         -translate-y-6 scale-75 transform font-mainText text-sm 
         text-xs text-gray-900 duration-300 peer-placeholder-shown:translate-y-0 
@@ -47,13 +52,17 @@ const NumberInput = forwardRef((props, ref: any) => {
         dark:text-gray-400
         peer-focus:dark:text-blue-500 md:text-sm
         `}
-        >
-          Phone Number*
-        </label>
+            >
+              Phone Number*
+            </label>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 NumberInput.displayName = "NumberInput";
 
@@ -64,6 +73,7 @@ const PhoneNumberInput = (
     placeholder = "Enter phone number",
     defaultCountry = undefined,
     errors,
+    isRounded = false,
   }: PhoneNumberInputProps,
   ref: any,
 ) => {
@@ -77,6 +87,7 @@ const PhoneNumberInput = (
         ref={ref}
         international
         inputComponent={NumberInput}
+        numberInputProps={{ isRounded }}
       />
       {errors && (
         <p className="font-mainText text-xs text-red-600">

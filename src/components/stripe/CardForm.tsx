@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import TextInput from "../utils/TextInput";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
+import PhoneNumberInput from "../utils/PhoneNumberInput";
 
 export interface CustomerSchema {
   first_name: string;
@@ -231,12 +232,13 @@ const CardForm = () => {
             name="phone"
             control={control}
             render={({ field }) => (
-              <TextInput
-                {...field}
-                placeholder="Phone*"
-                type="text"
-                className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
-                errors={errors?.phone?.message}
+              <PhoneNumberInput
+                value={field.value}
+                placeholder="Phone Number*"
+                defaultCountry="US"
+                onChange={field.onChange}
+                errors={errors.phone?.message}
+                isRounded
               />
             )}
           />
