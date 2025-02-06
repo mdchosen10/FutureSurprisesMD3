@@ -15,8 +15,6 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Spinner from "./shared/Spinner";
 import { Modal } from "flowbite-react";
-import { ModalHeader } from "flowbite-react/lib/esm/components/Modal/ModalHeader";
-import { ModalBody } from "flowbite-react/lib/esm/components/Modal/ModalBody";
 
 const FilloutForm = () => {
   const uniqueId = useSessionId();
@@ -94,14 +92,14 @@ const FilloutForm = () => {
               show={openModal}
               onClose={() => {}}
             >
-              <ModalHeader
+              <Modal.Header
                 theme={{ close: { icon: "!hidden" } }}
               >
                 <h3 className="font-poppins text-2xl font-bold text-primary">
                   Save Recipient
                 </h3>
-              </ModalHeader>
-              <ModalBody>
+              </Modal.Header>
+              <Modal.Body>
                 <div className="flex h-full flex-col items-center justify-center gap-6">
                   <p className="text-center font-poppins">
                     The recipient details will be saved and
@@ -118,7 +116,7 @@ const FilloutForm = () => {
                     {loading ? <Spinner /> : ""}
                   </Button>
                 </div>
-              </ModalBody>
+              </Modal.Body>
             </Modal>
           ) : (
             <div className="">
