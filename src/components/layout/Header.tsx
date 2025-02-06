@@ -22,22 +22,22 @@ const Header = () => {
             />
           </Link>
         </div>
-        <div className="hidden items-center gap-8 md:flex">
-          <Link
+        <div className="flex items-center gap-8">
+          {/* <Link
             className="font-bold hover:underline"
-            href="/about"
+            href="/about-us"
           >
             About
-          </Link>
+          </Link> */}
           <Link
-            className="font-bold hover:underline"
+            className="hidden font-bold hover:underline md:flex"
             href="/FAQs"
           >
             FAQ
           </Link>
           <Link
-            className="font-bold hover:underline"
-            href="/contact"
+            className="hidden font-bold hover:underline md:flex"
+            href="/contact-us"
           >
             Contact
           </Link>

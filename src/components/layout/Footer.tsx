@@ -24,42 +24,36 @@ const Footer = () => {
           </div>
           <div className="flex w-full flex-col">
             <div className="mb-14 flex w-full items-center justify-center gap-10 md:justify-end">
-              <Link
+              {/* <Link
                 className="font-bold text-white hover:underline dark:text-white lg:text-lg"
-                href="/about"
+                href="/about-us"
               >
                 About
-              </Link>
+              </Link> */}
               <Link
                 className="font-bold text-white hover:underline dark:text-white lg:text-lg"
-                href="/faq"
+                href="/FAQs"
               >
                 FAQ
               </Link>
               <Link
                 className="font-bold text-white hover:underline dark:text-white lg:text-lg"
-                href="/contact"
+                href="/contact-us"
               >
                 Contact
               </Link>
               <Link
                 className="font-bold text-white hover:underline dark:text-white lg:text-lg"
-                href="/account"
+                href="/my-account"
               >
                 Account
               </Link>
             </div>
-            <div className="flex w-full items-center justify-end gap-10  ">
-              <Link href="/">
-                <Image
-                  height={33}
-                  width={33}
-                  unoptimized
-                  src="/icons/fb.svg"
-                  alt="Facebook"
-                />
-              </Link>
-              <Link href="https://www.instagram.com/future_surprises_">
+            <div className="flex w-full items-center justify-end gap-10">
+              <Link
+                target="_blank"
+                href="https://www.instagram.com/future_surprises_"
+              >
                 <Image
                   height={33}
                   width={33}
@@ -68,31 +62,16 @@ const Footer = () => {
                   alt="Instagram"
                 />
               </Link>
-              <Link href="/">
+              <Link
+                target="_blank"
+                href="https://www.linkedin.com/company/future-surprises/"
+              >
                 <Image
                   height={33}
                   width={33}
                   unoptimized
-                  src="/icons/youtube.svg"
-                  alt="youtube"
-                />
-              </Link>
-              <Link href="/">
-                <Image
-                  height={33}
-                  width={33}
-                  unoptimized
-                  src="/icons/tiktok white.svg"
-                  alt="Tiktok"
-                />
-              </Link>
-              <Link href="/">
-                <Image
-                  height={33}
-                  width={33}
-                  unoptimized
-                  src="/icons/pintrest.svg"
-                  alt="pintrest"
+                  src="/icons/linked.svg"
+                  alt="linked"
                 />
               </Link>
             </div>
@@ -103,30 +82,12 @@ const Footer = () => {
           <p>
             All rights reserved @ 2025 future surprises inc
           </p>
-          <Link
-            className="hover:underline dark:text-white"
-            href="/terms"
-          >
+          <p className="dark:text-white">
             Terms And Conditions
-          </Link>
-          <Link
-            className="hover:underline dark:text-white"
-            href="/privacy"
-          >
-            Privacy Policy
-          </Link>
-          <Link
-            className="hover:underline dark:text-white"
-            href="/cookies"
-          >
-            Cookies Policy
-          </Link>
-          <Link
-            className="hover:underline dark:text-white"
-            href="/sitemap"
-          >
-            Sitemap
-          </Link>
+          </p>
+          <p className="dark:text-white">Privacy Policy</p>
+          <p className="dark:text-white">Cookies Policy</p>
+          <p className="dark:text-white">Sitemap</p>
         </div>
       </div>
     </footer>

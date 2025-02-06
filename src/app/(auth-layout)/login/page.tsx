@@ -283,8 +283,13 @@ const Login = () => {
               className="cursor-pointer text-xs text-primaryViolet md:text-sm"
               href={"/forgot-password"}
             >
-              Don&apos;t have a password? or Forgot
-              password?
+              Forgot password?
+            </Link>
+            <Link
+              className="cursor-pointer text-xs text-primaryViolet md:text-sm"
+              href={"/set-password"}
+            >
+              Don&apos;t have a password?
             </Link>
           </div>
         </div>

@@ -42,7 +42,7 @@ const Avatar = ({ user }: any) => {
     <div className="flex max-w-fit flex-row-reverse items-center justify-end gap-1 rounded-md border border-white p-1 md:flex-row md:justify-start md:border-none md:p-0">
       <Link
         href={"/my-account/recipients"}
-        className="cursor-pointer text-sm font-bold text-white"
+        className="cursor-pointer font-poppins font-bold capitalize text-white"
       >
         {user?.customer?.first_name || user?.first_name}
       </Link>

@@ -3,8 +3,10 @@
 import { usePathname, useRouter } from "next/navigation";
 import React, { ReactNode } from "react";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+// import Navbar from "@/components/Navbar";
+// import Footer from "@/components/Footer";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 // import Image from "next/image";
 // import BackArrow from "../../../public/images/back-icon.svg";
 
@@ -38,7 +40,8 @@ export default function SubLayoutWrapper({
   return (
     <div className="m-auto flex min-h-screen flex-col">
       <div className="fixed left-0 top-0 z-50 w-full ">
-        <Navbar />
+        {/* <Navbar /> */}
+        <Header />
       </div>
       <div className="left-0 top-0 flex h-[60px] items-center justify-between bg-white px-3 pt-10 lg:hidden">
         {tab && buttonLinkMapper?.[tab]?.show ? (
@@ -59,7 +62,7 @@ export default function SubLayoutWrapper({
           ""
         )}
       </div>
-      <main className="mx-auto w-full max-w-[1400px] flex-grow">
+      <main className="mx-auto min-h-screen w-full max-w-[1400px] flex-grow">
         {children}
       </main>
       <div>

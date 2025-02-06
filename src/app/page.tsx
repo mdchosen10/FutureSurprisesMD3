@@ -8,9 +8,11 @@ import TestimonialsCarousel from "@/components/Testimonial";
 import Banner from "@/components/layout/Banner";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [hydrated, setHydrated] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     setHydrated(true);
@@ -48,7 +50,12 @@ export default function Home() {
             registering. We&apos;ll save your progress for a
             smooth checkout.
           </p>
-          <Button variant="primary">
+          <Button
+            onClick={() => {
+              router.push("/surprise");
+            }}
+            variant="primary"
+          >
             Start Planning a Surprise
           </Button>
         </div>
