@@ -20,7 +20,7 @@ const Footer = () => {
                 />
               </Link>
             </div>
-            <p>Delivering Happiness, One Gift at a Time.</p>
+            <p>Thoughtfulness simplified.</p>
           </div>
           <div className="flex w-full flex-col">
             <div className="mb-14 flex w-full items-center justify-center gap-10 md:justify-end">
@@ -80,7 +80,7 @@ const Footer = () => {
         <hr className="mt-16 h-[1px] w-full bg-[#9B79B6]" />
         <div className="mt-7 flex flex-wrap justify-between gap-3">
           <p>
-            All rights reserved @ 2025 future surprises inc
+            All rights reserved @ 2025 future surprises llc
           </p>
           <p className="dark:text-white">
             Terms And Conditions

@@ -20,6 +20,7 @@ import { useAppDispatch } from "@/hooks";
 import { useAuth } from "@/hooks/useAuth";
 import Alert from "@/../public/images/alert.png";
 import * as authActions from "@/redux/auth/actions";
+import toast from "react-hot-toast";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -32,15 +33,22 @@ const tooltipMessage = `It is required to input the birthdate and
 export default function LayoutWrapper({
   children,
 }: LayoutProps) {
+  const [hydrated, setHydrated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] =
+    useState(false);
+  const [isAccessDisabled, setIsAccessDisabled] =
+    useState(false);
+
+  const user = useAuth();
   const router = useRouter();
   const params = useSearchParams();
-
-  const active = usePathname()?.split("/").slice(-1)[0];
   const dispatch = useAppDispatch();
-  const user = useAuth();
-  let isAccessDisabled: any = useRef();
+  const pathname = usePathname();
 
-  const [hydrated, setHydrated] = useState(false);
+  const active = hydrated
+    ? pathname?.split("/").slice(-1)[0]
+    : "";
+
   const recipientRef = useRef<HTMLButtonElement>(null);
   const paymentRef = useRef<HTMLButtonElement>(null);
   const orderRef = useRef<HTMLButtonElement>(null);
@@ -62,59 +70,80 @@ export default function LayoutWrapper({
 
   const checkAccessIfSocialSignIn =
     useCallback(async () => {
-      if (accessToken && accessToken !== "") {
+      if (accessToken) {
         localStorage.setItem("user_token", accessToken);
         const currentUser: any = await dispatch(
           authActions.getCurrentCustomer(),
         );
-        isAccessDisabled.current =
+        const isRestricted =
           !currentUser?.payload?.customer?.metadata
             ?.birthdate ||
           !currentUser?.payload?.customer?.phone;
-        if (isAccessDisabled.current) {
+        setIsAccessDisabled(isRestricted);
+
+        if (isRestricted) {
           router.push("/my-account/user");
         } else {
           router.replace(`/my-account/${active}`);
         }
       } else if (user) {
-        isAccessDisabled.current =
+        const isRestricted =
           !user?.metadata?.birthdate || !user?.phone;
-        if (isAccessDisabled.current) {
+        setIsAccessDisabled(isRestricted);
+        if (isRestricted) {
           router.push("/my-account/user");
         }
       } else {
         router.push("/login");
       }
-    }, [dispatch, params]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch, accessToken, user, active]);
 
   const getCurrentCustomer = async () => {
     await dispatch(authActions.getCurrentCustomer());
   };
 
   useEffect(() => {
-    accessToken && checkAccessIfSocialSignIn();
-  }, [accessToken, checkAccessIfSocialSignIn]);
-
-  useEffect(() => {
     setHydrated(true);
-    getCurrentCustomer();
   }, []);
 
   useEffect(() => {
-    const divElement = containerRef.current as HTMLElement;
-    const element = document?.querySelector(
-      ".active",
-    ) as HTMLElement;
-    if (divElement) {
-      divElement.scrollTo({
-        left: element?.offsetLeft,
-        behavior: "smooth",
-      });
-    }
-  }, [active]);
+    if (!hydrated) return;
 
-  if (!hydrated) {
-    // Returns null on first render, so the client and server match
+    if (!user || !user.id) {
+      toast.error("Please login to view your account");
+      router.push("/login");
+      return;
+    }
+
+    getCurrentCustomer();
+    setIsAuthenticated(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hydrated, user]);
+
+  useEffect(() => {
+    if (hydrated && accessToken) {
+      checkAccessIfSocialSignIn();
+    }
+  }, [hydrated, accessToken, checkAccessIfSocialSignIn]);
+
+  useEffect(() => {
+    if (hydrated) {
+      const divElement =
+        containerRef.current as HTMLElement;
+      const element = document?.querySelector(
+        ".active",
+      ) as HTMLElement;
+      if (divElement && element) {
+        divElement.scrollTo({
+          left: element.offsetLeft,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [hydrated, active]);
+
+  if (!hydrated || !isAuthenticated) {
     return null;
   }
 
@@ -130,18 +159,13 @@ export default function LayoutWrapper({
             router.push("/my-account/recipients");
             scrollHorizontally(recipientRef);
           }}
-          className={`sidebar-link  mx-3 
-          flex items-center gap-1
-          pb-1 
-          text-left 
-          font-mainText 
-          lg:mx-0 
-          lg:pb-0 
-          ${active === "recipients" ? "active" : ""}`}
-          disabled={isAccessDisabled.current}
+          className={`sidebar-link mx-3 flex items-center gap-1 pb-1 text-left font-mainText lg:mx-0 lg:pb-0 ${
+            active === "recipients" ? "active" : ""
+          }`}
+          disabled={isAccessDisabled}
         >
           <span>Recipient</span>
-          {isAccessDisabled.current && (
+          {isAccessDisabled && (
             <Tooltip
               content={tooltipMessage}
               className="!z-50 max-w-[200px] text-xs"
@@ -164,17 +188,13 @@ export default function LayoutWrapper({
             router.push("/my-account/payment");
             scrollHorizontally(paymentRef);
           }}
-          className={`sidebar-link  mx-3 
-          flex items-center gap-1
-          pb-1 
-          text-left 
-          font-mainText 
-          lg:mx-0 
-          lg:pb-0 ${active === "payment" ? "active" : ""}`}
-          disabled={isAccessDisabled.current}
+          className={`sidebar-link mx-3 flex items-center gap-1 pb-1 text-left font-mainText lg:mx-0 lg:pb-0 ${
+            active === "payment" ? "active" : ""
+          }`}
+          disabled={isAccessDisabled}
         >
           <span>Payment Details</span>
-          {isAccessDisabled.current && (
+          {isAccessDisabled && (
             <Tooltip
               content={tooltipMessage}
               className="!z-50 max-w-[200px] text-xs"
@@ -197,32 +217,12 @@ export default function LayoutWrapper({
             router.push("/my-account/orders");
             scrollHorizontally(orderRef);
           }}
-          className={`sidebar-link  mx-3 
-          flex items-center gap-1
-          pb-1 
-          text-left 
-          font-mainText 
-          lg:mx-0 
-          lg:pb-0  ${active === "orders" ? "active" : ""}`}
-          disabled={isAccessDisabled.current}
+          className={`sidebar-link mx-3 flex items-center gap-1 pb-1 text-left font-mainText lg:mx-0 lg:pb-0 ${
+            active === "orders" ? "active" : ""
+          }`}
+          disabled={isAccessDisabled}
         >
           <span>Order History</span>
-          {isAccessDisabled.current && (
-            <Tooltip
-              content={tooltipMessage}
-              className="!z-50 max-w-[200px] text-xs"
-              placement="right"
-              arrow={false}
-            >
-              <Image
-                src={Alert}
-                alt="help"
-                width={15}
-                height={15}
-                className="mb-[2px] min-w-[15px]"
-              />
-            </Tooltip>
-          )}
         </button>
         <button
           ref={userRef}
@@ -230,7 +230,7 @@ export default function LayoutWrapper({
             router.push("/my-account/user");
             scrollHorizontally(userRef);
           }}
-          className={`sidebar-link mx-3 inline whitespace-nowrap pb-1 text-left font-mainText lg:mx-0 lg:pb-0 ${
+          className={`sidebar-link mx-3 whitespace-nowrap pb-1 text-left font-mainText lg:mx-0 lg:pb-0 ${
             active === "user" ? "active" : ""
           }`}
         >

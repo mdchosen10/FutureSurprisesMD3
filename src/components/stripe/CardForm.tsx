@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 import TextInput from "../utils/TextInput";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
 import PhoneNumberInput from "../utils/PhoneNumberInput";
+import Link from "next/link";
 
 export interface CustomerSchema {
   first_name: string;
@@ -261,6 +262,11 @@ const CardForm = () => {
             Submit
             {loading ? <Spinner /> : ""}
           </button>
+
+          <p>
+            Already have an account ? please
+            <Link href="/login?next=surprise">login</Link>
+          </p>
         </form>
       )}
     </div>

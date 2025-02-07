@@ -18,7 +18,7 @@ export const faqs = [
   {
     title: "How much does Future Surprises cost?",
     description:
-      "Future Surprises is free to use, we only charge a nominal 5 dollar transaction fee for each transaction. There is no subscription fee or recurring charges.",
+      "Future Surprises costs exactly what you choose! You only pay for the gift tier you select, and you're charged only when we process your order. We carefully curate gifts to ensure they provide exceptional value—comparable to retail pricing—so it feels like you're getting a premium gifting experience at nearly no extra cost.",
   },
   {
     title: "How do I place an order?",
@@ -28,7 +28,7 @@ export const faqs = [
   {
     title: "Can I choose the gift myself?",
     description:
-      "The Future Surprises experience is designed to be fully automated; however, we do take into consideration any preferences or restrictions you provide.",
+      "The Future Surprises experience is designed to be fully automated; however, we  do offer 3 options for to choose from, and take into consideration any preferences or restrictions you provide.",
   },
   {
     title: "How long does delivery take?",

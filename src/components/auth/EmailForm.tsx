@@ -41,6 +41,9 @@ const EmailForm = ({
       onSubmit={handleSubmit(data => onSubmit(data.email))}
       className="flex w-full max-w-[270px] flex-col gap-4"
     >
+      <label className="text-left">
+        Enter your registered email
+      </label>
       <Controller
         name="email"
         control={control}
@@ -58,7 +61,7 @@ const EmailForm = ({
         type="submit"
         isLoading={loading}
         disabled={loading}
-        name="Send OTP"
+        name="Get OTP"
         bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
         textClass="text-white"
         extraClass="w-[140px] shadow-md mx-auto md:mx-0"

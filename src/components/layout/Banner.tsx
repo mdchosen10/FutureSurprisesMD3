@@ -23,11 +23,11 @@ const Banner = () => {
         ></source>
       </video>
 
-      <div className="banner absolute bottom-[-1px] left-0 mx-auto flex w-full max-w-screen-2xl px-5 pb-5 lg:px-20">
+      <div className="banner absolute bottom-[-2px] left-0 mx-auto flex w-full px-5 pb-5 lg:px-20">
         <div className="flex h-full w-full flex-col items-start justify-center gap-2">
           <h1 className="w-full text-center font-lora text-2xl font-bold text-black lg:text-5xl lg:leading-[60px]">
             Your Personal
-            <span className="text-primary">Gifting</span>
+            <span className="text-primary"> Gifting </span>
             Assistant
           </h1>
 
@@ -42,13 +42,29 @@ const Banner = () => {
                 router.push("/surprise");
               }}
               variant="primary"
-              className="font-semibold  2xl:text-xl"
+              className="!px-10 py-3 font-semibold 2xl:text-xl"
             >
-              Start Planning a Surprise
+              Get Started
             </Button>
             <Button
               variant="transparent"
               className="text-[#9B79B6] hover:underline  2xl:text-xl"
+              onClick={() => {
+                const x =
+                  document.getElementById("how-it-works");
+                if (x) {
+                  const offset = 100;
+                  const topPosition =
+                    x.getBoundingClientRect().top +
+                    window.scrollY -
+                    offset;
+
+                  window.scrollTo({
+                    top: topPosition,
+                    behavior: "smooth",
+                  });
+                }
+              }}
             >
               Learn How it Works
             </Button>

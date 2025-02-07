@@ -10,10 +10,12 @@ import * as authActions from "@/redux/auth/actions";
 import toast from "react-hot-toast";
 import { AnyAction } from "redux";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Avatar = ({ user }: any) => {
   // const router = useRouter();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [hydrated, setHydrated] = useState(false);
 
@@ -57,6 +59,13 @@ const Avatar = ({ user }: any) => {
           </div>
         )}
       >
+        <Dropdown.Item
+          onClick={() => {
+            router.push("/my-account");
+          }}
+        >
+          <span>Account</span>
+        </Dropdown.Item>
         <Dropdown.Item onClick={onClickLogout}>
           <span>Logout</span>
         </Dropdown.Item>

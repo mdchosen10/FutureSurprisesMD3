@@ -49,28 +49,27 @@ const SetPassword = () => {
 
   const handleSetPassword = async (data: {
     otp: string;
-    password: string;
   }) => {
     try {
       // API call to verify OTP and set password
       setSubmitting(true);
       const response = await fetch(
-        `${process.env.BASE_URL}/set-password`,
+        `${process.env.BASE_URL}/verify-otp`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email,
             otp: data.otp,
-            password: data.password,
           }),
         },
       );
       const result = await response.json();
       setSubmitting(false);
       if (result.success) {
-        toast.success("Password set successfully");
-        router.push("/login");
+        localStorage.setItem("user_token", result?.token);
+        toast.success("OTP verified successfully");
+        router.push("/my-account");
       } else {
         toast.error("Invalid OTP or something went wrong");
       }
@@ -106,7 +105,7 @@ const SetPassword = () => {
         </div>
       </div>
       {/* Right */}
-      <div className="flex w-[70%] flex-col md:ml-[30px] md:w-[50%] md:max-lg:mt-[20%] lg:ml-[67px] lg:mt-[130px]">
+      <div className="flex max-h-screen w-[70%] flex-col md:ml-[30px] md:w-[50%]">
         <div className="mr-auto mt-12">
           <Image
             src={GoBack}
@@ -117,10 +116,11 @@ const SetPassword = () => {
             onClick={() => router.back()}
           />
         </div>
-        <div className="mx-auto flex max-w-[400px] flex-col items-start gap-6 pt-14 md:mx-0 md:pt-0">
-          <h2 className="heading-gradient mx-auto text-xl font-semibold md:mx-0 md:min-h-[50px] md:text-[36px]">
-            Set Password
+        <div className="mx-auto my-auto flex max-w-[400px] flex-col justify-center gap-6 border p-10 pt-14 lg:px-20">
+          <h2 className="heading-gradient mx-auto w-full text-center text-xl font-semibold md:mx-0 md:min-h-[50px] md:text-[36px]">
+            Sign in
           </h2>
+
           {!showOtpForm ? (
             <EmailForm
               onSubmit={handleEmailSubmit}

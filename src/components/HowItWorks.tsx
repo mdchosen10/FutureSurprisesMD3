@@ -4,7 +4,10 @@ import React from "react";
 const HowItWorks = () => {
   return (
     <div className="mt-20">
-      <h2 className="mb-15 text-center font-lora text-2xl font-bold lg:text-5xl lg:leading-[60px] 2xl:text-[54px]">
+      <h2
+        id="how-it-works"
+        className="mb-15 text-center font-lora text-2xl font-bold lg:text-5xl lg:leading-[60px] 2xl:text-[54px]"
+      >
         How{" "}
         <span className="text-[#9B79B6]">
           future surprises

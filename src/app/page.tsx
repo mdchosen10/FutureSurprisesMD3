@@ -56,7 +56,7 @@ export default function Home() {
             }}
             variant="primary"
           >
-            Start Planning a Surprise
+            Get Started
           </Button>
         </div>
         <div className="">

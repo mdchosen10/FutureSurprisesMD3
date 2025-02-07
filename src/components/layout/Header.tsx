@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Avatar from "../Avatar";
+import Button from "../shared/Button";
 
 const Header = () => {
   const user = useAuth();
@@ -42,13 +43,20 @@ const Header = () => {
             Contact
           </Link>
 
+          <Link
+            className="hidden font-bold hover:underline md:flex"
+            href="/surprise"
+          >
+            Get Started
+          </Link>
+
           {!user?.id ? (
-            <Link
-              className="font-bold hover:underline"
-              href={"/login"}
+            <Button
+              variant="transparent"
+              className="!border font-bold hover:bg-white hover:text-primary"
             >
-              Account
-            </Link>
+              Sign in
+            </Button>
           ) : (
             <li className="list-none p-4">
               <Avatar user={user} />

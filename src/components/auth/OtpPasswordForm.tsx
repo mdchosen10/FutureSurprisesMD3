@@ -12,19 +12,12 @@ const otpPasswordSchema = yup
       .string()
       .required("OTP is required!")
       .length(4, "OTP must be 4 digits"),
-    password: yup
-      .string()
-      .required("Password is required!")
-      .min(8, "Password must be at least 8 characters"),
   })
   .required();
 
 type OtpPasswordFormProps = {
   /* eslint-disable no-unused-vars */
-  onSubmit: (data: {
-    otp: string;
-    password: string;
-  }) => void;
+  onSubmit: (data: { otp: string }) => void;
   loading: boolean;
 };
 
@@ -47,39 +40,21 @@ const OtpPasswordForm = ({
       onSubmit={handleSubmit(data =>
         onSubmit({
           otp: data.otp,
-          password: data.password,
         }),
       )}
       className="flex w-full max-w-[270px] flex-col gap-4"
     >
+      <label className="text-left">Enter the OTP</label>
       <Controller
         name="otp"
         control={control}
         render={({ field }) => (
           <TextInputFloating
             {...field}
-            placeholder="Enter OTP*"
+            placeholder="OTP*"
             type="text"
             errors={errors.otp?.message}
             inputClassName="w-full"
-          />
-        )}
-      />
-      <Controller
-        name="password"
-        control={control}
-        render={({ field }) => (
-          <TextInputFloating
-            {...field}
-            placeholder="New Password*"
-            type="password"
-            errors={errors.password?.message}
-            inputClassName="w-full"
-            isPasswordInput={true}
-            isPasswordShow={showPassword}
-            setIsPasswordShow={() =>
-              setShowPassword(!showPassword)
-            }
           />
         )}
       />
@@ -88,7 +63,7 @@ const OtpPasswordForm = ({
         type="submit"
         isLoading={loading}
         disabled={loading}
-        name="Set Password"
+        name="Sign in"
         bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
         textClass="text-white"
         extraClass="w-[140px] shadow-md mx-auto md:mx-0"
