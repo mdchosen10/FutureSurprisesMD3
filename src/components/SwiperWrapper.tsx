@@ -120,9 +120,13 @@ const SwiperWrapper = ({
           <SwiperSlide className="h-full w-full">
             <ImageGrid images={images?.slice(0, 4)} />
           </SwiperSlide>
-          <SwiperSlide className="h-full w-full">
-            <ImageGrid images={images?.slice(4, 8)} />
-          </SwiperSlide>
+          {images?.length > 4 ? (
+            <SwiperSlide className="h-full w-full">
+              <ImageGrid images={images?.slice(4, 8)} />
+            </SwiperSlide>
+          ) : (
+            ""
+          )}
         </Swiper>
         <Button
           className="absolute -right-[25px] top-[50%] z-20 h-fit w-fit translate-y-[-50%] transform"
