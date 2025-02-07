@@ -6,10 +6,11 @@ import Link from "next/link";
 import React from "react";
 import Avatar from "../Avatar";
 import Button from "../shared/Button";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const user = useAuth();
-
+  const router = useRouter();
   return (
     <nav className="fixed left-0 top-0 z-30 flex h-[90px] w-full items-center justify-between bg-primary font-poppins text-white dark:text-white">
       <div className="mx-auto flex w-full max-w-screen-2xl justify-between px-5 lg:px-16">
@@ -54,6 +55,9 @@ const Header = () => {
             <Button
               variant="transparent"
               className="!border font-bold hover:bg-white hover:text-primary"
+              onClick={() => {
+                router.push("/login");
+              }}
             >
               Sign in
             </Button>
