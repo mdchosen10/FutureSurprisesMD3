@@ -31,4 +31,10 @@ const giftForKids = [
   "https://images.squarespace-cdn.com/content/v1/65417fc1188fee42b071f876/1699981663626-OSK9EDJ71XN5DEG1JLAI/Early_Learning_Talking_Flash_Cards.png?format=750w",
 ];
 
-export { giftForHim, giftsForHer, giftForKids };
+const mileStone = [
+  "https://images.squarespace-cdn.com/content/v1/65417fc1188fee42b071f876/1699754085060-F9K88MODN1JMP4JPOK47/Swan+necklace.PNG?format=750w",
+  "https://images.squarespace-cdn.com/content/v1/65417fc1188fee42b071f876/1699751743508-7GBTHCTRW15VEUTBYR9Q/shower_set.png?format=750w",
+  "https://images.squarespace-cdn.com/content/v1/65417fc1188fee42b071f876/1699753908460-FT7XI1M6Q1ET49HDWMDW/rose+gift+set_transparent.png?format=750w",
+  "https://images.squarespace-cdn.com/content/v1/65417fc1188fee42b071f876/1699913451608-JMXEH8KSW2JLUGV8RH2F/corporate_gift_with_power_bank.png?format=750w",
+];
+export { giftForHim, giftsForHer, giftForKids, mileStone };

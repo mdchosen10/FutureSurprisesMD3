@@ -7,6 +7,7 @@ import {
   giftForHim,
   giftForKids,
   giftsForHer,
+  mileStone,
 } from "../lib/data";
 import SwiperWrapper from "./SwiperWrapper";
 
@@ -23,7 +24,7 @@ const Explore = () => {
     Him: giftForHim,
     Her: giftsForHer,
     Kids: giftForKids,
-    Milestones: giftForHim,
+    Milestones: mileStone,
   };
 
   const handleTabChange = (
