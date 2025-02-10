@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import Spinner from "./shared/Spinner";
 import { Modal } from "flowbite-react";
 
-const FilloutForm = () => {
+const FilloutForm = ({ hasData }: { hasData: boolean }) => {
   const uniqueId = useSessionId();
   const { data } = useWebSocket(uniqueId);
   const [loading, setLoading] = useState(false);
@@ -85,7 +85,7 @@ const FilloutForm = () => {
   if (uniqueId)
     return (
       <div className="w-full flex-1">
-        {data && data?.success ? (
+        {(data && data?.success) || hasData ? (
           user?.id ? (
             <Modal
               dismissible={false}

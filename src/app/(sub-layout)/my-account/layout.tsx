@@ -119,7 +119,7 @@ export default function LayoutWrapper({
     getCurrentCustomer();
     setIsAuthenticated(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hydrated, user]);
+  }, [hydrated]);
 
   useEffect(() => {
     if (hydrated && accessToken) {

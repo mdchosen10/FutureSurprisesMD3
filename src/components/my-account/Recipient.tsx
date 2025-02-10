@@ -204,11 +204,7 @@ const Recipient = () => {
 
   useEffect(() => {
     fetchUser();
-  }, [fetchUser]);
-
-  useEffect(() => {
-    getRecipients();
-  }, [getRecipients]);
+  }, []);
 
   return (
     <>

@@ -189,6 +189,15 @@ const CardForm = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="mx-auto mt-20 flex max-w-3xl flex-col gap-3 p-10"
         >
+          <div className="flex flex-col gap-2">
+            <h2 className="text-left font-poppins text-3xl font-bold text-white">
+              Start Your Surprise Journey
+            </h2>
+            <h2 className="text-left font-poppins text-white">
+              Please enter the following details to start
+              surprising your loved ones.
+            </h2>
+          </div>
           <Controller
             name="first_name"
             control={control}
@@ -263,9 +272,14 @@ const CardForm = () => {
             {loading ? <Spinner /> : ""}
           </button>
 
-          <p>
-            Already have an account ? please
-            <Link href="/login?next=surprise">login</Link>
+          <p className="text-end font-poppins text-white">
+            Already have an account ?{" "}
+            <Link
+              href="/login?next=surprise"
+              className="hover:underline"
+            >
+              login here
+            </Link>
           </p>
         </form>
       )}

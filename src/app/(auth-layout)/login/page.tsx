@@ -9,7 +9,10 @@ import FacebookIcon from "@/../public/icons/facebook.svg";
 import EmailIcon from "@/../public/icons/email.svg";
 
 import GoBack from "@/../public/icons/go-back.svg";
-import { useRouter } from "next/navigation";
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import Button from "@/components/Button";
 
@@ -20,7 +23,11 @@ import CloseIcon from "@/../public/icons/close-violet.svg";
 
 const Login = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const user = useAuth();
+  const next = searchParams.get("next") || null;
+
   // const { loading } = useAppSelector(
   //   state => state.authSlice,
   // );
@@ -133,9 +140,13 @@ const Login = () => {
           </h2>
 
           <button
-            onClick={() =>
-              (window.location.href = `${process.env.BASE_URL}/store/auth/google`)
-            }
+            onClick={() => {
+              if (next && next == "surprise") {
+                window.location.href = `${process.env.BASE_URL}/store/auth/google?redirectTo=${window.location.origin}/surprise`;
+              } else {
+                window.location.href = `${process.env.BASE_URL}/store/auth/google`;
+              }
+            }}
             type="button"
             className="flex min-w-[100%] max-w-[380px] items-center justify-center rounded-[10px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
           >
@@ -148,9 +159,13 @@ const Login = () => {
             <span className="ms-2">Google</span>
           </button>
           <button
-            onClick={() =>
-              (window.location.href = `${process.env.BASE_URL}/store/auth/facebook`)
-            }
+            onClick={() => {
+              if (next && next == "surprise") {
+                window.location.href = `${process.env.BASE_URL}/store/auth/facebook?redirectTo=${window.location.origin}/surprise`;
+              } else {
+                window.location.href = `${process.env.BASE_URL}/store/auth/facebook`;
+              }
+            }}
             type="button"
             className="flex min-w-[100%] max-w-[380px] items-center justify-center rounded-[10px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
           >
