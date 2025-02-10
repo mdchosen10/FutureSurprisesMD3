@@ -159,8 +159,7 @@ const Navbar = () => {
           src={Logo}
           className="w-44 cursor-pointer md:w-[200px]"
           onClick={() =>
-            (window.location.href =
-              "https://futuresurprises.com")
+            (window.location.href = window.location.origin)
           }
         />
         <nav className="hidden items-center justify-between gap-2 text-sm font-normal text-white md:flex lg:gap-4 lg:text-base xl:gap-11">

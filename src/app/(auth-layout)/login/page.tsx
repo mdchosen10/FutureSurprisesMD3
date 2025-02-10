@@ -110,7 +110,7 @@ const Login = () => {
             height={35}
             onClick={() =>
               (window.location.href =
-                "https://futuresurprises.com")
+                window.location.origin)
             }
           />
         </div>
