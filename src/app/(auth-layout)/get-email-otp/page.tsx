@@ -5,7 +5,10 @@ import React, { useEffect, useState } from "react";
 import GirlThinking from "@/../public/images/girl-thinking.png";
 import Logo from "@/../public/images/logo.png";
 import GoBack from "@/../public/icons/go-back.svg";
-import { useRouter } from "next/navigation";
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import toast from "react-hot-toast";
 import { useAuth } from "@/hooks/useAuth";
 import OtpPasswordForm from "@/components/auth/OtpPasswordForm";
@@ -18,6 +21,9 @@ const SetPassword = () => {
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") || null;
 
   const handleEmailSubmit = async (email: string) => {
     try {
@@ -69,7 +75,11 @@ const SetPassword = () => {
       if (result.success) {
         localStorage.setItem("user_token", result?.token);
         toast.success("OTP verified successfully");
-        router.push("/my-account");
+        if (next && next == "surprise") {
+          router.push("/surprise");
+        } else {
+          router.push("/my-account");
+        }
       } else {
         toast.error("Invalid OTP or something went wrong");
       }
