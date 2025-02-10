@@ -181,7 +181,9 @@ const Login = () => {
             Or
           </p>
           <button
-            onClick={() => router.push("/get-email-otp")}
+            onClick={() =>
+              router.push("/get-email-otp?next=surprise")
+            }
             type="button"
             className="flex min-w-[100%] max-w-[380px] items-center justify-center rounded-[10px] border border-primaryViolet px-[25px] py-[10px] font-mainText text-xs md:text-sm"
           >

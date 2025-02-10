@@ -22,7 +22,7 @@ export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const accessToken = params.get("access_token") || "";
+  const accessToken = params.get("access_token") || null;
 
   useEffect(() => {
     setHydrated(true);

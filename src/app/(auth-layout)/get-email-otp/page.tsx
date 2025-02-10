@@ -13,6 +13,8 @@ import toast from "react-hot-toast";
 import { useAuth } from "@/hooks/useAuth";
 import OtpPasswordForm from "@/components/auth/OtpPasswordForm";
 import EmailForm from "@/components/auth/EmailForm";
+import { useAppDispatch } from "@/hooks";
+import * as authActions from "@/redux/auth/actions";
 
 const SetPassword = () => {
   const router = useRouter();
@@ -21,6 +23,7 @@ const SetPassword = () => {
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const dispatch = useAppDispatch();
 
   const searchParams = useSearchParams();
   const next = searchParams.get("next") || null;
@@ -74,6 +77,7 @@ const SetPassword = () => {
       setSubmitting(false);
       if (result.success) {
         localStorage.setItem("user_token", result?.token);
+        await dispatch(authActions.getCurrentCustomer());
         toast.success("OTP verified successfully");
         if (next && next == "surprise") {
           router.push("/surprise");
