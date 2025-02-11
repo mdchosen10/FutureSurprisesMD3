@@ -111,7 +111,7 @@ const FilloutForm = ({ hasData }: { hasData: boolean }) => {
                   <Button
                     onClick={handleSubmit}
                     variant="primary"
-                    className="mx-auto !px-10 py-2 text-lg font-bold text-white"
+                    className="mx-auto flex gap-3 !px-10 py-2 text-lg font-bold text-white"
                     disabled={loading}
                   >
                     Submit
