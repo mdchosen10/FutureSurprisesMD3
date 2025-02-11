@@ -280,7 +280,7 @@ const CardForm = () => {
                 localStorage.setItem("redirect", "true");
                 router.push("/login?next=surprise");
               }}
-              className="hover:underline"
+              className="!bg-transparent !px-1 hover:underline"
             >
               login here
             </Button>
