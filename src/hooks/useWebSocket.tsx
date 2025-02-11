@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { io, type Socket } from "socket.io-client";
+import { useFormData } from "@/context/FormDataContext";
 
 const serverUrl: string = process.env
   .SOCKET_APP_BASE_URL as string;
@@ -11,6 +12,7 @@ const useWebSocket = (sessionId: string) => {
     message: string;
     success: boolean;
   } | null>(null);
+  const { setFormData } = useFormData();
 
   useEffect(() => {
     const newSocket = io(serverUrl, {
@@ -23,19 +25,16 @@ const useWebSocket = (sessionId: string) => {
     });
 
     newSocket.on("formProcessed", data => {
-      console.log("Form processed for this client:", data);
+      console.log("Form processed for this client");
       setData(data);
-      localStorage.setItem(
-        "formData",
-        JSON.stringify(data?.data ?? {}),
-      );
+      setFormData(data?.data ?? {});
     });
 
     return () => {
       newSocket.disconnect();
       console.log("Disconnected from WebSocket server");
     };
-  }, [sessionId]);
+  }, [sessionId, setFormData]);
 
   return { socket, data };
 };

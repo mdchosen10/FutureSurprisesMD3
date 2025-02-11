@@ -11,6 +11,7 @@ import {
   Sedgwick_Ave,
 } from "next/font/google";
 import { Metadata } from "next";
+import { FormDataProvider } from "@/context/FormDataContext";
 
 const mainHeading = Playfair_Display({
   subsets: ["latin"],
@@ -69,9 +70,11 @@ export default function RootLayout({
           }}
         />
         <StoreProvider>
-          <div className="mx-auto overflow-hidden">
-            {children}
-          </div>
+          <FormDataProvider>
+            <div className="mx-auto overflow-hidden">
+              {children}
+            </div>
+          </FormDataProvider>
         </StoreProvider>
       </body>
     </html>

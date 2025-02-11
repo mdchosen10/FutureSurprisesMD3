@@ -15,12 +15,14 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Spinner from "./shared/Spinner";
 import { Modal } from "flowbite-react";
+import { useFormData } from "@/context/FormDataContext";
 
 const FilloutForm = ({ hasData }: { hasData: boolean }) => {
   const uniqueId = useSessionId();
   const { data } = useWebSocket(uniqueId);
   const [loading, setLoading] = useState(false);
   const [openModal] = useState(true);
+  const { formData, setFormData } = useFormData();
 
   const token = getToken();
   const user = useAuth();
@@ -43,9 +45,6 @@ const FilloutForm = ({ hasData }: { hasData: boolean }) => {
     setLoading(true);
 
     try {
-      const storedData = JSON.parse(
-        localStorage.getItem("formData") ?? "{}",
-      );
       const token = localStorage.getItem("user_token");
       const response = await fetch(
         `${process.env.BASE_URL}/create-customer-and-payment`,
@@ -56,7 +55,7 @@ const FilloutForm = ({ hasData }: { hasData: boolean }) => {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            ...storedData,
+            ...formData,
           }),
         },
       );
@@ -64,7 +63,7 @@ const FilloutForm = ({ hasData }: { hasData: boolean }) => {
       const final = await response.json();
       if (final && final?.success) {
         setLoading(false);
-        localStorage.removeItem("formData");
+        setFormData({});
         localStorage?.setItem("user_token", final?.token);
         toast.success(
           "Recipient details stored successfully",
@@ -72,7 +71,7 @@ const FilloutForm = ({ hasData }: { hasData: boolean }) => {
         return router.push("/my-account/recipients");
       } else {
         setLoading(false);
-        localStorage.removeItem("formData");
+        setFormData({});
         toast.error("Failed to store recipient details");
         router.push("/surprise");
       }

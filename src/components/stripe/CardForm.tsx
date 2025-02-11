@@ -21,6 +21,7 @@ import TextInput from "../utils/TextInput";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
 import PhoneNumberInput from "../utils/PhoneNumberInput";
 import Link from "next/link";
+import { useFormData } from "@/context/FormDataContext";
 
 export interface CustomerSchema {
   first_name: string;
@@ -84,6 +85,7 @@ const CardForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
+  const { formData, setFormData } = useFormData();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
@@ -123,9 +125,6 @@ const CardForm = () => {
     }
 
     try {
-      const storedData = JSON.parse(
-        localStorage.getItem("formData") ?? "{}",
-      );
       const response = await fetch(
         `${process.env.BASE_URL}/create-customer-and-payment`,
         {
@@ -137,7 +136,7 @@ const CardForm = () => {
             last_name: data?.last_name,
             phone: data?.phone,
             paymentMethodId: paymentMethod.id,
-            ...storedData,
+            ...formData,
           }),
         },
       );
@@ -146,7 +145,7 @@ const CardForm = () => {
       if (final && final?.success && final?.token) {
         setLoading(false);
         setSuccess(true);
-        localStorage.removeItem("formData");
+        setFormData({});
         localStorage?.setItem("user_token", final?.token);
         toast.success(
           "Recipient details stored successfully",
@@ -154,7 +153,7 @@ const CardForm = () => {
         return router.push("/my-account/recipients");
       } else {
         setLoading(false);
-        localStorage.removeItem("formData");
+        setFormData({});
         toast.error("Failed to store recipient details");
         router.push("/surprise");
       }

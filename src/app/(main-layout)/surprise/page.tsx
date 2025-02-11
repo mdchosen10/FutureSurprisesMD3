@@ -1,14 +1,15 @@
 "use client";
 
 import FilloutForm from "@/components/FilloutForm";
+import { useFormData } from "@/context/FormDataContext";
 import React, { useEffect, useState } from "react";
 
 const Surprise = () => {
   const [hasData, setHasData] = useState(false);
+  const { formData } = useFormData();
 
   useEffect(() => {
-    const localData = localStorage.getItem("formData");
-    if (localData) {
+    if (formData && Object.keys(formData)?.length > 0) {
       setHasData(true);
     }
   }, []);
