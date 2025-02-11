@@ -20,8 +20,6 @@ import toast from "react-hot-toast";
 import TextInput from "../utils/TextInput";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
 import PhoneNumberInput from "../utils/PhoneNumberInput";
-import Link from "next/link";
-import { useFormData } from "@/context/FormDataContext";
 
 export interface CustomerSchema {
   first_name: string;
@@ -85,7 +83,6 @@ const CardForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
-  const { formData, setFormData } = useFormData();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
@@ -125,6 +122,9 @@ const CardForm = () => {
     }
 
     try {
+      const formData = JSON.parse(
+        localStorage.getItem("formData") || "{}",
+      );
       const response = await fetch(
         `${process.env.BASE_URL}/create-customer-and-payment`,
         {
@@ -145,7 +145,8 @@ const CardForm = () => {
       if (final && final?.success && final?.token) {
         setLoading(false);
         setSuccess(true);
-        setFormData({});
+        localStorage.removeItem("formData");
+        localStorage.removeItem("redirect");
         localStorage?.setItem("user_token", final?.token);
         toast.success(
           "Recipient details stored successfully",
@@ -153,7 +154,8 @@ const CardForm = () => {
         return router.push("/my-account/recipients");
       } else {
         setLoading(false);
-        setFormData({});
+        localStorage.removeItem("formData");
+        localStorage.removeItem("redirect");
         toast.error("Failed to store recipient details");
         router.push("/surprise");
       }
@@ -273,12 +275,15 @@ const CardForm = () => {
 
           <p className="text-end font-poppins text-white">
             Already have an account ?{" "}
-            <Link
-              href="/login?next=surprise"
+            <Button
+              onClick={() => {
+                localStorage.setItem("redirect", "true");
+                router.push("/login?next=surprise");
+              }}
               className="hover:underline"
             >
               login here
-            </Link>
+            </Button>
           </p>
         </form>
       )}

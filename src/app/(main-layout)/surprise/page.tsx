@@ -1,15 +1,21 @@
 "use client";
 
 import FilloutForm from "@/components/FilloutForm";
-import { useFormData } from "@/context/FormDataContext";
 import React, { useEffect, useState } from "react";
 
 const Surprise = () => {
   const [hasData, setHasData] = useState(false);
-  const { formData } = useFormData();
 
   useEffect(() => {
-    if (formData && Object.keys(formData)?.length > 0) {
+    const redirect = localStorage.getItem("redirect");
+    const formData =
+      localStorage.getItem("formData") ?? "{}";
+    if (
+      formData &&
+      Object.keys(JSON.parse(formData))?.length > 0 &&
+      redirect &&
+      redirect == "true"
+    ) {
       setHasData(true);
     }
   }, []);
