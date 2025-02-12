@@ -10,10 +10,12 @@ import * as authActions from "@/redux/auth/actions";
 import toast from "react-hot-toast";
 import { AnyAction } from "redux";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Avatar = ({ user }: any) => {
   // const router = useRouter();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [hydrated, setHydrated] = useState(false);
 
@@ -24,7 +26,7 @@ const Avatar = ({ user }: any) => {
     if (res?.payload?.status === 200) {
       toast.success("Logout successfully.");
       // window.location.pathname = "/";
-      window.location.href = "https://futuresurprises.com";
+      window.location.href = window.location.origin;
     }
   };
 
@@ -42,7 +44,7 @@ const Avatar = ({ user }: any) => {
     <div className="flex max-w-fit flex-row-reverse items-center justify-end gap-1 rounded-md border border-white p-1 md:flex-row md:justify-start md:border-none md:p-0">
       <Link
         href={"/my-account/recipients"}
-        className="cursor-pointer text-sm font-bold text-white"
+        className="cursor-pointer font-poppins font-bold capitalize text-white"
       >
         {user?.customer?.first_name || user?.first_name}
       </Link>
@@ -57,6 +59,13 @@ const Avatar = ({ user }: any) => {
           </div>
         )}
       >
+        <Dropdown.Item
+          onClick={() => {
+            router.push("/my-account");
+          }}
+        >
+          <span>Account</span>
+        </Dropdown.Item>
         <Dropdown.Item onClick={onClickLogout}>
           <span>Logout</span>
         </Dropdown.Item>

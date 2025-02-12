@@ -15,6 +15,7 @@ const nextConfig = {
     CHATGPT_MODEL: process.env.CHATGPT_MODEL,
     STRIPE_PUBLISHABLE_KEY:
       process.env.STRIPE_PUBLISHABLE_KEY,
+    SOCKET_APP_BASE_URL: process.env.SOCKET_APP_BASE_URL,
   },
   // output: "export",
   images: { unoptimized: true },
@@ -22,10 +23,14 @@ const nextConfig = {
   redirects() {
     return [
       process.env.MAINTENANCE_MODE === "1"
-        ? { source: "/((?!maintenance|_next).*)", destination: "/maintenance.html", permanent: false }
+        ? {
+            source: "/((?!maintenance|_next).*)",
+            destination: "/maintenance.html",
+            permanent: false,
+          }
         : null,
     ].filter(Boolean);
-  }
+  },
 };
 
 module.exports = nextConfig;

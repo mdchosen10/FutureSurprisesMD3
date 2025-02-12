@@ -73,7 +73,7 @@ const ProductListing = (props: any) => {
         </div>
       </Modal>
       <div className="my-6 flex flex-wrap justify-center gap-4 md:justify-start">
-        {!products.length && (
+        {!products?.length && (
           <p>
             Oops! There are no products for the selected
             category(s)

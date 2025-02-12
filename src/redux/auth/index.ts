@@ -60,7 +60,7 @@ const authSlice = createSlice({
       state => {
         state.loading = false;
         state.user = {};
-        localStorage.removeItem("user_token");
+        localStorage.clear();
       },
     );
     builder.addCase(

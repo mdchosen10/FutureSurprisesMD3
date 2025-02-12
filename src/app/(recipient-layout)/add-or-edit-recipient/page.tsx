@@ -957,9 +957,11 @@ const AddOrEditRecipient = () => {
     );
     setValue(
       "dob",
-      new Date(
-        moment(editableRecipient?.birthdate).toDate(),
-      ),
+      editableRecipient?.birthdate
+        ? new Date(
+            moment(editableRecipient?.birthdate).toDate(),
+          )
+        : null,
     );
     setValue(
       "spendingLimit",
@@ -984,7 +986,7 @@ const AddOrEditRecipient = () => {
         (holiday: any) => holiday.name === "Anniversary",
       );
     setAnniversaryDate(
-      anniversaryHoliday
+      anniversaryHoliday && anniversaryHoliday.date
         ? new Date(anniversaryHoliday.date)
         : null,
     );

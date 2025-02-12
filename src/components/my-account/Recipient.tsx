@@ -1,5 +1,5 @@
 "use client";
-
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
   useCallback,
   useEffect,
@@ -158,6 +158,24 @@ const Recipient = () => {
     },
   ];
 
+  const getRecipients = useCallback(async () => {
+    if (user && user?.id) {
+      setRecipientsLoading(true);
+      const res = await dispatch(
+        recipientActions.getAddedRecipients({
+          data: user?.id,
+        }),
+      );
+      if (res?.payload?.recipients) {
+        setRecipients(res?.payload?.recipients);
+      } else {
+        toast.error(
+          "Failed to load recipients, please refresh!",
+        );
+      }
+      setRecipientsLoading(false);
+    }
+  }, [dispatch, user]);
   const fetchUser = useCallback(async () => {
     const res = await dispatch(
       authActions.getCustomer(),
@@ -184,32 +202,9 @@ const Recipient = () => {
     toast.error("Something went wrong!");
   }, [recipientId, dispatch]);
 
-  const getRecipients = useCallback(async () => {
-    if (user && user?.id) {
-      setRecipientsLoading(true);
-      const res = await dispatch(
-        recipientActions.getAddedRecipients({
-          data: user?.id,
-        }),
-      );
-      if (res?.payload?.recipients) {
-        setRecipients(res?.payload?.recipients);
-      } else {
-        toast.error(
-          "Failed to load recipients, please refresh!",
-        );
-      }
-      setRecipientsLoading(false);
-    }
-  }, [dispatch, user]);
-
   useEffect(() => {
     fetchUser();
-  }, [fetchUser]);
-
-  useEffect(() => {
-    getRecipients();
-  }, [getRecipients]);
+  }, []);
 
   return (
     <>
@@ -218,10 +213,8 @@ const Recipient = () => {
           Recipient
         </h1>
         <button
-          onClick={() =>
-            router.push("/add-or-edit-recipient")
-          }
-          className="rounded-[10px] border border-[#A93CC9] px-[10px] py-[5px] font-mainText text-[14px]"
+          onClick={() => router.push("/surprise")}
+          className="rounded-[10px] bg-primary px-10 py-3 font-mainText text-lg font-bold text-white"
         >
           Add Recipient
         </button>
