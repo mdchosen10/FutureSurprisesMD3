@@ -15,12 +15,15 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Spinner from "./shared/Spinner";
 import { Modal } from "flowbite-react";
+import * as authActions from "@/redux/auth/actions";
+import { useAppDispatch } from "@/hooks";
 
 const FilloutForm = ({ hasData }: { hasData: boolean }) => {
   const uniqueId = useSessionId();
   const { data } = useWebSocket(uniqueId);
   const [loading, setLoading] = useState(false);
   const [openModal] = useState(true);
+  const dispatch = useAppDispatch();
 
   const token = getToken();
   const user = useAuth();
@@ -67,6 +70,8 @@ const FilloutForm = ({ hasData }: { hasData: boolean }) => {
         sessionStorage.removeItem("formData");
         sessionStorage.removeItem("redirect");
         localStorage?.setItem("user_token", final?.token);
+        await dispatch(authActions.getCurrentCustomer());
+
         toast.success(
           "Recipient details stored successfully",
         );

@@ -20,6 +20,8 @@ import toast from "react-hot-toast";
 import TextInput from "../utils/TextInput";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
 import PhoneNumberInput from "../utils/PhoneNumberInput";
+import { useAppDispatch } from "@/hooks";
+import * as authActions from "@/redux/auth/actions";
 
 export interface CustomerSchema {
   first_name: string;
@@ -83,6 +85,7 @@ const CardForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
@@ -148,6 +151,7 @@ const CardForm = () => {
         sessionStorage.removeItem("formData");
         sessionStorage.removeItem("redirect");
         localStorage?.setItem("user_token", final?.token);
+        await dispatch(authActions.getCurrentCustomer());
         toast.success(
           "Recipient details stored successfully",
         );
