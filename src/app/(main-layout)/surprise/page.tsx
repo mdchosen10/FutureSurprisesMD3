@@ -7,9 +7,9 @@ const Surprise = () => {
   const [hasData, setHasData] = useState(false);
 
   useEffect(() => {
-    const redirect = localStorage.getItem("redirect");
+    const redirect = sessionStorage.getItem("redirect");
     const formData =
-      localStorage.getItem("formData") ?? "{}";
+      sessionStorage.getItem("formData") ?? "{}";
     if (
       formData &&
       Object.keys(JSON.parse(formData))?.length > 0 &&

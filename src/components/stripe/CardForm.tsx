@@ -123,7 +123,7 @@ const CardForm = () => {
 
     try {
       const formData = JSON.parse(
-        localStorage.getItem("formData") || "{}",
+        sessionStorage.getItem("formData") || "{}",
       );
       const response = await fetch(
         `${process.env.BASE_URL}/create-customer-and-payment`,
@@ -145,8 +145,8 @@ const CardForm = () => {
       if (final && final?.success && final?.token) {
         setLoading(false);
         setSuccess(true);
-        localStorage.removeItem("formData");
-        localStorage.removeItem("redirect");
+        sessionStorage.removeItem("formData");
+        sessionStorage.removeItem("redirect");
         localStorage?.setItem("user_token", final?.token);
         toast.success(
           "Recipient details stored successfully",
@@ -154,14 +154,17 @@ const CardForm = () => {
         return router.push("/my-account/recipients");
       } else {
         setLoading(false);
-        localStorage.removeItem("formData");
-        localStorage.removeItem("redirect");
+        sessionStorage.removeItem("formData");
+        sessionStorage.removeItem("redirect");
         toast.error("Failed to store recipient details");
         router.push("/surprise");
       }
     } catch (err) {
+      sessionStorage.removeItem("formData");
+      sessionStorage.removeItem("redirect");
       setLoading(false);
       toast.error("Failed to store recipient details");
+      router.push("/surprise");
     }
   };
 
@@ -277,7 +280,7 @@ const CardForm = () => {
             Already have an account ?{" "}
             <Button
               onClick={() => {
-                localStorage.setItem("redirect", "true");
+                sessionStorage.setItem("redirect", "true");
                 router.push("/login?next=surprise");
               }}
               className="!bg-transparent !px-1 hover:underline"

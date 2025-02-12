@@ -25,7 +25,7 @@ const useWebSocket = (sessionId: string) => {
     newSocket.on("formProcessed", data => {
       console.log("Form processed for this client");
       setData(data);
-      localStorage.setItem(
+      sessionStorage.setItem(
         "formData",
         JSON.stringify(data?.data ?? {}),
       );

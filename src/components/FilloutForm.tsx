@@ -45,7 +45,7 @@ const FilloutForm = ({ hasData }: { hasData: boolean }) => {
     try {
       const token = localStorage.getItem("user_token");
       const formData = JSON.parse(
-        localStorage.getItem("formData") || "{}",
+        sessionStorage.getItem("formData") || "{}",
       );
       const response = await fetch(
         `${process.env.BASE_URL}/create-customer-and-payment`,
@@ -64,23 +64,26 @@ const FilloutForm = ({ hasData }: { hasData: boolean }) => {
       const final = await response.json();
       if (final && final?.success) {
         setLoading(false);
-        localStorage.removeItem("formData");
-        localStorage.removeItem("redirect");
+        sessionStorage.removeItem("formData");
+        sessionStorage.removeItem("redirect");
         localStorage?.setItem("user_token", final?.token);
         toast.success(
           "Recipient details stored successfully",
         );
         return router.push("/my-account/recipients");
       } else {
-        localStorage.removeItem("formData");
-        localStorage.removeItem("redirect");
+        sessionStorage.removeItem("formData");
+        sessionStorage.removeItem("redirect");
         setLoading(false);
         toast.error("Failed to store recipient details");
         router.push("/surprise");
       }
     } catch (err) {
+      sessionStorage.removeItem("formData");
+      sessionStorage.removeItem("redirect");
       setLoading(false);
       toast.error("Failed to store recipient details");
+      router.push("/surprise");
     }
   };
 
