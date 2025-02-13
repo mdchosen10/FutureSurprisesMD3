@@ -20,7 +20,6 @@ import { useAppDispatch } from "@/hooks";
 import { useAuth } from "@/hooks/useAuth";
 import Alert from "@/../public/images/alert.png";
 import * as authActions from "@/redux/auth/actions";
-import toast from "react-hot-toast";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -117,11 +116,6 @@ export default function LayoutWrapper({
   useEffect(() => {
     if (hydrated && accessToken) {
       checkAccessIfSocialSignIn();
-    }
-    if (!user || !user.id) {
-      toast.error("Please login to view your account");
-      router.push("/login");
-      return;
     }
   }, [hydrated, accessToken, checkAccessIfSocialSignIn]);
 
