@@ -109,13 +109,6 @@ export default function LayoutWrapper({
 
   useEffect(() => {
     if (!hydrated) return;
-
-    if (!user || !user.id) {
-      toast.error("Please login to view your account");
-      router.push("/login");
-      return;
-    }
-
     getCurrentCustomer();
     setIsAuthenticated(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,6 +117,11 @@ export default function LayoutWrapper({
   useEffect(() => {
     if (hydrated && accessToken) {
       checkAccessIfSocialSignIn();
+    }
+    if (!user || !user.id) {
+      toast.error("Please login to view your account");
+      router.push("/login");
+      return;
     }
   }, [hydrated, accessToken, checkAccessIfSocialSignIn]);
 
