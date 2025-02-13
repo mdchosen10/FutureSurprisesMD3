@@ -2,7 +2,6 @@ import React, { ReactNode } from "react";
 
 import { Metadata } from "next";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -24,7 +23,6 @@ export default function MainLayout({
       <main className="mx-auto w-full max-w-screen-2xl flex-grow">
         {children}
       </main>
-      <Footer />
     </div>
   );
 }

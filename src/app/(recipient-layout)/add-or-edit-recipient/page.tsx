@@ -62,10 +62,10 @@ const AddRecipientSchema = yup
   .object()
   .shape({
     fName: yup.string().required("First name is required"),
-    lName: yup.string().required("First name is required"),
+    lName: yup.string().nullable(),
     nickName: yup.string(),
-    signature: yup.string(),
-    dob: yup.date().required("Date of birth is required"),
+    signature: yup.string().nullable(),
+    dob: yup.date().nullable(),
     spendingLimit: yup
       .string()
       .required("Spending limit is required"),
@@ -509,7 +509,8 @@ const AddOrEditRecipient = () => {
     setAllHolidays([]);
     setAdditionalInfo([]);
     setChatGPTMessage("");
-    router.push("/add-or-edit-recipient");
+    // router.push("/add-or-edit-recipient");
+    router.push("/surprise");
   }, [reset, router]);
 
   const resetAddAddressForm = useCallback(() => {
@@ -1531,7 +1532,7 @@ const AddOrEditRecipient = () => {
                   render={({ field }) => (
                     <TextInputFloating
                       {...field}
-                      placeholder="Last name*"
+                      placeholder="Last name"
                       type="text"
                       errors={errors.lName?.message}
                       inputClassName="w-full md:w-[200px] lg:w-[220px]"

@@ -6,6 +6,7 @@ import "../styles/globals.css";
 // import type { Metadata } from "next";
 import {
   Lora,
+  Noto_Sans,
   Playfair_Display,
   Poppins,
   Sedgwick_Ave,
@@ -42,6 +43,13 @@ const lora = Lora({
   variable: "--font-lora",
 });
 
+const noto = Noto_Sans({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  style: ["normal"],
+  variable: "--font-noto",
+});
+
 export const metadata: Metadata = {
   title: "Future surprises",
   description: "Simplify your gift giving",
@@ -55,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${mainHeading.variable} ${mainText.variable} ${Sedgwick.variable} ${lora.variable}`}
+      className={`${mainHeading.variable} ${mainText.variable} ${Sedgwick.variable} ${lora.variable} ${noto.variable}`}
     >
       <body>
         <Toaster

@@ -23,6 +23,7 @@ const config: Config = {
         Sedgwick: ["var(--font-Sedgwick)"],
         lora: "var(--font-lora)",
         poppins: "var(--font-mainText)",
+        noto: "var(--font-noto)",
       },
       screens: {
         "3xl": "1440px",

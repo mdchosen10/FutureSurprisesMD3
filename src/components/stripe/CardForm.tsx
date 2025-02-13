@@ -158,10 +158,20 @@ const CardForm = () => {
         return router.push("/my-account/recipients");
       } else {
         setLoading(false);
-        sessionStorage.removeItem("formData");
-        sessionStorage.removeItem("redirect");
-        toast.error("Failed to store recipient details");
-        router.push("/surprise");
+        if (final?.existing) {
+          toast.error(
+            "Email already exists. Redirecting to login page. Please login to continue",
+          );
+          setTimeout(() => {
+            sessionStorage.setItem("redirect", "true");
+            router.push("/login?next=surprise");
+          }, 2000);
+        } else {
+          sessionStorage.removeItem("formData");
+          sessionStorage.removeItem("redirect");
+          toast.error("Failed to store recipient details");
+          router.push("/surprise");
+        }
       }
     } catch (err) {
       sessionStorage.removeItem("formData");

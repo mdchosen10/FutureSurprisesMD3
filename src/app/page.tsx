@@ -9,13 +9,23 @@ import Banner from "@/components/layout/Banner";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/hooks";
+import * as authActions from "@/redux/auth/actions";
 
 export default function Home() {
   const [hydrated, setHydrated] = useState<boolean>(false);
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
+  const getCurrentCustomer = async () => {
+    await dispatch(authActions.getCurrentCustomer());
+  };
   useEffect(() => {
     setHydrated(true);
+    const token = localStorage.getItem("user_token");
+    if (token) {
+      getCurrentCustomer();
+    }
   }, []);
 
   if (!hydrated) {

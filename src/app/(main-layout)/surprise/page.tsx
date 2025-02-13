@@ -1,10 +1,12 @@
 "use client";
 
 import FilloutForm from "@/components/FilloutForm";
+import Hurray from "@/components/Hurray";
 import React, { useEffect, useState } from "react";
 
 const Surprise = () => {
   const [hasData, setHasData] = useState(false);
+  const [updated, setUpdated] = useState(false);
 
   useEffect(() => {
     const redirect = sessionStorage.getItem("redirect");
@@ -18,11 +20,14 @@ const Surprise = () => {
     ) {
       setHasData(true);
     }
+    setUpdated(true);
   }, []);
-  return (
-    <div className="flex h-full min-h-screen w-screen pt-[85px]">
-      <FilloutForm hasData={hasData} />
+  return updated ? (
+    <div className="flex h-full min-h-screen pt-[90px]">
+      {hasData ? <Hurray /> : <FilloutForm />}
     </div>
+  ) : (
+    ""
   );
 };
 
