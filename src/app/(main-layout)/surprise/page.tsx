@@ -23,8 +23,10 @@ const Surprise = () => {
     setUpdated(true);
   }, []);
   return updated ? (
-    <div className="flex h-full min-h-screen pt-[90px]">
-      {hasData ? <Hurray /> : <FilloutForm />}
+    <div className="flex bg-[#2f1752]">
+      <div className="flex min-h-[calc(100vh-90px)] w-full">
+        {hasData ? <Hurray /> : <FilloutForm />}
+      </div>
     </div>
   ) : (
     ""

@@ -33,7 +33,7 @@ const FilloutForm = () => {
 
   if (uniqueId)
     return (
-      <div className="min-h-screen w-full flex-1">
+      <div className="w-full">
         {data && data?.showPayment ? (
           <div className="">
             <Elements
