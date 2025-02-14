@@ -20,7 +20,7 @@ export default function MainLayout({
         <Navbar />
       </div> */}
       <Header />
-      <main className="mx-auto w-full max-w-screen-2xl flex-grow">
+      <main className="mx-auto h-full w-full">
         {children}
       </main>
     </div>

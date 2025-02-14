@@ -16,7 +16,9 @@ export default function MainLayout({
 }: LayoutProps) {
   return (
     <>
-      <div className="min-h-screen">{children}</div>
+      <div className="mx-auto min-h-screen max-w-screen-2xl">
+        {children}
+      </div>
       <Footer />
     </>
   );
