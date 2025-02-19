@@ -42,28 +42,12 @@ const Header = () => {
           >
             FAQ
           </Link>
-          <Button
+          <Link
             className="hidden font-bold hover:underline md:flex"
-            onClick={() => {
-              const offset = 100;
-
-              const gallery =
-                document.getElementById("gallery");
-              if (gallery) {
-                const topPosition =
-                  gallery.getBoundingClientRect().top +
-                  window.scrollY -
-                  offset;
-
-                window.scrollTo({
-                  top: topPosition,
-                  behavior: "smooth",
-                });
-              }
-            }}
+            href="/collections"
           >
             Gallery
-          </Button>
+          </Link>
           <Link
             className="hidden font-bold hover:underline md:flex"
             href="/contact-us"
