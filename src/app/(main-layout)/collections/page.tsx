@@ -10,245 +10,240 @@ import {
   useRouter,
   useSearchParams,
 } from "next/navigation";
-import ProductCategoryListing from "@/components/ProductCategoryListing";
 import ProductListing from "@/components/ProductListing";
 import FilterIcon from "@/../public/icons/filter-icon.svg";
 import Image from "next/image";
 import * as collectionAction from "@/redux/collections/actions";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { categoryList, checkboxes } from "@/helpers";
 
 const Collections = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const params: any = searchParams?.getAll("category");
-
   const dispatch = useAppDispatch();
-  const { products }: any = useAppSelector(
+  const { products, categories } = useAppSelector(
     state => state.collectionSlice,
   );
 
-  const [filter, setFilter] = useState<string[]>([]);
+  const [categoryFilters, setCategoryFilters] = useState(
+    [],
+  );
+  const [priceFilters, setPriceFilters] = useState([]);
+  const [mobileFilterVisible, setMobileFilterVisible] =
+    useState(false);
 
-  const [toggleFilterMob, setToggleFilterMob] =
-    useState<boolean>(false);
+  // Price options for filter UI
+  const priceOptions = [30, 40, 60, 100];
 
-  const isProductListing = params?.length;
+  // Load data on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      await Promise.all([
+        dispatch(collectionAction.getCategories()),
+        dispatch(
+          collectionAction.getProducts({
+            options: { params: { expand: "categories" } },
+          }),
+        ),
+      ]);
+    };
 
-  const filteredProducts =
-    searchParams?.get("category") === "all"
-      ? products
-      : products?.filter((product: any) => {
-          return product.categories.some((category: any) =>
-            params.includes(category.handle),
-          );
-        });
+    fetchData();
+  }, [dispatch]);
 
-  const onClickViewAll = () => {
-    router.push("/collections/?category=all");
-  };
+  // Initialize filters from URL on page load
+  useEffect(() => {
+    const categoryParams =
+      searchParams?.getAll("category") || [];
+    const priceParams = searchParams?.getAll("price") || [];
 
-  const onFilterSelection = useCallback(
-    (checkbox: any) => {
-      const isPresent = filter.some(
-        (item: any) => item.value === checkbox.value,
+    if (categoryParams.length > 0) {
+      const selectedCategories =
+        categories?.filter(cat =>
+          categoryParams.includes(cat.handle),
+        ) || [];
+      setCategoryFilters(selectedCategories);
+    }
+
+    if (priceParams.length > 0) {
+      setPriceFilters(
+        priceParams.map(price => parseInt(price)),
       );
-      if (isPresent)
-        return setFilter(
-          filter.filter(
-            (item: any) => item.value !== checkbox.value,
-          ),
-        );
-      setFilter([...filter, checkbox]);
-    },
-    [filter],
-  );
+    }
+  }, [searchParams, categories]);
 
-  const categoryCardClick = useCallback(
-    (category: any) => {
-      onFilterSelection(category);
-    },
-    [onFilterSelection],
-  );
+  useEffect(() => {
+    if (
+      categoryFilters.length === 0 &&
+      priceFilters.length === 0
+    ) {
+      router.push("/collections");
+      return;
+    }
 
-  const onClickClear = () => {
-    setFilter([]);
+    const categoryParams = categoryFilters
+      .map(category => `category=${category.handle}`)
+      .join("&");
+
+    const priceParams = priceFilters
+      .map(price => `price=${price}`)
+      .join("&");
+
+    const queryString = [categoryParams, priceParams]
+      .filter(Boolean)
+      .join("&");
+
+    router.push(`/collections/?${queryString}`);
+  }, [categoryFilters, priceFilters, router]);
+
+  const toggleCategoryFilter = useCallback(category => {
+    setCategoryFilters(prevFilters => {
+      const isSelected = prevFilters.some(
+        item => item.handle === category.handle,
+      );
+      return isSelected
+        ? prevFilters.filter(
+            item => item.handle !== category.handle,
+          )
+        : [...prevFilters, category];
+    });
+  }, []);
+
+  const togglePriceFilter = useCallback(priceValue => {
+    setPriceFilters(prevFilters => {
+      const isSelected = prevFilters.includes(priceValue);
+      return isSelected
+        ? prevFilters.filter(price => price !== priceValue)
+        : [...prevFilters, priceValue];
+    });
+  }, []);
+
+  const clearAllFilters = () => {
+    setCategoryFilters([]);
+    setPriceFilters([]);
     router.push("/collections");
   };
 
-  useEffect(() => {
-    const options = {
-      params: {
-        expand: "categories",
-      },
-    };
-    const getAllProducts = async () => {
-      await dispatch(
-        collectionAction.getProducts({ options }),
+  const filteredProducts = products?.filter(product => {
+    if (
+      categoryFilters.length === 0 &&
+      priceFilters.length === 0
+    ) {
+      return true;
+    }
+
+    const matchesCategory =
+      categoryFilters.length === 0 ||
+      product.categories?.some(category =>
+        categoryFilters.some(
+          filter => filter.handle === category.handle,
+        ),
       );
-    };
 
-    getAllProducts();
-  }, [dispatch]);
+    const productPrice = parseInt(
+      product.metadata?.price || 0,
+    );
+    const matchesPrice =
+      priceFilters.length === 0 ||
+      priceFilters.some(
+        maxPrice => productPrice == maxPrice,
+      );
 
-  useEffect(() => {
-    if (!filter?.length) return router.push("/collections");
-    const queryParams = filter
-      .map((checkbox: any) => `category=${checkbox.value}`)
-      .join("&");
+    return matchesCategory && matchesPrice;
+  });
 
-    router.push(`/collections/?${queryParams}`);
-  }, [filter, router]);
-
-  return (
-    <div className="grid-flow-col grid-cols-4 gap-4 pt-[96px] font-mainText md:grid md:max-lg:px-8 lg:px-[116px]">
-      {/* Filter for mobile */}
-      <div
-        className={
-          toggleFilterMob
-            ? "fixed left-0 top-[70px] w-full bg-white p-6 md:hidden"
-            : "fixed left-[-100%] md:hidden"
-        }
-      >
-        <div className="mt-4 flex flex-col gap-4">
+  // Filter section component to avoid repetition
+  const FilterSection = ({ isMobile = false }) => (
+    <>
+      <div className="mt-4 flex flex-col gap-4">
+        {isMobile && (
           <div className="flex justify-between">
             <h1>Filter</h1>
             <h3
-              className="text-primaryViolet"
-              onClick={() =>
-                setToggleFilterMob(!toggleFilterMob)
-              }
+              className="cursor-pointer text-primaryViolet"
+              onClick={() => setMobileFilterVisible(false)}
             >
               Close
             </h3>
           </div>
-          <h1 className="font-semibold text-primaryViolet">
-            Price
-          </h1>
-          {checkboxes.map(
-            (item, index) =>
-              item.type === "price" && (
-                <CheckboxInput
-                  key={index}
-                  label={item.name}
-                  onChange={() => onFilterSelection(item)}
-                  checked={filter.some(
-                    (checkbox: any) =>
-                      checkbox.value === item.value,
-                  )}
-                />
-              ),
-          )}
-        </div>
-        <div className="mb-14 mt-6 flex flex-col gap-4">
-          <h1 className="font-semibold text-primaryViolet">
-            Categories
-          </h1>
-          {checkboxes.map(
-            (item, index) =>
-              item.type === "category" && (
-                <CheckboxInput
-                  key={index}
-                  label={item.name}
-                  onChange={() => onFilterSelection(item)}
-                  checked={filter?.some(
-                    (checkbox: any) =>
-                      checkbox.value === item.value,
-                  )}
-                />
-              ),
-          )}
-        </div>
-        <span
-          className="ml-2 cursor-pointer rounded-full border border-gray-300 px-4 py-2"
-          onClick={onClickClear}
-        >
-          Clear
-        </span>
+        )}
+        <h1 className="font-semibold text-primaryViolet">
+          Price
+        </h1>
+        {priceOptions.map(price => (
+          <CheckboxInput
+            key={`price-${price}`}
+            label={`Under ${price}`}
+            onChange={() => togglePriceFilter(price)}
+            checked={priceFilters.includes(price)}
+          />
+        ))}
       </div>
 
-      {/* Desktop */}
+      <div
+        className={`${
+          isMobile ? "mb-14" : "mb-10"
+        } mt-6 flex flex-col gap-4`}
+      >
+        <h1 className="font-semibold text-primaryViolet">
+          Categories
+        </h1>
+        {categories?.map(category => (
+          <CheckboxInput
+            key={`category-${category.handle}`}
+            label={category.name}
+            onChange={() => toggleCategoryFilter(category)}
+            checked={categoryFilters.some(
+              item => item.handle === category.handle,
+            )}
+          />
+        ))}
+      </div>
+
+      <button
+        onClick={clearAllFilters}
+        type="button"
+        className={`rounded-full border ${
+          isMobile ? "border-gray-300" : "border-gray-500"
+        } px-4 py-2`}
+      >
+        Clear
+      </button>
+    </>
+  );
+
+  return (
+    <div className="grid-flow-col grid-cols-4 gap-4 pt-[96px] font-mainText md:grid md:max-lg:px-8 lg:px-[116px]">
+      <div
+        className={
+          mobileFilterVisible
+            ? "fixed left-0 top-[70px] z-50 w-full bg-white p-6 md:hidden"
+            : "fixed left-[-100%] md:hidden"
+        }
+      >
+        <FilterSection isMobile={true} />
+      </div>
+
+      {/* Desktop Filter Sidebar */}
       <div className="hidden border-r border-[#a93cc93f] md:block md:min-h-[500px]">
-        <div className="mt-4 flex flex-col gap-4">
-          <div className="flex justify-between md:hidden">
-            <h1>Filter</h1>
-            <h3
-              className="text-primaryViolet"
-              onClick={() =>
-                setToggleFilterMob(!toggleFilterMob)
-              }
-            >
-              Close
-            </h3>
-          </div>
-          <h1 className="font-semibold text-primaryViolet">
-            Price
-          </h1>
-          {checkboxes.map(
-            (item, index) =>
-              item.type === "price" && (
-                <CheckboxInput
-                  key={index}
-                  label={item.name}
-                  onChange={() => onFilterSelection(item)}
-                  checked={filter?.some(
-                    (checkbox: any) =>
-                      checkbox.value === item.value,
-                  )}
-                />
-              ),
-          )}
-        </div>
-        <div className="mb-10 mt-6 flex flex-col gap-4">
-          <h1 className="font-semibold text-primaryViolet">
-            Categories
-          </h1>
-          {checkboxes.map(
-            (item, index) =>
-              item.type === "category" && (
-                <CheckboxInput
-                  key={index}
-                  label={item.name}
-                  onChange={() => onFilterSelection(item)}
-                  checked={filter?.some(
-                    (checkbox: any) =>
-                      checkbox.value === item.value,
-                  )}
-                />
-              ),
-          )}
-        </div>
-        <button
-          onClick={onClickClear}
-          type="button"
-          className="rounded-full border border-gray-500 px-2 py-1"
-        >
-          Clear
-        </button>
+        <FilterSection />
       </div>
 
-      {
-        <div
-          className={`${
-            toggleFilterMob && "hidden"
-          } col-span-3 flex flex-col items-center`}
-        >
-          {isProductListing ? (
-            <ProductListing products={filteredProducts} />
-          ) : (
-            <ProductCategoryListing
-              onClickViewAll={onClickViewAll}
-              categories={categoryList}
-              categoryCardClick={categoryCardClick}
-            />
-          )}
-        </div>
-      }
+      {/* Product Grid */}
+      <div
+        className={`${
+          mobileFilterVisible && "hidden"
+        } col-span-3 flex flex-col items-center`}
+      >
+        <ProductListing products={filteredProducts || []} />
+      </div>
+
       <Image
         src={FilterIcon}
         alt="filter"
-        onClick={() => setToggleFilterMob(!toggleFilterMob)}
-        className={`fixed bottom-20 right-8 z-50 h-14 w-14 md:hidden`}
+        onClick={() =>
+          setMobileFilterVisible(!mobileFilterVisible)
+        }
+        className="fixed bottom-20 right-8 z-50 h-14 w-14 cursor-pointer md:hidden"
       />
     </div>
   );
