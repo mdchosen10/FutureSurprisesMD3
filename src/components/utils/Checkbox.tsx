@@ -35,17 +35,22 @@ const CheckboxInput = forwardRef<
 
   return (
     <div className="mr-4 flex items-start">
-      <input
-        checked={checked}
-        id={name}
-        ref={ref}
-        onChange={onChange}
-        onBlur={onBlur}
-        type="checkbox"
-        disabled={disabled}
-        // title="test"
-        defaultChecked={defaultChecked}
-        className={`h-4
+      <label
+        // htmlFor={name}
+        // onClick={onChange}
+        className={`${labelClassName} ml-2  flex items-center gap-x-2 font-normal text-gray-900 dark:text-gray-300`}
+      >
+        <input
+          checked={checked}
+          id={name}
+          ref={ref}
+          onChange={onChange}
+          onBlur={onBlur}
+          type="checkbox"
+          disabled={disabled}
+          // title="test"
+          defaultChecked={defaultChecked}
+          className={`h-4
           w-4
           ${
             isCustomHolidayCheckbox
@@ -62,13 +67,9 @@ const CheckboxInput = forwardRef<
           focus:ring-white dark:border-gray-600 
           dark:bg-gray-700
           dark:ring-offset-gray-800 dark:focus:ring-purple-600 ${classes}`}
-      />
-      <label
-        // htmlFor={name}
-        // onClick={onChange}
-        className={`${labelClassName} ml-2  font-normal text-gray-900 dark:text-gray-300`}
-      >
-        {label}
+        />
+
+        <span>{label}</span>
       </label>
     </div>
   );
