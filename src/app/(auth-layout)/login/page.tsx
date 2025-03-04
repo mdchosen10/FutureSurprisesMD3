@@ -144,7 +144,7 @@ const Login = () => {
               if (next && next == "surprise") {
                 window.location.href = `${process.env.BASE_URL}/store/auth/google?redirectTo=${window.location.origin}/surprise`;
               } else {
-                window.location.href = `${process.env.BASE_URL}/store/auth/google`;
+                window.location.href = `${process.env.BASE_URL}/store/auth/google?redirectTo=${window.location.origin}/my-account/recipients`;
               }
             }}
             type="button"
@@ -163,7 +163,7 @@ const Login = () => {
               if (next && next == "surprise") {
                 window.location.href = `${process.env.BASE_URL}/store/auth/facebook?redirectTo=${window.location.origin}/surprise`;
               } else {
-                window.location.href = `${process.env.BASE_URL}/store/auth/facebook`;
+                window.location.href = `${process.env.BASE_URL}/store/auth/facebook?redirectTo=${window.location.origin}/my-account/recipients`;
               }
             }}
             type="button"
