@@ -186,56 +186,69 @@ const Collections = () => {
             </h3>
           </div>
         )}
-        <h1 className="font-semibold text-primaryViolet">
-          Price
-        </h1>
-        {priceOptions.map((price: number) => (
-          <CheckboxInput
-            key={`price-${price}`}
-            label={`Under ${price}`}
-            onChange={() => togglePriceFilter(price)}
-            checked={priceFilters.includes(price)}
-          />
-        ))}
-      </div>
-
-      <div
-        className={`${
-          isMobile ? "mb-14" : "mb-10"
-        } mt-6 flex flex-col gap-4`}
-      >
-        <h1 className="font-semibold text-primaryViolet">
-          Categories
-        </h1>
-        {categories?.map(
-          (category: any) =>
-            !priceOptions?.includes(
-              Number(category?.handle),
-            ) && (
+        {priceOptions?.length ? (
+          <>
+            <h1 className="font-semibold text-primaryViolet">
+              Price
+            </h1>
+            {priceOptions.map((price: number) => (
               <CheckboxInput
-                key={`category-${category?.handle}`}
-                label={category?.name}
-                onChange={() =>
-                  toggleCategoryFilter(category)
-                }
-                checked={categoryFilters.some(
-                  (item: any) =>
-                    item.handle === category.handle,
-                )}
+                key={`price-${price}`}
+                label={`Under ${price}`}
+                onChange={() => togglePriceFilter(price)}
+                checked={priceFilters.includes(price)}
               />
-            ),
+            ))}
+          </>
+        ) : (
+          ""
         )}
       </div>
 
-      <button
-        onClick={clearAllFilters}
-        type="button"
-        className={`rounded-full border ${
-          isMobile ? "border-gray-300" : "border-gray-500"
-        } px-4 py-2`}
-      >
-        Clear
-      </button>
+      {categories?.length ? (
+        <>
+          <div
+            className={`${
+              isMobile ? "mb-14" : "mb-10"
+            } mt-6 flex flex-col gap-4`}
+          >
+            <h1 className="font-semibold text-primaryViolet">
+              Categories
+            </h1>
+            {categories?.map(
+              (category: any) =>
+                !priceOptions?.includes(
+                  Number(category?.handle),
+                ) && (
+                  <CheckboxInput
+                    key={`category-${category?.handle}`}
+                    label={category?.name}
+                    onChange={() =>
+                      toggleCategoryFilter(category)
+                    }
+                    checked={categoryFilters.some(
+                      (item: any) =>
+                        item.handle === category.handle,
+                    )}
+                  />
+                ),
+            )}
+          </div>
+          <button
+            onClick={clearAllFilters}
+            type="button"
+            className={`rounded-full border ${
+              isMobile
+                ? "border-gray-300"
+                : "border-gray-500"
+            } px-4 py-2`}
+          >
+            Clear
+          </button>
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
 
@@ -248,7 +261,7 @@ const Collections = () => {
           <div
             className={
               mobileFilterVisible
-                ? "fixed left-0 top-[70px] z-50 w-full bg-white p-6 md:hidden"
+                ? "fixed left-0 top-[70px] z-40 w-full bg-white p-6 md:hidden"
                 : "fixed left-[-100%] md:hidden"
             }
           >
