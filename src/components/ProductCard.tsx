@@ -19,7 +19,7 @@ const ProductCard = (props: any) => {
       onClick={onClick}
     >
       <Image
-        src={product?.thumbnail}
+        src={product?.thumbnail ?? ""}
         alt="product"
         className="max-h-[70px] max-w-[66px] md:h-[145px] md:w-[120px]"
         width={150}

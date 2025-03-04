@@ -27,7 +27,7 @@ import CloseIcon from "@/../public/icons/close-modal.svg";
 // };
 
 const ProductListing = (props: any) => {
-  const { products } = props;
+  const { products = [] } = props;
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] =
@@ -59,33 +59,34 @@ const ProductListing = (props: any) => {
           />
           <div className="flex flex-col items-center gap-4 px-6">
             <Image
-              src={selectedProduct.thumbnail}
+              src={selectedProduct?.thumbnail}
               alt="close"
               className="bg-gray-200"
               width={200}
               height={200}
             />
-            <h3>{selectedProduct.title}</h3>
+            <h3>{selectedProduct?.title}</h3>
             <p className="pb-9 text-center text-sm text-[#6C6672]">
-              {selectedProduct.description}
+              {selectedProduct?.description}
             </p>
           </div>
         </div>
       </Modal>
       <div className="my-6 flex flex-wrap justify-center gap-4 md:justify-start">
-        {!products?.length && (
+        {!products?.length ? (
           <p>
             Oops! There are no products for the selected
             category(s)
           </p>
+        ) : (
+          products?.map((product: any) => (
+            <ProductCard
+              key={product?.id}
+              product={product}
+              onClick={() => onProductClick(product)}
+            />
+          ))
         )}
-        {products?.map((product: any) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onClick={() => onProductClick(product)}
-          />
-        ))}
       </div>
       {/* <Flowbite theme={{ theme: paginationTheme }}>
         <Pagination

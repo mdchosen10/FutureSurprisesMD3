@@ -15,26 +15,25 @@ import FilterIcon from "@/../public/icons/filter-icon.svg";
 import Image from "next/image";
 import * as collectionAction from "@/redux/collections/actions";
 import { useAppDispatch, useAppSelector } from "@/hooks";
+import PageLoader from "@/app/loading";
 
 const Collections = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
-  const { products, categories } = useAppSelector(
+  const { products, categories, loading } = useAppSelector(
     state => state.collectionSlice,
   );
 
-  const [categoryFilters, setCategoryFilters] = useState(
-    [],
-  );
-  const [priceFilters, setPriceFilters] = useState([]);
+  const [categoryFilters, setCategoryFilters] =
+    useState<any>([]);
+  const [priceFilters, setPriceFilters] = useState<any>([]);
   const [mobileFilterVisible, setMobileFilterVisible] =
     useState(false);
+  const [priceOptions, setPriceOptions] = useState<
+    number[]
+  >([]);
 
-  // Price options for filter UI
-  const priceOptions = [30, 40, 60, 100];
-
-  // Load data on component mount
   useEffect(() => {
     const fetchData = async () => {
       await Promise.all([
@@ -50,7 +49,16 @@ const Collections = () => {
     fetchData();
   }, [dispatch]);
 
-  // Initialize filters from URL on page load
+  // Set priceOptions based on categories
+  useEffect(() => {
+    if (categories) {
+      const prices = categories
+        .filter((category: any) => !isNaN(category?.handle))
+        .map((category: any) => Number(category?.handle));
+      setPriceOptions(prices);
+    }
+  }, [categories]);
+
   useEffect(() => {
     const categoryParams =
       searchParams?.getAll("category") || [];
@@ -58,7 +66,7 @@ const Collections = () => {
 
     if (categoryParams.length > 0) {
       const selectedCategories =
-        categories?.filter(cat =>
+        categories?.filter((cat: any) =>
           categoryParams.includes(cat.handle),
         ) || [];
       setCategoryFilters(selectedCategories);
@@ -66,7 +74,7 @@ const Collections = () => {
 
     if (priceParams.length > 0) {
       setPriceFilters(
-        priceParams.map(price => parseInt(price)),
+        priceParams.map((price: any) => parseInt(price)),
       );
     }
   }, [searchParams, categories]);
@@ -81,11 +89,11 @@ const Collections = () => {
     }
 
     const categoryParams = categoryFilters
-      .map(category => `category=${category.handle}`)
+      .map((category: any) => `category=${category.handle}`)
       .join("&");
 
     const priceParams = priceFilters
-      .map(price => `price=${price}`)
+      .map((price: any) => `price=${price}`)
       .join("&");
 
     const queryString = [categoryParams, priceParams]
@@ -95,27 +103,36 @@ const Collections = () => {
     router.push(`/collections/?${queryString}`);
   }, [categoryFilters, priceFilters, router]);
 
-  const toggleCategoryFilter = useCallback(category => {
-    setCategoryFilters(prevFilters => {
-      const isSelected = prevFilters.some(
-        item => item.handle === category.handle,
-      );
-      return isSelected
-        ? prevFilters.filter(
-            item => item.handle !== category.handle,
-          )
-        : [...prevFilters, category];
-    });
-  }, []);
+  const toggleCategoryFilter = useCallback(
+    (category: any) => {
+      setCategoryFilters((prevFilters: any) => {
+        const isSelected = prevFilters.some(
+          (item: any) => item.handle === category.handle,
+        );
+        return isSelected
+          ? prevFilters.filter(
+              (item: any) =>
+                item.handle !== category.handle,
+            )
+          : [...prevFilters, category];
+      });
+    },
+    [],
+  );
 
-  const togglePriceFilter = useCallback(priceValue => {
-    setPriceFilters(prevFilters => {
-      const isSelected = prevFilters.includes(priceValue);
-      return isSelected
-        ? prevFilters.filter(price => price !== priceValue)
-        : [...prevFilters, priceValue];
-    });
-  }, []);
+  const togglePriceFilter = useCallback(
+    (priceValue: any) => {
+      setPriceFilters((prevFilters: any) => {
+        const isSelected = prevFilters.includes(priceValue);
+        return isSelected
+          ? prevFilters.filter(
+              (price: any) => price !== priceValue,
+            )
+          : [...prevFilters, priceValue];
+      });
+    },
+    [],
+  );
 
   const clearAllFilters = () => {
     setCategoryFilters([]);
@@ -123,33 +140,36 @@ const Collections = () => {
     router.push("/collections");
   };
 
-  const filteredProducts = products?.filter(product => {
-    if (
-      categoryFilters.length === 0 &&
-      priceFilters.length === 0
-    ) {
-      return true;
-    }
+  const filteredProducts = products?.filter(
+    (product: any) => {
+      if (
+        categoryFilters?.length === 0 &&
+        priceFilters?.length === 0
+      ) {
+        return true;
+      }
 
-    const matchesCategory =
-      categoryFilters.length === 0 ||
-      product.categories?.some(category =>
-        categoryFilters.some(
-          filter => filter.handle === category.handle,
-        ),
-      );
+      const matchesCategory =
+        categoryFilters?.length === 0 ||
+        product.categories?.some((category: any) =>
+          categoryFilters.some(
+            (filter: any) =>
+              filter?.handle === category?.handle,
+          ),
+        );
 
-    const productPrice = parseInt(
-      product.metadata?.price || 0,
-    );
-    const matchesPrice =
-      priceFilters.length === 0 ||
-      priceFilters.some(
-        maxPrice => productPrice == maxPrice,
-      );
+      const matchesPrice =
+        priceFilters?.length === 0 ||
+        product.categories?.some((category: any) =>
+          priceFilters.some(
+            (filter: any) =>
+              filter === Number(category?.handle),
+          ),
+        );
 
-    return matchesCategory && matchesPrice;
-  });
+      return matchesCategory && matchesPrice;
+    },
+  );
 
   // Filter section component to avoid repetition
   const FilterSection = ({ isMobile = false }) => (
@@ -169,7 +189,7 @@ const Collections = () => {
         <h1 className="font-semibold text-primaryViolet">
           Price
         </h1>
-        {priceOptions.map(price => (
+        {priceOptions.map((price: number) => (
           <CheckboxInput
             key={`price-${price}`}
             label={`Under ${price}`}
@@ -187,16 +207,24 @@ const Collections = () => {
         <h1 className="font-semibold text-primaryViolet">
           Categories
         </h1>
-        {categories?.map(category => (
-          <CheckboxInput
-            key={`category-${category.handle}`}
-            label={category.name}
-            onChange={() => toggleCategoryFilter(category)}
-            checked={categoryFilters.some(
-              item => item.handle === category.handle,
-            )}
-          />
-        ))}
+        {categories?.map(
+          (category: any) =>
+            !priceOptions?.includes(
+              Number(category?.handle),
+            ) && (
+              <CheckboxInput
+                key={`category-${category?.handle}`}
+                label={category?.name}
+                onChange={() =>
+                  toggleCategoryFilter(category)
+                }
+                checked={categoryFilters.some(
+                  (item: any) =>
+                    item.handle === category.handle,
+                )}
+              />
+            ),
+        )}
       </div>
 
       <button
@@ -212,40 +240,44 @@ const Collections = () => {
   );
 
   return (
-    <div className="grid-flow-col grid-cols-4 gap-4 pt-[96px] font-mainText md:grid md:max-lg:px-8 lg:px-[116px]">
-      <div
-        className={
-          mobileFilterVisible
-            ? "fixed left-0 top-[70px] z-50 w-full bg-white p-6 md:hidden"
-            : "fixed left-[-100%] md:hidden"
-        }
-      >
-        <FilterSection isMobile={true} />
-      </div>
+    <>
+      {loading ? (
+        <PageLoader />
+      ) : (
+        <div className="grid-flow-col grid-cols-4 gap-4 pt-[96px] font-mainText md:grid md:max-lg:px-8 lg:px-[116px]">
+          <div
+            className={
+              mobileFilterVisible
+                ? "fixed left-0 top-[70px] z-50 w-full bg-white p-6 md:hidden"
+                : "fixed left-[-100%] md:hidden"
+            }
+          >
+            <FilterSection isMobile={true} />
+          </div>
 
-      {/* Desktop Filter Sidebar */}
-      <div className="hidden border-r border-[#a93cc93f] md:block md:min-h-[500px]">
-        <FilterSection />
-      </div>
+          <div className="hidden border-r border-[#a93cc93f] md:block md:min-h-[500px]">
+            <FilterSection />
+          </div>
 
-      {/* Product Grid */}
-      <div
-        className={`${
-          mobileFilterVisible && "hidden"
-        } col-span-3 flex flex-col items-center`}
-      >
-        <ProductListing products={filteredProducts || []} />
-      </div>
+          <div
+            className={`${
+              mobileFilterVisible && "hidden"
+            } col-span-3 flex flex-col items-center`}
+          >
+            <ProductListing products={filteredProducts} />
+          </div>
 
-      <Image
-        src={FilterIcon}
-        alt="filter"
-        onClick={() =>
-          setMobileFilterVisible(!mobileFilterVisible)
-        }
-        className="fixed bottom-20 right-8 z-50 h-14 w-14 cursor-pointer md:hidden"
-      />
-    </div>
+          <Image
+            src={FilterIcon}
+            alt="filter"
+            onClick={() =>
+              setMobileFilterVisible(!mobileFilterVisible)
+            }
+            className="fixed bottom-20 right-8 z-50 h-14 w-14 cursor-pointer md:hidden"
+          />
+        </div>
+      )}
+    </>
   );
 };
 
