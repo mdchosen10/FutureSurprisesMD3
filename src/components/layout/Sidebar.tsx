@@ -21,12 +21,12 @@ const Sidebar = ({
   return (
     <>
       <Drawer
-        className="w-5/6 bg-primary !p-0 "
+        className="w-5/6 bg-primary !p-0 lg:hidden"
         open={isOpen}
         onClose={handleClose}
       >
         <Drawer.Items className="!p-5">
-          <div className="mx-auto flex w-full max-w-full flex-col justify-between px-0 text-white lg:hidden">
+          <div className="mx-auto flex w-full max-w-full flex-col justify-between px-0 text-white">
             <div className="flex w-full items-center justify-between bg-primary">
               <Link href="/">
                 <Image
@@ -39,7 +39,7 @@ const Sidebar = ({
               <Image
                 src={BurgerMenuClose}
                 alt="menu"
-                className="mr-4 cursor-pointer md:hidden"
+                className="mr-4 cursor-pointer"
                 onClick={() => handleClose()}
               />
             </div>

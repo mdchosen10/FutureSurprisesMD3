@@ -116,10 +116,17 @@ const Header = () => {
             Get Started
           </Link>
         ) : (
-          ""
+          <li className="list-none p-4">
+            <Avatar user={user} />
+          </li>
         )}
       </div>
-      <Sidebar isOpen={isOpen} handleClose={handleClose} />
+      <div className="lg:hidden">
+        <Sidebar
+          isOpen={isOpen}
+          handleClose={handleClose}
+        />
+      </div>
     </nav>
   );
 };
