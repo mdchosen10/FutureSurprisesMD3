@@ -20,6 +20,7 @@ import { useAppDispatch } from "@/hooks";
 import { useAuth } from "@/hooks/useAuth";
 import Alert from "@/../public/images/alert.png";
 import * as authActions from "@/redux/auth/actions";
+import toast from "react-hot-toast";
 
 interface LayoutProps {
   children?: ReactNode;
@@ -35,8 +36,7 @@ export default function LayoutWrapper({
   const [hydrated, setHydrated] = useState(false);
   const [isAuthenticated, setIsAuthenticated] =
     useState(false);
-  const [isAccessDisabled, setIsAccessDisabled] =
-    useState(false);
+  const [isAccessDisabled] = useState(false);
 
   const user = useAuth();
   const router = useRouter();
@@ -71,27 +71,9 @@ export default function LayoutWrapper({
     useCallback(async () => {
       if (accessToken) {
         localStorage.setItem("user_token", accessToken);
-        const currentUser: any = await dispatch(
-          authActions.getCurrentCustomer(),
-        );
-        const isRestricted =
-          !currentUser?.payload?.customer?.metadata
-            ?.birthdate ||
-          !currentUser?.payload?.customer?.phone;
-        setIsAccessDisabled(isRestricted);
-
-        if (isRestricted) {
-          router.push("/my-account/user");
-        } else {
-          router.replace(`/my-account/${active}`);
-        }
+        await dispatch(authActions.getCurrentCustomer());
       } else if (user) {
-        const isRestricted =
-          !user?.metadata?.birthdate || !user?.phone;
-        setIsAccessDisabled(isRestricted);
-        if (isRestricted) {
-          router.push("/my-account/user");
-        }
+        return;
       } else {
         router.push("/login");
       }
@@ -109,7 +91,12 @@ export default function LayoutWrapper({
   useEffect(() => {
     if (!hydrated) return;
     getCurrentCustomer();
-    setIsAuthenticated(true);
+    if (user && user?.id) {
+      setIsAuthenticated(true);
+    } else {
+      toast.error("Please login to view recipients");
+      router.push("/login");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hydrated]);
 
