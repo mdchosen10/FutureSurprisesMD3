@@ -24,7 +24,7 @@ const Surprise = () => {
   }, []);
   return updated ? (
     <div className="flex bg-[#2f1752]">
-      <div className="flex min-h-[calc(100vh-90px)] w-full">
+      <div className="flex min-h-[calc(100dvh-90px)] w-full">
         {hasData ? <Hurray /> : <FilloutForm />}
       </div>
     </div>
