@@ -17,9 +17,9 @@ import {
 import Button from "@/components/Button";
 
 import { useAuth } from "@/hooks/useAuth";
-import Link from "next/link";
 import { Modal } from "flowbite-react";
 import CloseIcon from "@/../public/icons/close-violet.svg";
+import GetStartedButton from "@/components/GetStartedButton";
 
 const Login = () => {
   const router = useRouter();
@@ -201,12 +201,17 @@ const Login = () => {
           </button>
 
           <div className="flex w-full flex-col items-center gap-4 font-mainText">
-            <Link
+            {/* <Link
               className="cursor-pointer text-center text-xs text-primaryViolet md:text-sm"
               href={"/surprise"}
             >
               New user ? Get Started
-            </Link>
+            </Link> */}
+            <GetStartedButton
+              className="cursor-pointer text-center text-xs text-primaryViolet md:text-sm"
+              gtagLabel="login_page_get_started_button"
+              label="New user ? Get Started"
+            />
           </div>
         </div>
       </div>

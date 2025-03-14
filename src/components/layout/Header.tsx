@@ -9,6 +9,7 @@ import Button from "../shared/Button";
 import { usePathname, useRouter } from "next/navigation";
 import BurgerMenuOpen from "@/../public/icons/burger-menu.svg";
 import Sidebar from "./Sidebar";
+import GetStartedButton from "../GetStartedButton";
 
 const Header = () => {
   const user = useAuth();
@@ -73,12 +74,16 @@ const Header = () => {
               >
                 Sign in
               </Button>
-              <Link
+              {/* <Link
                 className="hidden rounded-md !border px-3 py-2 font-bold hover:bg-white hover:text-primary md:flex"
                 href="/surprise"
               >
                 Get Started
-              </Link>
+              </Link> */}
+              <GetStartedButton
+                className="hidden rounded-md !border px-3 py-2 font-bold hover:bg-white hover:text-primary md:flex"
+                gtagLabel="desktop_header_get_started_button"
+              />
             </>
           ) : (
             <li className="list-none p-4">
@@ -108,13 +113,17 @@ const Header = () => {
             </Link>
           </div>
         </div>
-        {!user ? (
-          <Link
+        {!user || !user?.id ? (
+          // <Link
+          //   className="flex items-center rounded-md !border px-3 py-2 text-xs font-bold hover:bg-white hover:text-primary md:text-sm lg:text-lg"
+          //   href="/surprise"
+          // >
+          //   Get Started
+          // </Link>
+          <GetStartedButton
             className="flex items-center rounded-md !border px-3 py-2 text-xs font-bold hover:bg-white hover:text-primary md:text-sm lg:text-lg"
-            href="/surprise"
-          >
-            Get Started
-          </Link>
+            gtagLabel="mobile_header_get_started_button"
+          />
         ) : (
           <li className="list-none p-4">
             <Avatar user={user} />

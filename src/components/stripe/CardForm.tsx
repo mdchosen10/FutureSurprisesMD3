@@ -22,6 +22,7 @@ import { isPossiblePhoneNumber } from "react-phone-number-input";
 import PhoneNumberInput from "../utils/PhoneNumberInput";
 import { useAppDispatch } from "@/hooks";
 import * as authActions from "@/redux/auth/actions";
+import * as gtag from "@/lib/gtag";
 
 export interface CustomerSchema {
   first_name: string;
@@ -115,7 +116,12 @@ const CardForm = () => {
         type: "card",
         card: cardElement,
       });
-
+    gtag.event({
+      action: "submit",
+      category: "conversion",
+      label: "payment_submission",
+      value: 1,
+    });
     if (error) {
       setLoading(false);
       toast.error(

@@ -16,6 +16,7 @@ import Image from "next/image";
 import * as collectionAction from "@/redux/collections/actions";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import PageLoader from "@/app/loading";
+import * as gtag from "@/lib/gtag";
 
 const Collections = () => {
   const router = useRouter();
@@ -33,6 +34,15 @@ const Collections = () => {
   const [priceOptions, setPriceOptions] = useState<
     number[]
   >([]);
+
+  useEffect(() => {
+    gtag.event({
+      action: "view",
+      category: "pages",
+      label: "gallery_page",
+      value: "",
+    });
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
