@@ -2,10 +2,9 @@
 
 import React from "react";
 import Button from "../shared/Button";
-import { useRouter } from "next/navigation";
+import GetStartedButton from "../GetStartedButton";
 
 const Banner = () => {
-  const router = useRouter();
   return (
     <div className="relative flex h-full w-full">
       <video
@@ -37,7 +36,7 @@ const Banner = () => {
           </p>
 
           <div className="mx-auto mt-4 flex flex-wrap items-center gap-4">
-            <Button
+            {/* <Button
               onClick={() => {
                 router.push("/surprise");
               }}
@@ -45,7 +44,12 @@ const Banner = () => {
               className="!px-10 py-3 font-semibold 2xl:text-xl"
             >
               Get Started
-            </Button>
+            </Button> */}
+
+            <GetStartedButton
+              className="rounded-md bg-primary !px-10 py-3 font-poppins font-semibold text-white 2xl:text-xl"
+              gtagLabel="home_page_video_get_started_button"
+            />
             <Button
               variant="transparent"
               className="text-[#9B79B6] hover:underline  2xl:text-xl"

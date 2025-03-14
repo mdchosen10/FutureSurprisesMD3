@@ -8,6 +8,7 @@ import Avatar from "../Avatar";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import BurgerMenuClose from "@/../public/icons/burger-menu-close.svg";
+import GetStartedButton from "../GetStartedButton";
 
 const Sidebar = ({
   isOpen,
@@ -74,12 +75,16 @@ const Sidebar = ({
                   >
                     Sign in
                   </Button>
-                  <Link
+                  {/* <Link
                     className="flex rounded-md !border bg-primary px-3 py-2 font-bold text-white hover:bg-primary"
                     href="/surprise"
                   >
                     Get Started
-                  </Link>
+                  </Link> */}
+                  <GetStartedButton
+                    className="flex rounded-md !border bg-primary px-3 py-2 font-bold text-white hover:bg-primary"
+                    gtagLabel="mobile_sidebar_get_started_button"
+                  />
                 </>
               ) : (
                 <li className="list-none">

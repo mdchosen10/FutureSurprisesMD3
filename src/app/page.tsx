@@ -3,18 +3,17 @@
 import { useEffect, useState } from "react";
 import HowItWorks from "@/components/HowItWorks";
 import Explore from "@/components/Explore";
-import Button from "@/components/shared/Button";
 import TestimonialsCarousel from "@/components/Testimonial";
 import Banner from "@/components/layout/Banner";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks";
 import * as authActions from "@/redux/auth/actions";
+import GetStartedButton from "@/components/GetStartedButton";
+import * as gtag from "@/lib/gtag";
 
 export default function Home() {
   const [hydrated, setHydrated] = useState<boolean>(false);
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const getCurrentCustomer = async () => {
@@ -26,6 +25,15 @@ export default function Home() {
     if (token) {
       getCurrentCustomer();
     }
+  }, []);
+
+  useEffect(() => {
+    gtag.event({
+      action: "view",
+      category: "pages",
+      label: "home_page",
+      value: "",
+    });
   }, []);
 
   if (!hydrated) {
@@ -60,14 +68,18 @@ export default function Home() {
             registering. We&apos;ll save your progress for a
             smooth checkout.
           </p>
-          <Button
+          {/* <Button
             onClick={() => {
               router.push("/surprise");
             }}
             variant="primary"
           >
             Get Started
-          </Button>
+          </Button> */}
+          <GetStartedButton
+            className="rounded-md bg-primary px-5 py-2 font-poppins text-white lg:text-lg"
+            gtagLabel="home_page_start_surprise_journey_get_started_button"
+          />
         </div>
         <div className="">
           <hr className="mx-auto mb-6 h-16 w-1 rotate-0 transform bg-primary" />
