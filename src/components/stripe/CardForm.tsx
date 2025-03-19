@@ -165,7 +165,7 @@ const CardForm = () => {
       } else {
         setLoading(false);
         if (final?.existing) {
-          toast.error(
+          toast(
             "Email already exists. Redirecting to login page. Please login to continue",
           );
           setTimeout(() => {
