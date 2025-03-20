@@ -256,7 +256,7 @@ const ContactUs = () => {
                 type="submit"
                 isLoading={false}
                 name="Send"
-                bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
+                bgClass="bg-primary"
                 textClass="text-white"
                 extraClass="w-[140px] shadow-md "
               />

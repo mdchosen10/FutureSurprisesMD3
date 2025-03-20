@@ -112,7 +112,7 @@ function AddPaymentComponent({
                     <Button
                       name="Cancel"
                       onClick={onCancel}
-                      bgClass="font-mainText bg-gradient-to-r from-[#2c2434] to-[#bc66d7] text-white px-[25px] h-fit !py-2 lg:py-[15px] hover:shadow-md"
+                      bgClass="font-mainText bg-primary text-white px-[25px] h-fit !py-2 lg:py-[15px] hover:shadow-md"
                     />
                   )}
                 />

@@ -151,7 +151,7 @@ const ForgotPassword = () => {
               isLoading={loading}
               disabled={loading}
               name="Submit"
-              bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
+              bgClass="bg-primary"
               textClass="text-white"
               extraClass="w-[140px] shadow-md mx-auto md:mx-0"
             />

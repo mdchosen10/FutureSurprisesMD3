@@ -31,7 +31,7 @@ const Sidebar = ({
             <div className="flex w-full items-center justify-between bg-primary">
               <Link href="/">
                 <Image
-                  src="/images/future-surprise-logo.png"
+                  src="/images/Future-Surprises-Logo-White.png"
                   height={47}
                   width={197}
                   alt="logo"

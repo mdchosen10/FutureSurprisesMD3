@@ -30,7 +30,7 @@ const Hurray = () => {
         </p>
         <Button
           name="Go to My Account"
-          bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md"
+          bgClass="bg-primary shadow-md"
           textClass="text-white font-mainText"
           extraClass="px-6"
           type="submit"

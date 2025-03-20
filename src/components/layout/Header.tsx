@@ -27,13 +27,18 @@ const Header = () => {
       } left-0 top-0 z-30 flex h-[90px] w-full items-center justify-between bg-primary font-poppins text-white dark:text-white`}
     >
       <div className="mx-auto hidden w-full max-w-screen-2xl justify-between px-5 lg:flex lg:px-16">
-        <div className="ms-5">
-          <Link href="/">
+        <div className="ms-5 flex">
+          <Link
+            href="/"
+            className="h-24 w-auto items-center"
+          >
             <Image
-              src="/images/future-surprise-logo.png"
-              height={47}
-              width={197}
+              src="/images/Future-Surprises-Logo-White.png"
+              height={0}
+              width={0}
+              unoptimized
               alt="logo"
+              className="h-full w-full object-contain"
             />
           </Link>
         </div>
@@ -92,7 +97,7 @@ const Header = () => {
           )}
         </div>
       </div>
-      <div className="flex w-full justify-between px-5 lg:hidden">
+      <div className="flex w-full items-center justify-between px-5 lg:hidden">
         <div className="flex items-center gap-x-3">
           <Button className="!px-0">
             <Image
@@ -105,7 +110,7 @@ const Header = () => {
           <div className="">
             <Link href="/">
               <Image
-                src="/images/future-surprise-logo.png"
+                src="/images/Future-Surprises-Logo-White.png"
                 height={47}
                 width={160}
                 alt="logo"

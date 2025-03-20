@@ -31,7 +31,7 @@ const ProductCategoryListing: FC<{
           type="button"
           name="View all"
           onClick={onClickViewAll}
-          bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md"
+          bgClass="bg-primary shadow-md"
           textClass="text-white"
           extraClass="max-w-[130px] px-4"
         />

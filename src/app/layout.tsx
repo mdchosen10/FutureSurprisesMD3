@@ -9,13 +9,13 @@ import * as gtag from "@/lib/gtag";
 import {
   Lora,
   Noto_Sans,
-  Playfair_Display,
   Poppins,
   Sedgwick_Ave,
+  Ysabeau_Office,
 } from "next/font/google";
 import { Metadata } from "next";
 
-const mainHeading = Playfair_Display({
+const mainHeading = Ysabeau_Office({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-mainHeading",

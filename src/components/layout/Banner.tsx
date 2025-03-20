@@ -24,7 +24,7 @@ const Banner = () => {
 
       <div className="banner absolute bottom-[-2px] left-0 mx-auto flex w-full px-5 pb-5 lg:px-20">
         <div className="flex h-full w-full flex-col items-start justify-center gap-2">
-          <h1 className="w-full text-center font-lora text-2xl font-bold text-black lg:text-5xl lg:leading-[60px]">
+          <h1 className="w-full text-center font-mainHeading text-2xl font-bold text-black lg:text-5xl lg:leading-[60px]">
             Your Personal
             <span className="text-primary"> Gifting </span>
             Assistant
@@ -52,7 +52,7 @@ const Banner = () => {
             />
             <Button
               variant="transparent"
-              className="text-[#9B79B6] hover:underline  2xl:text-xl"
+              className="text-[#511f4a] hover:underline  2xl:text-xl"
               onClick={() => {
                 const x =
                   document.getElementById("how-it-works");

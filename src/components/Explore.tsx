@@ -39,9 +39,9 @@ const Explore = () => {
 
   return (
     <div className="mt-20" id="gallery">
-      <h2 className="mb-15 text-center font-lora text-2xl font-bold lg:text-5xl lg:leading-[60px] 2xl:text-[54px]">
+      <h2 className="mb-15 text-center font-mainHeading text-2xl font-bold lg:text-5xl lg:leading-[60px] 2xl:text-[54px]">
         Explore our{" "}
-        <span className="text-[#9B79B6]">Gift</span>{" "}
+        <span className="text-[#511f4a]">Gift</span>{" "}
         Selection
       </h2>
       <p className="mx-auto mt-6 max-w-4xl text-center text-lg text-[#2C2C34] 2xl:text-2xl">
