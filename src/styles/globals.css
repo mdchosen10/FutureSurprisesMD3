@@ -120,7 +120,7 @@ td:nth-child(1) {
   }
   .sidebar-link.active {
     background-color: transparent;
-    color: #643e74;
+    color: #511f4a;
     border-bottom: 2px solid #a93cc9;
   }
 }
@@ -131,7 +131,7 @@ td:nth-child(1) {
   }
 
   .sidebar-link.active {
-    background-color: #643e74;
+    background-color: #511f4a;
     color: #fff;
   }
 }

@@ -31,7 +31,7 @@ const SignUpFooter = () => {
           {!user?.id && (
             <Button
               name="Sign up"
-              bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md"
+              bgClass="bg-primary shadow-md"
               textClass="text-white"
               extraClass="px-5 font-mainText"
               onClick={() => router.push("/register")}

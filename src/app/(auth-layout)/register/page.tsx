@@ -281,7 +281,7 @@ const Login = () => {
             type="button"
             name="Close"
             onClick={() => setOpenModal(false)}
-            bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
+            bgClass="bg-primary"
             textClass="text-white font-mainText"
             extraClass="w-[140px] shadow-md mx-auto"
           />
@@ -518,7 +518,7 @@ const Login = () => {
                 disabled={alreadyRegistered}
                 name="Save & Add Recipient"
                 isLoading={addRecipientBtnLoading}
-                bgClass="font-medium bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md px-[10px] py-[12px] md:px-[25px] md:py-[15px] text-xs md:text-base"
+                bgClass="font-medium bg-primary shadow-md px-[10px] py-[12px] md:px-[25px] md:py-[15px] text-xs md:text-base"
                 textClass="text-white"
                 extraClass="flex justify-center items-center md:gap-2"
                 render={() => (

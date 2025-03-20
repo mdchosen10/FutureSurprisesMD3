@@ -58,9 +58,9 @@ export default function Home() {
           <Explore />
         </div>
         <div className="banner-2 mb-16 mt-24 flex h-[412px] flex-col items-start justify-center px-10 lg:px-20">
-          <h2 className="mb-15 text-left font-lora text-2xl font-bold dark:text-secondary lg:text-5xl lg:leading-[60px] 2xl:text-[54px]">
+          <h2 className="mb-15 text-left font-mainHeading text-2xl font-bold dark:text-secondary lg:text-5xl lg:leading-[60px] 2xl:text-[54px]">
             Start your{" "}
-            <span className="text-[#4B0082]">Surprise</span>{" "}
+            <span className="text-primary">Surprise</span>{" "}
             Journey Now
           </h2>
           <p className="mb-6 mt-4 max-w-2xl dark:text-secondary">

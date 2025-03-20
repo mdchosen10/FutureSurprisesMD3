@@ -32,9 +32,9 @@ const TestimonialsCarousel = () => {
 
   return (
     <div className="testimonials-carousel">
-      <h2 className="text-center font-lora text-2xl font-bold lg:text-5xl lg:leading-[60px] 2xl:text-[54px]">
+      <h2 className="text-center font-mainHeading text-2xl font-bold lg:text-5xl lg:leading-[60px] 2xl:text-[54px]">
         What our{" "}
-        <span className="text-[#9B79B6]">Customers</span>{" "}
+        <span className="text-[#511f4a]">Customers</span>{" "}
         are Saying
       </h2>
       <Swiper

@@ -1151,7 +1151,7 @@ const AddOrEditRecipient = () => {
               onClick={onClickYesGoToAddPayment}
               isLoading={loading}
               disabled={loading}
-              bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md"
+              bgClass="bg-primary shadow-md"
               textClass="text-white text-sm"
               extraClass="px-6"
             />
@@ -1381,7 +1381,7 @@ const AddOrEditRecipient = () => {
               name="Confirm"
               type="button"
               onClick={onAcknowledgeGiftDelivery}
-              bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md"
+              bgClass="bg-primary shadow-md"
               textClass="text-white"
               extraClass="px-6"
             />
@@ -1457,7 +1457,7 @@ const AddOrEditRecipient = () => {
               name="Save and Add Payment"
               type="button"
               onClick={onClickAddPaymentFirst}
-              bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md"
+              bgClass="bg-primary shadow-md"
               textClass="text-white"
               extraClass="px-6"
             />
@@ -2030,7 +2030,7 @@ const AddOrEditRecipient = () => {
                 <Button
                   name="Save"
                   type="submit"
-                  bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md"
+                  bgClass="bg-primary shadow-md"
                   textClass="text-white"
                   extraClass="px-6"
                   disabled={loading || chaGPTLoading}

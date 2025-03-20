@@ -8,13 +8,13 @@ const Footer = () => {
       <div className="mx-auto max-w-screen-2xl p-10 pt-20 lg:px-20">
         <div className="grid w-full gap-6 lg:grid-cols-2">
           <div className="flex flex-col">
-            <div className="w-sm mb-7 h-20 lg:w-[340px]">
+            <div className="mb-7 h-24 w-fit">
               <Link href="/">
                 <Image
                   height={0}
                   width={0}
                   unoptimized
-                  src="/images/logo-large.png"
+                  src="/images/Future-Surprises-Logo-White.png"
                   className="h-full w-full object-contain"
                   alt="Logo"
                 />
@@ -77,7 +77,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <hr className="mt-16 h-[1px] w-full bg-[#9B79B6]" />
+        <hr className="mt-16 h-[1px] w-full bg-[#511f4a]" />
         <div className="mt-7 flex flex-wrap justify-between gap-3">
           <p>
             All rights reserved @ 2025 future surprises llc

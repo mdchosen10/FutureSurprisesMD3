@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import GirlThinking from "@/../public/images/girl-thinking.png";
-import Logo from "@/../public/images/new_log_big.png";
+import Logo from "@/../public/images/Future-Surprises-Logo-White.png";
 import GoogleIcon from "@/../public/icons/google.svg";
 import FacebookIcon from "@/../public/icons/facebook.svg";
 import EmailIcon from "@/../public/icons/email.svg";
@@ -73,7 +73,7 @@ const Login = () => {
             type="button"
             name="Close"
             onClick={() => setOpenModal(false)}
-            bgClass="bg-gradient-to-r from-[#2c2434] to-[#bc66d7]"
+            bgClass="bg-primary"
             textClass="text-white font-mainText"
             extraClass="w-[140px] shadow-md mx-auto"
           />

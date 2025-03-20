@@ -321,7 +321,7 @@ const UserDetails = () => {
             name="Save"
             disabled={loading}
             isLoading={loading}
-            bgClass="font-medium bg-gradient-to-r from-[#2c2434] to-[#bc66d7] shadow-md px-[10px] py-[12px] md:px-[25px] md:py-[15px] text-xs md:text-base"
+            bgClass="font-medium bg-primary shadow-md px-[10px] py-[12px] md:px-[25px] md:py-[15px] text-xs md:text-base"
             textClass="text-white"
             extraClass="flex justify-center items-center md:gap-2"
           />

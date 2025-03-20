@@ -14,9 +14,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primaryViolet: "#643e74",
-        primaryBlack: "#2C2434",
-        primary: "#4B0082",
+        primaryViolet: "#511f4a",
+        primaryBlack: "#000000",
+        primary: "#511f4a",
         secondary: "#2c2c34",
       },
       fontFamily: {
