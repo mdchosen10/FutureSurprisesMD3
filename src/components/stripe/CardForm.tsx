@@ -175,16 +175,32 @@ const CardForm = () => {
         } else {
           sessionStorage.removeItem("formData");
           sessionStorage.removeItem("redirect");
-          toast.error("Failed to store recipient details");
-          router.push("/surprise");
+          if (final?.cardError) {
+            toast.error(
+              "Card verification failed. Please check your card details or try with a different card.",
+            );
+          } else {
+            toast.error(
+              "Failed to store recipient details",
+            );
+            router.push("/surprise");
+          }
         }
       }
-    } catch (err) {
+    } catch (err: any) {
       sessionStorage.removeItem("formData");
       sessionStorage.removeItem("redirect");
+      if (err?.cardError) {
+        toast.error(
+          "Card verification failed. Please check your card details or try with a different card.",
+        );
+      } else {
+        toast.error(
+          "Failed to store recipient details. Please try again.",
+        );
+        router.push("/surprise");
+      }
       setLoading(false);
-      toast.error("Failed to store recipient details");
-      router.push("/surprise");
     }
   };
 
