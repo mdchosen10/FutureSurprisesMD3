@@ -87,6 +87,17 @@ const Page = () => {
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <p className="font-poppins text-lg text-red-600">
+          Error: {error}
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
       {showConfetti && (
@@ -108,20 +119,17 @@ const Page = () => {
           <h2 className="mb-4 font-lora text-3xl font-bold text-white lg:text-5xl">
             Thank you
           </h2>
-
-          {error && (
-            <p className="font-poppins text-red-600">
-              Error: {error}
-            </p>
-          )}
+          <p className="text-lg text-white">
+            Recipient details stored successfully
+          </p>
 
           {recipient && (
             <div className="flex w-full max-w-sm flex-col items-center justify-center gap-3 divide-y">
-              <div className="flex w-full items-center justify-between gap-4">
+              <div className="flex w-full items-center justify-between gap-4 py-2 text-white">
                 <p className="">Name:</p>
                 <p className="">{recipient?.name ?? ""}</p>
               </div>
-              <div className="flex w-full items-center justify-between gap-4">
+              <div className="flex w-full items-center justify-between gap-4 py-2 text-white">
                 <p className="">Relationship:</p>
                 <p className="">
                   {recipient?.relationship ?? ""}
