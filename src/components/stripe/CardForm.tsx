@@ -89,7 +89,6 @@ const CardForm = () => {
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<boolean>(false);
   const {
     handleSubmit,
     control,
@@ -153,7 +152,6 @@ const CardForm = () => {
       const final = await response.json();
       if (final && final?.success && final?.token) {
         setLoading(false);
-        setSuccess(true);
         sessionStorage.removeItem("formData");
         sessionStorage.removeItem("redirect");
         localStorage?.setItem("user_token", final?.token);
@@ -161,7 +159,9 @@ const CardForm = () => {
         toast.success(
           "Recipient details stored successfully",
         );
-        return router.push("/my-account/recipients");
+        router.push(
+          `/thank-you?status=success&recipient=${final?.recipient?.id}`,
+        );
       } else {
         setLoading(false);
         if (final?.existing) {
@@ -206,126 +206,106 @@ const CardForm = () => {
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-[#2f1752] px-5 lg:px-20">
-      {success ? (
-        <div className="flex w-full flex-col items-center justify-center gap-3 pt-20">
-          <h2 className="text-3xl font-bold text-white">
-            Thank you{" "}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mx-auto mt-20 flex max-w-3xl flex-col gap-3 p-10"
+      >
+        <div className="flex flex-col gap-2">
+          <h2 className="text-left font-poppins text-3xl font-bold text-white">
+            Start Your Surprise Journey
           </h2>
-          <p className="text-lg text-white">
-            Recipient details stored successfully
-          </p>
-          <Button
-            variant="transparent"
-            className="border !bg-white px-5 text-[#2f1752]"
-            onClick={() => {
-              router.push("/");
-            }}
-          >
-            Go To Home Page
-          </Button>
+          <h2 className="text-left font-poppins text-white">
+            Please enter the following details to start
+            surprising your loved ones.
+          </h2>
         </div>
-      ) : (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mx-auto mt-20 flex max-w-3xl flex-col gap-3 p-10"
+        <Controller
+          name="first_name"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              placeholder="First Name*"
+              type="text"
+              className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+              errors={errors?.first_name?.message}
+            />
+          )}
+        />
+        <Controller
+          name="last_name"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              placeholder="Last Name*"
+              type="text"
+              className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+              errors={errors?.last_name?.message}
+            />
+          )}
+        />
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              placeholder="Email*"
+              type="email"
+              className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
+              errors={errors?.email?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <PhoneNumberInput
+              value={field.value}
+              placeholder="Phone Number*"
+              defaultCountry="US"
+              onChange={field.onChange}
+              errors={errors.phone?.message}
+              isRounded
+            />
+          )}
+        />
+        <label className="text-white">
+          Enter Card Details
+        </label>
+        <div className="flex flex-col gap-6 rounded-md border border-white bg-[#422c62] px-5 py-3">
+          <CardElement options={cardElementOptions} />
+        </div>
+        <small className="mt-3 text-xs text-[#ffeeee]">
+          By providing your card information, you allow
+          Future Surprises to charge your card for future
+          payments in accordance with their terms.
+        </small>
+        <button
+          className="ml-auto mt-5 flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2 text-black hover:shadow-md disabled:cursor-not-allowed"
+          type="submit"
+          disabled={!stripe || loading}
         >
-          <div className="flex flex-col gap-2">
-            <h2 className="text-left font-poppins text-3xl font-bold text-white">
-              Start Your Surprise Journey
-            </h2>
-            <h2 className="text-left font-poppins text-white">
-              Please enter the following details to start
-              surprising your loved ones.
-            </h2>
-          </div>
-          <Controller
-            name="first_name"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                placeholder="First Name*"
-                type="text"
-                className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
-                errors={errors?.first_name?.message}
-              />
-            )}
-          />
-          <Controller
-            name="last_name"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                placeholder="Last Name*"
-                type="text"
-                className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
-                errors={errors?.last_name?.message}
-              />
-            )}
-          />
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                placeholder="Email*"
-                type="email"
-                className="my-3 w-full rounded-full border bg-[#422c62] px-5 py-2 text-white focus:ring-0"
-                errors={errors?.email?.message}
-              />
-            )}
-          />
+          Submit
+          {loading ? <Spinner /> : ""}
+        </button>
 
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field }) => (
-              <PhoneNumberInput
-                value={field.value}
-                placeholder="Phone Number*"
-                defaultCountry="US"
-                onChange={field.onChange}
-                errors={errors.phone?.message}
-                isRounded
-              />
-            )}
-          />
-          <label className="text-white">
-            Enter Card Details
-          </label>
-          <div className="flex flex-col gap-6 rounded-md border border-white bg-[#422c62] px-5 py-3">
-            <CardElement options={cardElementOptions} />
-          </div>
-          <small className="mt-3 text-xs text-[#ffeeee]">
-            By providing your card information, you allow
-            Future Surprises to charge your card for future
-            payments in accordance with their terms.
-          </small>
-          <button
-            className="ml-auto mt-5 flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2 text-black hover:shadow-md disabled:cursor-not-allowed"
-            type="submit"
-            disabled={!stripe || loading}
+        <p className="text-end font-poppins text-white">
+          Already have an account ?{" "}
+          <Button
+            onClick={() => {
+              sessionStorage.setItem("redirect", "true");
+              router.push("/login?next=surprise");
+            }}
+            className="!bg-transparent !px-1 hover:underline"
           >
-            Submit
-            {loading ? <Spinner /> : ""}
-          </button>
-
-          <p className="text-end font-poppins text-white">
-            Already have an account ?{" "}
-            <Button
-              onClick={() => {
-                sessionStorage.setItem("redirect", "true");
-                router.push("/login?next=surprise");
-              }}
-              className="!bg-transparent !px-1 hover:underline"
-            >
-              login here
-            </Button>
-          </p>
-        </form>
-      )}
+            login here
+          </Button>
+        </p>
+      </form>
     </div>
   );
 };
