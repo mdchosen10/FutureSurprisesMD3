@@ -59,7 +59,7 @@ const Page = () => {
     const fetchRecipient = async () => {
       try {
         const res = await dispatch(
-          recipientActions.getAddedRecipients({
+          recipientActions.getRecipient({
             data: recipientId,
           }),
         );
@@ -109,7 +109,7 @@ const Page = () => {
           )}
 
           {recipient && (
-            <div className="flex w-full flex-col items-center justify-center gap-3 divide-y rounded-lg p-6 shadow-lg">
+            <div className="flex w-full flex-col items-center justify-center gap-3 divide-y">
               <h3 className="text-xl font-semibold text-[#2f1752]">
                 Name:
                 {recipient?.name ?? ""}
