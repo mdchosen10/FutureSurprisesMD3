@@ -10,6 +10,24 @@ import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import * as recipientActions from "@/redux/recipient/actions";
 import { Spinner } from "flowbite-react";
+import moment from "moment";
+
+const getNextHoliday = (recipient: any) => {
+  let holidays = recipient?.all_holidays?.slice();
+  const sorted =
+    holidays?.sort(
+      (a: any, b: any) =>
+        (moment(a?.date) as any) - (moment(b?.date) as any),
+    ) || [];
+
+  const currentDate = moment();
+
+  const upcomingHoliday = sorted.find(
+    (holiday: any) => moment(holiday?.date) >= currentDate,
+  );
+
+  return upcomingHoliday;
+};
 
 const Page = () => {
   const router = useRouter();
@@ -18,7 +36,8 @@ const Page = () => {
   const dispatch = useAppDispatch();
 
   const [recipient, setRecipient] = useState<{
-    name?: string;
+    first_name?: string;
+    nickname?: string;
     relationship?: string;
   } | null>(null);
   const [loading, setLoading] = useState(true);
@@ -78,7 +97,7 @@ const Page = () => {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-full items-center justify-center">
+      <div className="flex h-screen w-full items-center justify-center bg-[#2f1752]">
         <Spinner
           aria-label="page-loader"
           size="xl"
@@ -90,7 +109,7 @@ const Page = () => {
 
   if (error) {
     return (
-      <div className="flex h-screen w-full items-center justify-center">
+      <div className="flex h-screen w-full items-center justify-center bg-[#2f1752]">
         <p className="font-poppins text-lg text-red-600">
           Error: {error}
         </p>
@@ -116,23 +135,33 @@ const Page = () => {
 
       <div className="relative flex min-h-screen w-full items-center justify-center bg-[#2f1752] px-4">
         <div className="flex h-full w-full max-w-2xl flex-col items-center justify-center gap-6">
-          <h2 className="mb-4 font-lora text-3xl font-bold text-white lg:text-5xl">
+          <h2 className="mb-4 font-lora text-3xl font-bold text-white lg:text-7xl">
             Thank you
           </h2>
-          <p className="text-lg text-white">
+          <p className="font-mainHeading text-lg text-white lg:text-2xl">
             Recipient details stored successfully
           </p>
 
           {recipient && (
-            <div className="flex w-full max-w-sm flex-col items-center justify-center gap-3 divide-y">
+            <div className="flex w-full max-w-sm flex-col items-center justify-center gap-3 divide-y font-poppins">
               <div className="flex w-full items-center justify-between gap-4 py-2 text-white">
                 <p className="">Name:</p>
-                <p className="">{recipient?.name ?? ""}</p>
+                <p className="">
+                  {recipient?.first_name ??
+                    recipient?.nickname ??
+                    ""}
+                </p>
               </div>
               <div className="flex w-full items-center justify-between gap-4 py-2 text-white">
                 <p className="">Relationship:</p>
                 <p className="">
                   {recipient?.relationship ?? ""}
+                </p>
+              </div>
+              <div className="flex w-full items-center justify-between gap-4 py-2 text-white">
+                <p className="">Next Holiday:</p>
+                <p className="">
+                  {getNextHoliday(recipient)?.name ?? ""}
                 </p>
               </div>
             </div>
