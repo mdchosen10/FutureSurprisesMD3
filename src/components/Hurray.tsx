@@ -4,15 +4,11 @@ import Spinner from "./shared/Spinner";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
-import Confetti from "react-confetti";
-import { useWindowSize } from "react-use";
 
 const Hurray = () => {
   const [loading, setLoading] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false);
   const router = useRouter();
   const user = useAuth();
-  const { width, height } = useWindowSize();
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -43,11 +39,10 @@ const Hurray = () => {
         toast.success(
           "Recipient details stored successfully",
         );
-        setShowConfetti(true);
-        setTimeout(() => {
-          setShowConfetti(false);
-          router.push("/my-account/recipients");
-        }, 2000);
+
+        router.push(
+          `/thank-you?status=success&recipient=${final?.recipient?.id}`,
+        );
       } else {
         sessionStorage.removeItem("formData");
         sessionStorage.removeItem("redirect");
@@ -66,15 +61,6 @@ const Hurray = () => {
 
   return (
     <div className="min-h-screen w-full bg-[#2f1752]">
-      <div className="mx-auto w-full">
-        {showConfetti && (
-          <Confetti
-            width={width - 100}
-            height={height - 100}
-            gravity={0.2}
-          />
-        )}
-      </div>
       <div className="flex h-full flex-col items-center gap-6 p-6 pt-20 font-noto text-white">
         <h3 className="text-2xl font-bold text-white lg:text-4xl">
           Save Recipient

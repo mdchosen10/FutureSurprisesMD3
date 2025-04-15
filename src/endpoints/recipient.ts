@@ -35,6 +35,18 @@ export const getAddedRecipients = (
   });
 };
 
+export const getRecipient = (
+  config: any = {},
+): Promise<AxiosResponse> => {
+  const id = config.data || null;
+  return axiosInstance({
+    url: `/store/recipients/${id}`,
+    method: "GET",
+    withCredentials: true,
+    ...config,
+  });
+};
+
 export const addRecipient = (
   config: any = {},
 ): Promise<AxiosResponse> => {

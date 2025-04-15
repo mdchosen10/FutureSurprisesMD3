@@ -52,7 +52,9 @@ const useWebSocket = (sessionId: string) => {
         toast.success(
           "Recipient details stored successfully",
         );
-        router.push("/my-account/recipients");
+        router.push(
+          `/thank-you?status=success&recipient=${data?.recipient?.id}`,
+        );
       }
     });
 
