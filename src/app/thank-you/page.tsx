@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import * as recipientActions from "@/redux/recipient/actions";
+import PageLoader from "../loading";
 
 const Page = () => {
   const router = useRouter();
@@ -62,6 +63,7 @@ const Page = () => {
             data: recipientId,
           }),
         );
+        console.log(res);
         if (!res || !res.payload)
           throw new Error("Failed to fetch recipient");
         setRecipient(res.payload);
@@ -75,6 +77,9 @@ const Page = () => {
     fetchRecipient();
   }, [recipientId]);
 
+  if (loading) {
+    return <PageLoader />;
+  }
   return (
     <>
       {showConfetti && (
@@ -97,12 +102,6 @@ const Page = () => {
             Thank you
           </h2>
 
-          {loading && (
-            <p className="font-poppins text-white">
-              Loading recipient details...
-            </p>
-          )}
-
           {error && (
             <p className="font-poppins text-red-600">
               Error: {error}
@@ -110,8 +109,9 @@ const Page = () => {
           )}
 
           {recipient && (
-            <div className="w-full rounded-lg bg-white p-6 shadow-lg">
+            <div className="flex w-full flex-col items-center justify-center gap-3 divide-y rounded-lg p-6 shadow-lg">
               <h3 className="text-xl font-semibold text-[#2f1752]">
+                Name:
                 {recipient?.name ?? ""}
               </h3>
               <p className="text-[#2f1752]">
