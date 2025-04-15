@@ -39,7 +39,7 @@ export const getRecipientDetails = createAsyncThunk<
 });
 
 export const getRecipient = createAsyncThunk<
-  AxiosResponse,
+  any,
   AxiosRequestConfig
 >("auth/getRecipient", async (config: any) => {
   const res = await recipientApi.getRecipient(config);
