@@ -63,10 +63,9 @@ const Page = () => {
             data: recipientId,
           }),
         );
-        console.log(res); // eslint-disable-line no-console
-        if (!res || !res.payload)
+        if (!res || !res.payload || !res.payload.recipient)
           throw new Error("Failed to fetch recipient");
-        setRecipient(res.payload);
+        setRecipient(res.payload?.recipient);
       } catch (err) {
         setError((err as Error).message);
       } finally {
@@ -109,15 +108,17 @@ const Page = () => {
           )}
 
           {recipient && (
-            <div className="flex w-full flex-col items-center justify-center gap-3 divide-y">
-              <h3 className="text-xl font-semibold text-[#2f1752]">
-                Name:
-                {recipient?.name ?? ""}
-              </h3>
-              <p className="text-[#2f1752]">
-                Relationship:{" "}
-                {recipient?.relationship ?? ""}
-              </p>
+            <div className="flex w-full max-w-sm flex-col items-center justify-center gap-3 divide-y">
+              <div className="flex w-full items-center justify-between gap-4">
+                <p className="">Name:</p>
+                <p className="">{recipient?.name ?? ""}</p>
+              </div>
+              <div className="flex w-full items-center justify-between gap-4">
+                <p className="">Relationship:</p>
+                <p className="">
+                  {recipient?.relationship ?? ""}
+                </p>
+              </div>
             </div>
           )}
 
