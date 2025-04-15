@@ -63,7 +63,7 @@ const Page = () => {
             data: recipientId,
           }),
         );
-        console.log(res);
+        console.log(res); // eslint-disable-line no-console
         if (!res || !res.payload)
           throw new Error("Failed to fetch recipient");
         setRecipient(res.payload);
