@@ -81,7 +81,10 @@ export default function LayoutWrapper({
     }, [dispatch, accessToken, user, active]);
 
   const getCurrentCustomer = async () => {
-    await dispatch(authActions.getCurrentCustomer());
+    let res = await dispatch(
+      authActions.getCurrentCustomer(),
+    );
+    return res?.payload as { customer: any };
   };
 
   useEffect(() => {
@@ -90,13 +93,14 @@ export default function LayoutWrapper({
 
   useEffect(() => {
     if (!hydrated) return;
-    getCurrentCustomer();
-    if (user && user?.id) {
-      setIsAuthenticated(true);
-    } else {
-      toast.error("Please login to view recipients");
-      router.push("/login");
-    }
+    getCurrentCustomer().then(res => {
+      if (res && res?.customer) {
+        setIsAuthenticated(true);
+      } else {
+        toast.error("Please login to view recipients");
+        router.push("/login");
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hydrated]);
 
