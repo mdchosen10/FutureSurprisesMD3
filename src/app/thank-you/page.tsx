@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import * as recipientActions from "@/redux/recipient/actions";
-import PageLoader from "../loading";
+import { Spinner } from "flowbite-react";
 
 const Page = () => {
   const router = useRouter();
@@ -77,7 +77,15 @@ const Page = () => {
   }, [recipientId]);
 
   if (loading) {
-    return <PageLoader />;
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <Spinner
+          aria-label="page-loader"
+          size="xl"
+          color="white"
+        />
+      </div>
+    );
   }
   return (
     <>
