@@ -10,6 +10,7 @@ import CardForm from "./stripe/CardForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAuth } from "@/hooks/useAuth";
+import SuccessMessage from "./SuccessMessage";
 
 const FilloutForm = () => {
   const uniqueId = useSessionId();
@@ -34,7 +35,9 @@ const FilloutForm = () => {
   if (uniqueId)
     return (
       <div className="w-full">
-        {data && data?.showPayment ? (
+        {data && data?.success ? (
+          <SuccessMessage />
+        ) : data?.showPayment ? (
           <div className="">
             <Elements
               options={elementsOptions}
@@ -50,6 +53,9 @@ const FilloutForm = () => {
               sessionId: uniqueId,
               authToken: token,
               customerId: user?.id ?? null,
+              stripe_id: user?.metadata?.stripe_id ?? null,
+              payment_id:
+                user?.metadata?.payment_method_id ?? null,
             }}
           />
         )}

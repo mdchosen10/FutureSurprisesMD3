@@ -44,9 +44,7 @@ export default function LayoutWrapper({
   const dispatch = useAppDispatch();
   const pathname = usePathname();
 
-  const active = hydrated
-    ? pathname?.split("/").slice(-1)[0]
-    : "";
+  const active = hydrated ? pathname?.split("/")?.[2] : "";
 
   const recipientRef = useRef<HTMLButtonElement>(null);
   const paymentRef = useRef<HTMLButtonElement>(null);

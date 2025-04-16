@@ -13,8 +13,11 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import Button from "./Button";
-import { useAppSelector } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { AddPaymentMethod } from "@/components/stripe/AddPaymentMethod";
+import * as authActions from "@/redux/auth/actions";
+import toast from "react-hot-toast";
+import SuccessMessage from "./SuccessMessage";
 
 const stripePromise: any = loadStripe(
   process.env.STRIPE_PUBLISHABLE_KEY || "",
@@ -31,6 +34,8 @@ function AddPaymentComponent({
   const [clientSecret, setClientSecret] =
     useState<string>("");
   const [loading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
+  const [success, setSuccess] = useState(false);
 
   const elementsOptions: Object = {
     // mode: "payment",
@@ -86,7 +91,29 @@ function AddPaymentComponent({
     }
   }, [user?.metadata?.stripe_id]);
 
-  return (
+  const handleSubmit = async (reqData: any) => {
+    const res: any = await dispatch(
+      authActions.updateMedusaCustomerAccount({
+        data: reqData,
+      }),
+    );
+
+    if (res?.payload?.status === 200) {
+      toast.success("Payment details saved successfully.");
+      setSuccess(true);
+    } else {
+      toast.error("Failed to save payment details.");
+      setSuccess(false);
+    }
+  };
+
+  return success ? (
+    <SuccessMessage
+      message="Payment details saved successfully."
+      link="/my-account/payment"
+      classNames="bg-white text-primary"
+    />
+  ) : (
     <div className="p-5 lg:p-10">
       {loading && path !== "add-payment-details" ? (
         <div className="flex w-full p-5">
@@ -107,6 +134,7 @@ function AddPaymentComponent({
                 </div>
                 <AddressElement options={addressOptions} />
                 <AddPaymentMethod
+                  onSubmit={handleSubmit}
                   clientSecret={clientSecret}
                   render={() => (
                     <Button

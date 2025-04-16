@@ -8,18 +8,14 @@ import {
 import { useState } from "react";
 import Button from "../Button";
 import toast from "react-hot-toast";
-import { useAppDispatch } from "@/hooks";
-import * as authActions from "@/redux/auth/actions";
-import { useRouter } from "next/navigation";
 
 export const AddPaymentMethod = ({
   clientSecret,
   render,
+  onSubmit,
 }: any) => {
   const stripe: any = useStripe();
-  const dispatch = useAppDispatch();
   const elements = useElements();
-  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] =
@@ -52,19 +48,7 @@ export const AddPaymentMethod = ({
             response?.setupIntent?.payment_method || "",
         },
       };
-
-      const res: any = await dispatch(
-        authActions.updateMedusaCustomerAccount({
-          data: reqData,
-        }),
-      );
-
-      if (res?.payload?.status === 200) {
-        toast.success(
-          "Payment details saved successfully.",
-        );
-        router.push("/my-account/recipients");
-      }
+      onSubmit(reqData);
     }
     setLoading(false);
   };
