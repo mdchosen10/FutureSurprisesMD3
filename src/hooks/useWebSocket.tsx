@@ -11,8 +11,9 @@ const serverUrl: string = process.env
 const useWebSocket = (sessionId: string) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [data, setData] = useState<{
-    message: string;
-    showPayment: boolean;
+    message?: string;
+    showPayment?: boolean;
+    success?: boolean;
   } | null>(null);
   const user = useAuth();
   const router = useRouter();
@@ -48,14 +49,11 @@ const useWebSocket = (sessionId: string) => {
           });
         }
       } else {
-        setData(null);
+        setData({ success: true });
         toast.success(
           "Recipient details stored successfully",
         );
         console.log(data);
-        router.push(
-          `/thank-you?status=success&recipient=${data?.recipient?.id}`,
-        );
       }
     });
 
