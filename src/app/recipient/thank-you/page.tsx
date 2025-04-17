@@ -113,7 +113,7 @@ const RecipientThankYouPage = () => {
     );
   }
   return (
-    <SuccessMessage>
+    <SuccessMessage classNames="min-h-screen bg-[#2f1752] text-white">
       {showConfetti && (
         <div
           className={`pointer-events-none fixed left-0 top-0 z-50 transition-opacity duration-700 ${
