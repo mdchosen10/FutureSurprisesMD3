@@ -1,3 +1,5 @@
+"use client";
+
 import SuccessMessage from "@/components/SuccessMessage";
 import React from "react";
 

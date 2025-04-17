@@ -1,3 +1,5 @@
+"use client";
+
 import SuccessMessage from "@/components/SuccessMessage";
 import { Spinner } from "flowbite-react";
 import { useAppDispatch } from "@/hooks";
