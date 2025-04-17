@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
+import React, {
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import { useRouter } from "next/navigation";
 import { FaCheckCircle } from "react-icons/fa";
 
@@ -6,10 +12,12 @@ const SuccessMessage = ({
   message = "Recipient added successfully.",
   link = "/my-account/recipients",
   classNames = "bg-[#2f1752] text-white",
+  children,
 }: {
   message?: string;
   link?: string;
   classNames?: string;
+  children?: ReactNode;
 }) => {
   const [countdown, setCountdown] = useState(5);
   const router = useRouter();
@@ -34,6 +42,7 @@ const SuccessMessage = ({
         <h1 className="text-center font-mainHeading text-2xl font-bold lg:text-4xl">
           {message}
         </h1>
+        {children}
         <p className="text-lg lg:text-xl">
           You will be redirected in {countdown} second
           {countdown !== 1 ? "s" : ""}.

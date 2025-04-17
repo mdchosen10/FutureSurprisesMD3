@@ -10,14 +10,13 @@ import {
 } from "@stripe/stripe-js";
 import { Spinner } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import Button from "./Button";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { AddPaymentMethod } from "@/components/stripe/AddPaymentMethod";
 import * as authActions from "@/redux/auth/actions";
 import toast from "react-hot-toast";
-import SuccessMessage from "./SuccessMessage";
 
 const stripePromise: any = loadStripe(
   process.env.STRIPE_PUBLISHABLE_KEY || "",
@@ -35,7 +34,7 @@ function AddPaymentComponent({
     useState<string>("");
   const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
-  const [success, setSuccess] = useState(false);
+  const router = useRouter();
 
   const elementsOptions: Object = {
     // mode: "payment",
@@ -100,20 +99,13 @@ function AddPaymentComponent({
 
     if (res?.payload?.status === 200) {
       toast.success("Payment details saved successfully.");
-      setSuccess(true);
+      router.push("/payment/thank-you");
     } else {
       toast.error("Failed to save payment details.");
-      setSuccess(false);
     }
   };
 
-  return success ? (
-    <SuccessMessage
-      message="Payment details saved successfully."
-      link="/my-account/payment"
-      classNames="bg-white text-primary"
-    />
-  ) : (
+  return (
     <div className="p-5 lg:p-10">
       {loading && path !== "add-payment-details" ? (
         <div className="flex w-full p-5">
