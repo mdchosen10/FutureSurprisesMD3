@@ -160,7 +160,7 @@ const CardForm = () => {
           "Recipient details stored successfully",
         );
         router.push(
-          `/thank-you?recipient=${final?.recipient?.id}`,
+          `/recipient/thank-you?recipient=${final?.recipient?.id}`,
         );
       } else {
         setLoading(false);
